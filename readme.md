@@ -11,7 +11,7 @@
 tıklayarak genişleyen alanda, ilgili şehirdeki üniversitelerin listesi görüntülenir. Listelenen
 üniversiteler favorilere eklenip çıkarılabilirler. Ayrıca üniversitelere tıklandığında alan 
 genişler ve üniversite bilgileri görüntülenir. Bu alandan üniversite websitesine gidebilir ve 
-telefon numarasına tıklayarak telefonla arayabiliriz. Kotlin dilinde MVVM(Model-View-ViewModel) mimarisi ile bireysel olarak geliştirdim.*<br/>
+telefon numarasına tıklayarak telefonla arayabiliriz. Bu projeyi Kotlin dilinde MVVM(Model-View-ViewModel) mimarisi ile bireysel olarak geliştirdim.*<br/>
 
 ![MainActivity](./images/MainActivity.png)
 ![FavoriteActivity](./images/FavoriteActivity.png)
