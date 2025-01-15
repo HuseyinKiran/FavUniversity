@@ -51,13 +51,4 @@ class FavoriteViewModel @Inject constructor(
         }
     }
 
-    fun isUniversityFavorite(universityName: String?): LiveData<Boolean> {
-        val isFavorite = MutableLiveData<Boolean>()
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.isUniversityFavorite(universityName)
-            isFavorite.postValue(result)
-        }
-        return isFavorite
-    }
-
 }

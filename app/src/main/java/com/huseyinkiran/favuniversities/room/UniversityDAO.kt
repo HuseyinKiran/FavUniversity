@@ -23,4 +23,3 @@ interface UniversityDAO {
     suspend fun getFavoriteByName(universityName: String): University?
 
 }
-

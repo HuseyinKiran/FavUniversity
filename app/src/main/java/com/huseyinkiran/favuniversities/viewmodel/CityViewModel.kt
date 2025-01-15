@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.huseyinkiran.favuniversities.model.Province
-import com.huseyinkiran.favuniversities.model.University
 import com.huseyinkiran.favuniversities.repository.UniversityRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,7 +26,7 @@ class CityViewModel @Inject constructor(
 
     private var currentList: MutableList<Province> = mutableListOf()
     private var currentPage = 1
-    private var isLoading = false // Yeni veriler yükleniyor mu?
+    private var isLoading = false
 
     fun loadProvinces() {
         if (isLoading || currentPage > 3) { // Maksimum 3 sayfa yüklenir
@@ -44,7 +43,7 @@ class CityViewModel @Inject constructor(
                 if (response.data.isNotEmpty()) {
                     currentList.addAll(response.data)
                     _provinceList.value = currentList
-                    currentPage++ // Yalnızca başarılı bir yüklemeden sonra artırılır
+                    currentPage++
                     _errorMessage.value = false
                 } else {
                     Log.e("CityViewModel", "Empty data received")
@@ -62,7 +61,4 @@ class CityViewModel @Inject constructor(
         }
     }
 
-
 }
-
-

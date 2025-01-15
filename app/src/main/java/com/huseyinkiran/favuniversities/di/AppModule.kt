@@ -1,10 +1,7 @@
 package com.huseyinkiran.favuniversities.di
 
 import android.content.Context
-import androidx.fragment.app.FragmentActivity
 import androidx.room.Room
-import com.huseyinkiran.favuniversities.adapter.CityAdapter
-import com.huseyinkiran.favuniversities.adapter.UniversityAdapter
 import com.huseyinkiran.favuniversities.repository.UniversityRepository
 import com.huseyinkiran.favuniversities.repository.UniversityRepositoryImpl
 import com.huseyinkiran.favuniversities.room.UniversityDAO
@@ -50,19 +47,6 @@ object AppModule {
     @Provides
     fun provideRepository(dao: UniversityDAO, api: UniversityAPI) =
         UniversityRepositoryImpl(dao, api) as UniversityRepository
-
-    @Singleton
-    @Provides
-    fun provideCityAdapter() : CityAdapter {
-        return CityAdapter(onFavoriteClick = {})
-    }
-
-    @Singleton
-    @Provides
-    fun provideUniversityAdapter() : UniversityAdapter {
-        return UniversityAdapter(onFavoriteClick = {})
-    }
-
 
 }
 

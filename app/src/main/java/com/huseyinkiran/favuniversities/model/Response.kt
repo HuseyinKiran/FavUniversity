@@ -8,4 +8,3 @@ data class Response(
     val totalPage: Int,
     val data: List<Province>
 )
-

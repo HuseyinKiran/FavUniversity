@@ -2,16 +2,15 @@ package com.huseyinkiran.favuniversities.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.FragmentWebsiteBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+
 class WebsiteFragment : Fragment() {
 
     private var _binding: FragmentWebsiteBinding? = null
@@ -29,11 +28,14 @@ class WebsiteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val websiteUrl = arguments?.getString("WEBSITE_URL") ?: ""
+        val universityName = arguments?.getString("UNIVERSITY_NAME") ?: ""
         setupWebView(websiteUrl)
 
         binding.goBack.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding.txtToolbar.text = universityName
 
     }
 
@@ -45,6 +47,8 @@ class WebsiteFragment : Fragment() {
             loadWithOverviewMode = true
             useWideViewPort = true
         }
+        binding.webView.webViewClient = WebViewClient()
         binding.webView.loadUrl(url)
     }
+
 }

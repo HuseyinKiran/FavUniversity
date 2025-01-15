@@ -5,4 +5,3 @@ data class Province(
     val province: String,
     val universities: List<University>
 )
-

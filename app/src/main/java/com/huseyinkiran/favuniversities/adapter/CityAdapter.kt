@@ -12,14 +12,12 @@ import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.CellCityBinding
 import com.huseyinkiran.favuniversities.model.Province
 import com.huseyinkiran.favuniversities.model.University
-import javax.inject.Inject
 
-class CityAdapter @Inject constructor(
-    private val onFavoriteClick: (University) -> Unit
-) : RecyclerView.Adapter<CityAdapter.CityViewHolder>() {
-
-    @Inject
-    lateinit var universityAdapter: UniversityAdapter
+class CityAdapter(
+    private val onFavoriteClick: (University) -> Unit,
+    private val onWebsiteClick: (String, String) -> Unit
+) :
+    RecyclerView.Adapter<CityAdapter.CityViewHolder>() {
 
     class CityViewHolder(val binding: CellCityBinding) : ViewHolder(binding.root)
 
@@ -41,7 +39,7 @@ class CityAdapter @Inject constructor(
 
             Log.d("Cities", "${city.province} ")
 
-            universityAdapter = UniversityAdapter(onFavoriteClick)
+            val universityAdapter = UniversityAdapter(onFavoriteClick, onWebsiteClick)
             universityAdapter.updateUniversities(city.universities)
             uniRv.layoutManager = LinearLayoutManager(root.context)
             uniRv.adapter = universityAdapter
@@ -65,32 +63,7 @@ class CityAdapter @Inject constructor(
     @SuppressLint("NotifyDataSetChanged")
     fun updateCities(newCities: List<Province>) {
         cityList = newCities
-        notifyDataSetChanged() // Tüm listeyi yeniden bağla
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateCities2(provinces: List<Province>, favoriteUniversities: List<University>) {
-        cityList = provinces
-        cityList.forEach { city ->
-            city.universities.forEach { university ->
-                // Favori durumunu güncelle
-                university.isFavorite = favoriteUniversities.any { it.id == university.id }
-            }
-        }
         notifyDataSetChanged()
     }
-
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateFavorites(favoriteList: List<University>) {
-        cityList.forEach { city ->
-            city.universities.forEach { university ->
-                university.isFavorite = favoriteList.contains(university)
-            }
-        }
-        notifyDataSetChanged()
-    }
-
 
 }
-

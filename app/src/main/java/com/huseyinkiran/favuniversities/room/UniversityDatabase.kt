@@ -10,4 +10,3 @@ abstract class UniversityDatabase : RoomDatabase() {
     abstract fun universityDao(): UniversityDAO
 
 }
-

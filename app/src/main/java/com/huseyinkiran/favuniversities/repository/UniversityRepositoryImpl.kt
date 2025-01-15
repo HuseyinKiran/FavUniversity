@@ -1,7 +1,6 @@
 package com.huseyinkiran.favuniversities.repository
 
 import androidx.lifecycle.LiveData
-import com.huseyinkiran.favuniversities.model.Province
 import com.huseyinkiran.favuniversities.model.Response
 import com.huseyinkiran.favuniversities.model.University
 import com.huseyinkiran.favuniversities.room.UniversityDAO

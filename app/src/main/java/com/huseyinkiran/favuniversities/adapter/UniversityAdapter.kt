@@ -1,40 +1,30 @@
 package com.huseyinkiran.favuniversities.adapter
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.net.Uri
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.CellUniversityBinding
 import com.huseyinkiran.favuniversities.model.University
-import com.huseyinkiran.favuniversities.view.HomeFragment
-import com.huseyinkiran.favuniversities.view.WebsiteFragment
-import javax.inject.Inject
 
-class UniversityAdapter @Inject constructor(
-    private val onFavoriteClick: (University) -> Unit
+class UniversityAdapter(
+    private val onFavoriteClick: (University) -> Unit,
+    private val onWebsiteClick: (String, String) -> Unit
 ) :
     RecyclerView.Adapter<UniversityAdapter.UniversityViewHolder>() {
 
     class UniversityViewHolder(val binding: CellUniversityBinding) : ViewHolder(binding.root)
 
     private var universityList: List<University> = listOf()
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UniversityViewHolder {
         val view = CellUniversityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -91,14 +81,12 @@ class UniversityAdapter @Inject constructor(
             }
 
             txtPhone.setOnClickListener {
-                val context = root.context
-                Log.d("UniversityAdapter", "tel:${university.phone}")
-                callPhoneNumber(university, context)
+                callPhoneNumber(university, it.context)
             }
 
             txtWebsite.setOnClickListener {
                 Log.d("UniversityAdapter", "website:${university.website}")
-                  //navigateToWebsite(university.website, fragment)
+                onWebsiteClick(university.website, university.name)
             }
 
         }
@@ -111,36 +99,10 @@ class UniversityAdapter @Inject constructor(
     }
 
     private fun callPhoneNumber(university: University, context: Context) {
-        val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:${university.phone}")
-        }
-
-        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-            context.startActivity(intent)
-        } else {
-            if (context is Activity) {
-                ActivityCompat.requestPermissions(
-                    context,
-                    arrayOf(android.Manifest.permission.CALL_PHONE),
-                    1
-                )
-            }
-        }
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:${university.phone}")
+        context.startActivity(intent)
+        Log.d("UniversityAdapter", "tel : ${university.phone}: ")
     }
-
-    private fun navigateToWebsite(websiteUrl: String, fragment: FragmentActivity) {
-        val bundle = Bundle().apply {
-            putString("WEBSITE_URL", websiteUrl)
-        }
-        val websiteFragment = WebsiteFragment().apply {
-            arguments = bundle
-        }
-        fragment.supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, websiteFragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
 
 }
-

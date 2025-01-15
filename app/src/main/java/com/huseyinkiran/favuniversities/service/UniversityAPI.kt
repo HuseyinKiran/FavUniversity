@@ -10,4 +10,3 @@ interface UniversityAPI {
     suspend fun getUniversities(@Path("pageNumber") pageNumber: Int): Response
 
 }
-
