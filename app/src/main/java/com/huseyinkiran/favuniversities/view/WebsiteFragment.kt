@@ -48,7 +48,11 @@ class WebsiteFragment : Fragment() {
             useWideViewPort = true
         }
         binding.webView.webViewClient = WebViewClient()
-        binding.webView.loadUrl(url)
+        if (url.contains("https://")) {
+            binding.webView.loadUrl(url)
+        } else {
+            binding.webView.loadUrl("https://$url")
+        }
     }
 
 }

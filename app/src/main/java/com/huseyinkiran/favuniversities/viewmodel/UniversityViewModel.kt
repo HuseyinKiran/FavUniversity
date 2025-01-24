@@ -14,11 +14,24 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor(
+class UniversityViewModel @Inject constructor(
     private val repository: UniversityRepository
 ) : ViewModel() {
 
     val favoriteUniversities: LiveData<List<University>> = repository.getAllUniversities()
+
+    private val _expandedUniversities = MutableLiveData<MutableSet<String>>()
+    val expandedUniversities: LiveData<MutableSet<String>> = _expandedUniversities
+
+    fun checkUniversityExpansion(universityName: String) {
+        val currentSet = _expandedUniversities.value ?: mutableSetOf()
+        if (currentSet.contains(universityName)) {
+            currentSet.remove(universityName)
+        } else {
+            currentSet.add(universityName)
+        }
+        _expandedUniversities.value = currentSet
+    }
 
     fun updateFavorites(university: University) {
 
@@ -49,6 +62,7 @@ class FavoriteViewModel @Inject constructor(
             }
 
         }
+
     }
 
 }

@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Üniversiteler"
+            android:text="@string/home_fragment_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/black"
             android:textSize="18sp" />
@@ -43,12 +43,12 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="İnternet bağlantınızı kontrol ediniz."
+        android:text="@string/error_text"
         android:textColor="@color/black"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cityRv"
+        android:id="@+id/provinceRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolBar"

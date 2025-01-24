@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.adapter.UniversityAdapter
 import com.huseyinkiran.favuniversities.databinding.FragmentFavoritesBinding
-import com.huseyinkiran.favuniversities.viewmodel.FavoriteViewModel
+import com.huseyinkiran.favuniversities.viewmodel.UniversityViewModel
 
 
 class FavoritesFragment : Fragment() {
 
     private lateinit var universityAdapter: UniversityAdapter
-    private val favoriteViewModel: FavoriteViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private val favoriteViewModel: UniversityViewModel by hiltNavGraphViewModels(R.id.nav_graph)
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
@@ -44,6 +44,8 @@ class FavoritesFragment : Fragment() {
             val action =
                 FavoritesFragmentDirections.actionFavoritesFragmentToWebsiteFragment(websiteUrl, uniName)
             findNavController().navigate(action)
+        }, onUniversityExpand = {
+            favoriteViewModel.checkUniversityExpansion(it)
         })
 
         binding.favoritesRv.layoutManager = LinearLayoutManager(requireContext())
@@ -52,6 +54,10 @@ class FavoritesFragment : Fragment() {
         favoriteViewModel.favoriteUniversities.observe(viewLifecycleOwner) { universityList ->
             universityAdapter.updateUniversities(universityList)
             Log.d("FavoritesFragment", "${universityList.size} ")
+        }
+
+        favoriteViewModel.expandedUniversities.observe(viewLifecycleOwner) { expandedUniversities ->
+            universityAdapter.updateExpandedUniversities(expandedUniversities)
         }
 
     }

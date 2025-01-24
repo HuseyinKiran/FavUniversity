@@ -18,13 +18,16 @@ import com.huseyinkiran.favuniversities.model.University
 
 class UniversityAdapter(
     private val onFavoriteClick: (University) -> Unit,
-    private val onWebsiteClick: (String, String) -> Unit
+    private val onWebsiteClick: (String, String) -> Unit,
+    private val onUniversityExpand: (String) -> Unit
 ) :
     RecyclerView.Adapter<UniversityAdapter.UniversityViewHolder>() {
 
     class UniversityViewHolder(val binding: CellUniversityBinding) : ViewHolder(binding.root)
 
     private var universityList: List<University> = listOf()
+    private var favoriteUniversities: List<University> = listOf()
+    private var expandedUniversities: Set<String> = setOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UniversityViewHolder {
         val view = CellUniversityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -46,38 +49,39 @@ class UniversityAdapter(
             txtPhone.paintFlags = txtPhone.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             txtWebsite.paintFlags = txtWebsite.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
+
+            val isFavorite = university.isFavorite
             btnFavorite.setImageResource(
-                if (university.isFavorite) R.drawable.baseline_favorite_24
+                if (isFavorite) R.drawable.baseline_favorite_24
                 else R.drawable.baseline_favorite_border_24
             )
 
+    /*        btnFavorite.setOnClickListener {
+                var isNowFavorite = university.isFavorite
+                isNowFavorite = !isNowFavorite
+                onFavoriteClick(university)
+                Log.d("UNIVERSITY_ADAPTER", "Favorite clicked for ${university.name}")
+                val message =
+                    if (isNowFavorite) "Added to favorites" else "Removed from favorites"
+                Toast.makeText(holder.itemView.context, message, Toast.LENGTH_SHORT).show()
+            }
+
+     */
+
+            val isExpanded = expandedUniversities.contains(university.name)
             if (university.rector == "-" && university.phone == "-" &&
                 university.fax == "-" && university.address == "-" && university.email == "-"
             ) {
                 btnExpand.visibility = View.INVISIBLE
             } else {
-                universityLayout.setOnClickListener {
-                    if (cardUnivInfo.visibility == View.GONE) {
-                        cardUnivInfo.visibility = View.VISIBLE
-                        btnExpand.setImageResource(R.drawable.baseline_remove_24)
-                    } else {
-                        cardUnivInfo.visibility = View.GONE
-                        btnExpand.setImageResource(R.drawable.baseline_add_24)
-                    }
-                }
+                cardUnivInfo.visibility =
+                    if (isExpanded) View.VISIBLE else View.GONE
+                if (isExpanded) R.drawable.baseline_remove_24
+                else R.drawable.baseline_add_24
             }
 
-            btnFavorite.setOnClickListener {
-                university.isFavorite = !university.isFavorite
-                btnFavorite.setImageResource(
-                    if (university.isFavorite) R.drawable.baseline_favorite_24
-                    else R.drawable.baseline_favorite_border_24
-                )
-                onFavoriteClick(university)
-                Log.d("UNIVERSITY_ADAPTER", "Favorite clicked for ${university.name}")
-                val message =
-                    if (university.isFavorite) "Added to favorites" else "Removed from favorites"
-                Toast.makeText(holder.itemView.context, message, Toast.LENGTH_SHORT).show()
+            universityLayout.setOnClickListener {
+                onUniversityExpand(university.name)
             }
 
             txtPhone.setOnClickListener {
@@ -89,12 +93,49 @@ class UniversityAdapter(
                 onWebsiteClick(university.website, university.name)
             }
 
+            btnFavorite.setOnClickListener {
+                university.isFavorite = !university.isFavorite
+                onFavoriteClick(university)
+                Log.d("UNIVERSITY_ADAPTER", "Favorite clicked for ${university.name}")
+                val message =
+                    if (university.isFavorite) "Favorilere eklendi" else "Favorilerden kaldırıldı"
+                Toast.makeText(holder.itemView.context, message, Toast.LENGTH_SHORT).show()
+            }
+
+   /*         btnFavorite.setOnClickListener {
+                university.isFavorite = !university.isFavorite
+                btnFavorite.setImageResource(
+                    if (university.isFavorite) R.drawable.baseline_favorite_24
+                    else R.drawable.baseline_favorite_border_24
+                )
+                onFavoriteClick(university)
+                Log.d("UNIVERSITY_ADAPTER", "Favorite clicked for ${university.name}")
+                val message =
+                    if (university.isFavorite) "Favorilere eklendi" else "Favorilerden kaldırıldı"
+                Toast.makeText(holder.itemView.context, message, Toast.LENGTH_SHORT).show()
+            } // burası çalışınca ui güncelleniyor favoritesfragment'ta fakat yukarıdaki alan ui çalışmıyor
+
+
+    */
+
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateUniversities(newUniversities: List<University>) {
         universityList = newUniversities
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateFavoriteUniversities(newFavorites: List<University>) {
+        favoriteUniversities = newFavorites
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateExpandedUniversities(newExpandedUniversities: Set<String>) {
+        expandedUniversities = newExpandedUniversities
         notifyDataSetChanged()
     }
 

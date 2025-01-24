@@ -23,7 +23,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="8"
                 android:backgroundTint="@color/material_dynamic_neutral_variant90"
-                android:src="@drawable/baseline_arrow_back_24" />
+                android:src="@drawable/baseline_arrow_back_24"
+                android:contentDescription="@string/back_button"/>
 
             <TextView
                 android:id="@+id/txtToolbar"
@@ -33,7 +34,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:paddingStart="8dp"
+                android:paddingVertical="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/black" />
 

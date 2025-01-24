@@ -11,19 +11,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.huseyinkiran.favuniversities.R
-import com.huseyinkiran.favuniversities.adapter.CityAdapter
+import com.huseyinkiran.favuniversities.adapter.ProvinceAdapter
 import com.huseyinkiran.favuniversities.databinding.FragmentHomeBinding
-import com.huseyinkiran.favuniversities.viewmodel.CityViewModel
-import com.huseyinkiran.favuniversities.viewmodel.FavoriteViewModel
+import com.huseyinkiran.favuniversities.viewmodel.ProvinceViewModel
+import com.huseyinkiran.favuniversities.viewmodel.UniversityViewModel
 
 
 class HomeFragment : Fragment() {
 
-    private lateinit var cityAdapter: CityAdapter
+    private lateinit var provinceAdapter: ProvinceAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val cityViewModel: CityViewModel by hiltNavGraphViewModels(R.id.nav_graph)
-    private val favoriteViewModel: FavoriteViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private val provinceViewModel: ProvinceViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private val favoriteViewModel: UniversityViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +37,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.goToFavorite.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFavoritesFragment())
+            val action = HomeFragmentDirections.actionHomeFragmentToFavoritesFragment()
+            findNavController().navigate(action)
         }
 
         setupRecyclerView()
@@ -47,22 +48,32 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
 
-        cityAdapter = CityAdapter(onFavoriteClick = {
-            favoriteViewModel.updateFavorites(it)
-            Log.d("HomeFragment", "favorite: ${it.name}")
-        }, onWebsiteClick = { websiteUrl, uniName ->
-            val action = HomeFragmentDirections.actionHomeFragmentToWebsiteFragment(websiteUrl, uniName)
-            findNavController().navigate(action)
-        })
+        provinceAdapter = ProvinceAdapter(
+            onFavoriteClick = {
+                favoriteViewModel.updateFavorites(it)
+                Log.d("HomeFragment", "favorite: ${it.name}")
+            },
+            onWebsiteClick = { websiteUrl, uniName ->
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToWebsiteFragment(websiteUrl, uniName)
+                findNavController().navigate(action)
+            },
+            onProvinceExpand = {
+                provinceViewModel.checkProvinceExpansion(it)
+            },
+            onUniversityExpand = {
+                provinceViewModel.checkUniversityExpansion(it)
+            }
+        )
 
-        binding.cityRv.adapter = cityAdapter
-        binding.cityRv.layoutManager = LinearLayoutManager(requireContext())
+        binding.provinceRv.adapter = provinceAdapter
+        binding.provinceRv.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.cityRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.provinceRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(3)) {
-                    cityViewModel.loadProvinces()
+                    provinceViewModel.loadProvinces()
                 }
             }
         })
@@ -71,17 +82,17 @@ class HomeFragment : Fragment() {
 
     private fun setupViewModel() {
 
-        cityViewModel.provinceList.observe(viewLifecycleOwner){ provinces ->
+        provinceViewModel.provinceList.observe(viewLifecycleOwner) { provinces ->
             binding.progressBar.visibility = View.GONE
             if (provinces.isNullOrEmpty()) {
                 binding.txtError.visibility = View.VISIBLE
             } else {
                 binding.progressBar.visibility = View.GONE
-                cityAdapter.updateCities(provinces)
+                provinceAdapter.updateProvinces(provinces)
             }
         }
 
-        cityViewModel.errorMessage.observe(viewLifecycleOwner) { isError ->
+        provinceViewModel.errorMessage.observe(viewLifecycleOwner) { isError ->
             if (isError) {
                 binding.txtError.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.GONE
@@ -90,19 +101,21 @@ class HomeFragment : Fragment() {
             }
         }
 
-        favoriteViewModel.favoriteUniversities.observe(viewLifecycleOwner) { universities ->
-            Log.d(
-                "HomeFragment", "Favorites: ${
-                    universities.map { university ->
-                        university.name
-                    }
-                }"
-            )
-
+        provinceViewModel.expandedProvinces.observe(viewLifecycleOwner) { expandedCities ->
+            provinceAdapter.updateExpandedCities(expandedCities)
         }
 
+        provinceViewModel.expandedUniversities.observe(viewLifecycleOwner) { expandedUniversities ->
+            provinceAdapter.updateExpandedUniversities(expandedUniversities)
+        }
+
+        favoriteViewModel.favoriteUniversities.observe(viewLifecycleOwner) { universities ->
+            provinceAdapter.updateFavoriteUniversities(universities)
+        }
+
+
         binding.progressBar.visibility = View.VISIBLE
-        cityViewModel.loadProvinces()
+        provinceViewModel.loadProvinces()
 
     }
 
