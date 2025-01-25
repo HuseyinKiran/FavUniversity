@@ -1,7 +1,6 @@
 package com.huseyinkiran.favuniversities.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,23 +36,26 @@ class FavoritesFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        universityAdapter = UniversityAdapter(onFavoriteClick = {
-            favoriteViewModel.updateFavorites(it)
-            Log.d("FavoritesFragment", "${it.name} was removed from favorites")
-        }, onWebsiteClick = { websiteUrl, uniName ->
-            val action =
-                FavoritesFragmentDirections.actionFavoritesFragmentToWebsiteFragment(websiteUrl, uniName)
-            findNavController().navigate(action)
-        }, onUniversityExpand = {
-            favoriteViewModel.checkUniversityExpansion(it)
-        })
+        universityAdapter = UniversityAdapter(
+            onFavoriteClick = {
+                favoriteViewModel.updateFavorites(it)
+            },
+            onWebsiteClick = { websiteUrl, uniName ->
+                val action = FavoritesFragmentDirections
+                    .actionFavoritesFragmentToWebsiteFragment(websiteUrl, uniName)
+                findNavController().navigate(action)
+            },
+            onUniversityExpand = {
+                favoriteViewModel.checkUniversityExpansion(it)
+            }
+        )
 
         binding.favoritesRv.layoutManager = LinearLayoutManager(requireContext())
         binding.favoritesRv.adapter = universityAdapter
 
-        favoriteViewModel.favoriteUniversities.observe(viewLifecycleOwner) { universityList ->
-            universityAdapter.updateUniversities(universityList)
-            Log.d("FavoritesFragment", "${universityList.size} ")
+        favoriteViewModel.favoriteUniversities.observe(viewLifecycleOwner) { favorites ->
+            universityAdapter.updateUniversities(favorites)
+            universityAdapter.updateFavoriteUniversities(favorites.map { it.name }.toSet())
         }
 
         favoriteViewModel.expandedUniversities.observe(viewLifecycleOwner) { expandedUniversities ->

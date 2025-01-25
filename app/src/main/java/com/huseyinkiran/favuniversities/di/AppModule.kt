@@ -49,4 +49,3 @@ object AppModule {
         UniversityRepositoryImpl(dao, api) as UniversityRepository
 
 }
-

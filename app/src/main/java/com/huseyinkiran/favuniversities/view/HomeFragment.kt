@@ -1,7 +1,6 @@
 package com.huseyinkiran.favuniversities.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +50,6 @@ class HomeFragment : Fragment() {
         provinceAdapter = ProvinceAdapter(
             onFavoriteClick = {
                 favoriteViewModel.updateFavorites(it)
-                Log.d("HomeFragment", "favorite: ${it.name}")
             },
             onWebsiteClick = { websiteUrl, uniName ->
                 val action =
@@ -109,8 +107,8 @@ class HomeFragment : Fragment() {
             provinceAdapter.updateExpandedUniversities(expandedUniversities)
         }
 
-        favoriteViewModel.favoriteUniversities.observe(viewLifecycleOwner) { universities ->
-            provinceAdapter.updateFavoriteUniversities(universities)
+        favoriteViewModel.favoriteUniversities.observe(viewLifecycleOwner) { favorites ->
+            provinceAdapter.updateFavoriteUniversities(favorites.map { it.name }.toSet())
         }
 
 

@@ -1,6 +1,5 @@
 package com.huseyinkiran.favuniversities.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import com.huseyinkiran.favuniversities.repository.UniversityRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +20,7 @@ class UniversityViewModel @Inject constructor(
 
     private val _expandedUniversities = MutableLiveData<MutableSet<String>>()
     val expandedUniversities: LiveData<MutableSet<String>> = _expandedUniversities
+
 
     fun checkUniversityExpansion(universityName: String) {
         val currentSet = _expandedUniversities.value ?: mutableSetOf()
@@ -38,29 +37,19 @@ class UniversityViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val universityInDb = repository.getUniversityByName(university.name)
-
-                Log.d(
-                    "FAVORITE_CHECK",
-                    "University ${university.name} isFavorite: ${universityInDb?.isFavorite}"
-                )
-
                 if (universityInDb != null) {
                     repository.deleteUniversity(universityInDb)
-                    Log.d("FAVORITE_ACTION", "Deleted ${university.name} from favorites")
                     university.isFavorite = false
                 } else {
                     repository.upsertUniversity(university)
-                    Log.d("FAVORITE_ACTION", "Added ${university.name} to favorites")
                     university.isFavorite = true
                 }
 
                 university.isFavorite = universityInDb == null
 
             } catch (e: Exception) {
-                Log.e("DATABASE_ERROR", "Error updating favorites: ${e.message}")
                 e.printStackTrace()
             }
-
         }
 
     }
