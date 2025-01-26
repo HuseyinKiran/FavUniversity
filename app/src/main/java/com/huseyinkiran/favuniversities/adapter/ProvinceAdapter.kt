@@ -1,7 +1,6 @@
 package com.huseyinkiran.favuniversities.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,9 +39,8 @@ class ProvinceAdapter(
         val province = provinceList[position]
 
         holder.binding.apply {
-            txtCityName.text = province.province
 
-            Log.d("Cities", "${province.province} ")
+            txtCityName.text = province.province
 
             val universityAdapter = UniversityAdapter(
                 onFavoriteClick = onFavoriteClick,
