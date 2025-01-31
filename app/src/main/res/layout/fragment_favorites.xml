@@ -10,25 +10,25 @@
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/material_dynamic_neutral_variant90">
+        android:background="@color/toolbar_softCyan">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/favorites_fragment_title"
             android:gravity="center"
+            android:text="@string/favorites_fragment_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+            android:textSize="18sp" />
 
         <ImageButton
             android:id="@+id/goToMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:src="@drawable/baseline_arrow_back_24"
-            android:backgroundTint="@color/material_dynamic_neutral_variant90"
-            android:contentDescription="@string/back_button" />
+            android:backgroundTint="@color/toolbar_softCyan"
+            android:contentDescription="@string/back_button"
+            android:src="@drawable/baseline_arrow_back_24" />
 
     </RelativeLayout>
 
@@ -37,6 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolBar"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp" />
 
 </RelativeLayout>
