@@ -9,7 +9,6 @@
         android:id="@+id/cardUni"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/toolbar_softCyan"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp">
 
@@ -28,10 +27,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:backgroundTint="@color/toolbar_softCyan"
+                    android:backgroundTint="@color/white"
                     android:clickable="false"
-                    android:src="@drawable/baseline_add_24"
-                    android:contentDescription="@string/university_expand_button" />
+                    android:src="@drawable/baseline_add_24" />
 
                 <TextView
                     android:id="@+id/txtUniName"
@@ -39,6 +37,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:text="BEYKENT ÜNİVERSİTESİ"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                 <ImageButton
@@ -46,9 +45,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:backgroundTint="@color/toolbar_softCyan"
-                    android:src="@drawable/baseline_favorite_border_24"
-                    android:contentDescription="@string/university_favorite_button"/>
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/baseline_favorite_border_24" />
 
             </LinearLayout>
 
@@ -58,14 +56,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/universityLayout"
                 android:visibility="gone"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/universityDetails_softCyan"
-                    android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:background="@color/material_dynamic_neutral_variant90"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -75,15 +73,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/phone"
-                            android:textStyle="bold" />
+                            android:text="telefon:" />
 
                         <TextView
                             android:id="@+id/txtPhone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:textColor="@color/black" />
+                            android:text="0 (322) 455 00 01" />
 
                     </LinearLayout>
 
@@ -95,15 +92,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/fax"
-                            android:textStyle="bold" />
+                            android:text="fax:" />
 
                         <TextView
                             android:id="@+id/txtFax"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:textColor="@color/black" />
+                            android:text="0 (322) 455 00 02" />
 
                     </LinearLayout>
 
@@ -115,15 +111,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/website"
-                            android:textStyle="bold" />
+                            android:text="website:" />
 
                         <TextView
                             android:id="@+id/txtWebsite"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:textColor="@color/black" />
+                            android:text="https://www.adanabtu.edu.tr" />
 
                     </LinearLayout>
 
@@ -135,15 +130,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/address"
-                            android:textStyle="bold" />
+                            android:text="adres:" />
 
                         <TextView
                             android:id="@+id/txtAddress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:textColor="@color/black" />
+                            android:text="Gültepe Mahallesi, Çatalan Caddesi No:201/5 01250 Sarıçam/ADANA" />
 
                     </LinearLayout>
 
@@ -155,15 +149,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/rector"
-                            android:textStyle="bold" />
+                            android:text="rektör:" />
 
                         <TextView
                             android:id="@+id/txtRector"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:textColor="@color/black" />
+                            android:text="MEHMET TÜMAY" />
 
                     </LinearLayout>
 
