@@ -1,6 +1,7 @@
 # FavUniversity
 
 ## Kullanılan Teknolojiler<br/>
+* Kotlin
 * Room Database
 * Navigation
 * Retrofit
@@ -9,11 +10,12 @@
 
 **Projenin Özeti** <br/>
 
-*Türkiye'deki şehirlerin ve üniversitelerin listelendiği bu uygulamada, listelenen şehirlere
-tıklayarak genişleyen alanda, ilgili şehirdeki üniversitelerin listesi görüntülenir. Listelenen
-üniversiteler favorilere eklenip çıkarılabilirler. Ayrıca üniversitelere tıklandığında alan
-genişler ve üniversite bilgileri görüntülenir. Bu alandan üniversite websitesine gidebilir ve
-telefon numarasına tıklayarak telefonla arayabiliriz. Bu projeyi Kotlin dilinde MVVM(Model-View-ViewModel) mimarisi ile bireysel olarak geliştirdim.*<br/>
+Türkiye'deki şehirlerin listelendiği ana sayfada şehirlere tıklayarak şehirdeki üniversiteleri 
+görüntüleyebilirsiniz. Üniversitelere tıklayarak detaylarını inceleyebilirsiniz. Telefon alanına 
+tıklayarak arayabilirsiniz. Ayrıca website alanına tıklayarak üniversitenin websitesini inceleyebilirsiniz.
+Favorilerinize ekleme/çıkarma işlemlerini yapabilir ve Favorilerim sayfasında favori üniversitelerinizi
+görüntüleyebilirsiniz.
+
 
 ![HomeFragment](./images/HomeFirst.png)
 ![HomeFragment](./images/HomeSecond.png)
