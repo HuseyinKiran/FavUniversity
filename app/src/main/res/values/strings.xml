@@ -6,9 +6,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_text">İnternet bağlantınızı kontrol ediniz.</string>
     <string name="back_button">Back Button</string>
+
     <string name="university_expand_button">University Expand Button</string>
     <string name="province_expand_button">Province Expand Button</string>
     <string name="university_favorite_button">University Favorite Button</string>
+
     <string name="phone">telefon:</string>
     <string name="fax">fax:</string>
     <string name="website">website:</string>
