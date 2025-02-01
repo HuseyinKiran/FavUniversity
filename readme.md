@@ -19,4 +19,4 @@ telefon numarasına tıklayarak telefonla arayabiliriz. Bu projeyi Kotlin dilind
 ![HomeFragment](./images/HomeFragmentSecond.png)
 ![FavoritesFragment](./images/FavoritesFragmentFirst.png)
 ![FavoritesFragment](./images/FavoritesFragmentSecond.png)
-![WebsiteFragment](./images/WebsiteFragment.png)
+![WebsiteFragmentt](./images/WebsiteFragment.png)
