@@ -14,7 +14,7 @@ Türkiye'deki şehirlerin listelendiği ana sayfada şehirlere tıklayarak şehi
 görüntüleyebilirsiniz. Üniversitelere tıklayarak detaylarını inceleyebilirsiniz. Telefon alanına 
 tıklayarak arayabilirsiniz. Ayrıca website alanına tıklayarak üniversitenin websitesini inceleyebilirsiniz.
 Favorilerinize ekleme/çıkarma işlemlerini yapabilir ve Favorilerim sayfasında favori üniversitelerinizi
-görüntüleyebilirsiniz. 
+görüntüleyebilirsiniz.
 
 ![SplashFragment](./images/SplashScreen.png)
 ![HomeFragment](./images/HomeFirst.png)
