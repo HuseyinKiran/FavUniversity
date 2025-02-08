@@ -20,7 +20,7 @@ class ProvinceViewModel @Inject constructor(
     val provinceList: LiveData<List<Province>> = _provinceList
 
     private val _expandedProvinces = MutableLiveData<MutableSet<String>>()
-    val expandedProvinces : LiveData<MutableSet<String>> = _expandedProvinces
+    val expandedProvinces: LiveData<MutableSet<String>> = _expandedProvinces
 
     private val _errorMessage = MutableLiveData<Boolean>()
     val errorMessage: LiveData<Boolean> get() = _errorMessage
@@ -40,7 +40,7 @@ class ProvinceViewModel @Inject constructor(
         } else {
             currentSet.add(provinceName)
         }
-        _expandedProvinces.value = currentSet
+        _expandedProvinces.postValue(currentSet)
     }
 
     fun checkUniversityExpansion(universityName: String) {
@@ -50,20 +50,17 @@ class ProvinceViewModel @Inject constructor(
         } else {
             currentSet.add(universityName)
         }
-        _expandedUniversities.value = currentSet
+        _expandedUniversities.postValue(currentSet)
     }
 
     fun loadProvinces() {
-        if (isLoading || currentPage > 3) {
-            return
-        }
 
+        if (isLoading || currentPage > 3) return
         isLoading = true
 
         viewModelScope.launch {
             try {
                 val response = universityRepository.getProvinces(currentPage)
-
                 if (response.data.isNotEmpty()) {
                     currentList.addAll(response.data)
                     _provinceList.value = currentList
@@ -80,6 +77,7 @@ class ProvinceViewModel @Inject constructor(
                 isLoading = false
             }
         }
+
     }
 
 }

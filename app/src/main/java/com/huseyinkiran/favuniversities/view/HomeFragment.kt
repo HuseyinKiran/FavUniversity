@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,8 +26,7 @@ class HomeFragment : Fragment() {
     private val favoriteViewModel: UniversityViewModel by hiltNavGraphViewModels(R.id.nav_graph)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -42,6 +42,12 @@ class HomeFragment : Fragment() {
 
         setupRecyclerView()
         setupViewModel()
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            if (findNavController().currentDestination?.id == R.id.homeFragment) {
+                requireActivity().finish()
+            }
+        }
 
     }
 
@@ -70,7 +76,7 @@ class HomeFragment : Fragment() {
         binding.provinceRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(3)) {
+                if (!recyclerView.canScrollVertically(1)) {
                     provinceViewModel.loadProvinces()
                 }
             }
@@ -100,7 +106,7 @@ class HomeFragment : Fragment() {
         }
 
         provinceViewModel.expandedProvinces.observe(viewLifecycleOwner) { expandedCities ->
-            provinceAdapter.updateExpandedCities(expandedCities)
+            provinceAdapter.updateExpandedProvinces(expandedCities)
         }
 
         provinceViewModel.expandedUniversities.observe(viewLifecycleOwner) { expandedUniversities ->
@@ -108,7 +114,7 @@ class HomeFragment : Fragment() {
         }
 
         favoriteViewModel.favoriteUniversities.observe(viewLifecycleOwner) { favorites ->
-            provinceAdapter.updateFavoriteUniversities(favorites.map { it.name }.toSet())
+            provinceAdapter.updateFavoriteUniversities(favorites)
         }
 
 
@@ -116,7 +122,6 @@ class HomeFragment : Fragment() {
         provinceViewModel.loadProvinces()
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

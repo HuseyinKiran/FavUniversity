@@ -11,7 +11,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.huseyinkiran.favuniversities"
+        applicationId = "com.huseyinkiran.favuniversity"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -76,4 +76,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    // Splash
+    implementation("androidx.core:core-splashscreen:1.0.0")
 }

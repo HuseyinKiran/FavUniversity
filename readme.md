@@ -16,7 +16,7 @@ tıklayarak arayabilirsiniz. Ayrıca website alanına tıklayarak üniversitenin
 Favorilerinize ekleme/çıkarma işlemlerini yapabilir ve Favorilerim sayfasında favori üniversitelerinizi
 görüntüleyebilirsiniz.
 
-
+![SplashFragment](./images/SplashScreen.png)
 ![HomeFragment](./images/HomeFirst.png)
 ![HomeFragment](./images/HomeSecond.png)
 ![FavoritesFragment](./images/FavoritesFirst.png)

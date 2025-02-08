@@ -23,7 +23,7 @@ class ProvinceAdapter(
     class ProvinceViewHolder(val binding: CellProvinceBinding) : ViewHolder(binding.root)
 
     private var provinceList: List<Province> = listOf()
-    private var favoriteUniversities: Set<String> = setOf()
+    private var favoriteUniversities: List<University> = listOf()
     private var expandedProvinces: Set<String> = setOf()
     private var expandedUniversities: Set<String> = setOf()
 
@@ -50,7 +50,7 @@ class ProvinceAdapter(
 
             universityAdapter.updateUniversities(province.universities)
             universityAdapter.updateExpandedUniversities(expandedUniversities)
-            universityAdapter.updateFavoriteUniversities(favoriteUniversities)
+            universityAdapter.updateFavoriteUniversities(favoriteUniversities.map { it.name }.toSet())
 
             uniRv.layoutManager = LinearLayoutManager(root.context)
             uniRv.adapter = universityAdapter
@@ -78,10 +78,11 @@ class ProvinceAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateFavoriteUniversities(newFavorites: Set<String>) {
+    fun updateFavoriteUniversities(newFavorites: List<University>) {
         favoriteUniversities = newFavorites
         notifyDataSetChanged()
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateExpandedUniversities(newExpandedUniversities: Set<String>) {
@@ -90,7 +91,7 @@ class ProvinceAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateExpandedCities(newExpandedProvinces: Set<String>) {
+    fun updateExpandedProvinces(newExpandedProvinces: Set<String>) {
         expandedProvinces = newExpandedProvinces
         notifyDataSetChanged()
     }

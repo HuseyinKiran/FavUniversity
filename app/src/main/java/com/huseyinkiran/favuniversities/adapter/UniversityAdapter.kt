@@ -85,7 +85,7 @@ class UniversityAdapter(
                 university.isFavorite = !university.isFavorite
                 onFavoriteClick(university)
                 val message =
-                    if (university.isFavorite) "Favorilere eklendi" else "Favorilerden kaldırıldı"
+                    if (university.isFavorite) R.string.added_to_favorites else R.string.removed_from_favorites
                 Toast.makeText(holder.itemView.context, message, Toast.LENGTH_SHORT).show()
             }
 
