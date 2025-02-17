@@ -7,9 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.FragmentWebsiteBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class WebsiteFragment : Fragment() {
@@ -27,6 +32,10 @@ class WebsiteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        lifecycleScope.launch {
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = View.GONE
+        }
+
         val bundle: WebsiteFragmentArgs by navArgs()
         val websiteUrl = bundle.WEBSITEURL
         val universityName = bundle.UNIVERSITYNAME
@@ -38,6 +47,11 @@ class WebsiteFragment : Fragment() {
             findNavController().popBackStack()
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = View.VISIBLE
     }
 
     @SuppressLint("SetJavaScriptEnabled")

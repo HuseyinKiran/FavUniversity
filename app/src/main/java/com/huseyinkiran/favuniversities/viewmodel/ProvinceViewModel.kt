@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProvinceViewModel @Inject constructor(
-    private val universityRepository: UniversityRepository
+    private val repository: UniversityRepository
 ) : ViewModel() {
 
     private val _provinceList = MutableLiveData<List<Province>>()
@@ -60,7 +60,7 @@ class ProvinceViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val response = universityRepository.getProvinces(currentPage)
+                val response = repository.getProvinces(currentPage)
                 if (response.data.isNotEmpty()) {
                     currentList.addAll(response.data)
                     _provinceList.value = currentList

@@ -2,6 +2,10 @@ package com.huseyinkiran.favuniversities.di
 
 import android.content.Context
 import androidx.room.Room
+import com.huseyinkiran.favuniversities.repository.local.UniversityLocalRepository
+import com.huseyinkiran.favuniversities.repository.local.UniversityLocalRepositoryImpl
+import com.huseyinkiran.favuniversities.repository.remote.UniversityRemoteRepository
+import com.huseyinkiran.favuniversities.repository.remote.UniversityRemoteRepositoryImpl
 import com.huseyinkiran.favuniversities.repository.UniversityRepository
 import com.huseyinkiran.favuniversities.repository.UniversityRepositoryImpl
 import com.huseyinkiran.favuniversities.room.UniversityDAO
@@ -45,7 +49,19 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(dao: UniversityDAO, api: UniversityAPI) =
-        UniversityRepositoryImpl(dao, api) as UniversityRepository
+    fun provideLocalRepository(dao: UniversityDAO): UniversityLocalRepository =
+        UniversityLocalRepositoryImpl(dao)
+
+    @Singleton
+    @Provides
+    fun provideRemoteRepository(api: UniversityAPI): UniversityRemoteRepository =
+        UniversityRemoteRepositoryImpl(api)
+
+    @Singleton
+    @Provides
+    fun provideUniversityRepository(
+        localRepository: UniversityLocalRepository,
+        remoteRepository: UniversityRemoteRepository
+    ): UniversityRepository = UniversityRepositoryImpl(localRepository, remoteRepository)
 
 }

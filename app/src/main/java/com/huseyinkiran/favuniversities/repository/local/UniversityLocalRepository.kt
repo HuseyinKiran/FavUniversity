@@ -1,10 +1,9 @@
-package com.huseyinkiran.favuniversities.repository
+package com.huseyinkiran.favuniversities.repository.local
 
 import androidx.lifecycle.LiveData
-import com.huseyinkiran.favuniversities.model.Response
 import com.huseyinkiran.favuniversities.model.University
 
-interface UniversityRepository {
+interface UniversityLocalRepository {
 
     suspend fun upsertUniversity(university: University)
 
@@ -13,7 +12,5 @@ interface UniversityRepository {
     fun getAllUniversities() : LiveData<List<University>>
 
     suspend fun getUniversityByName(universityName: String): University?
-
-    suspend fun getProvinces(pageNumber: Int) : Response
 
 }

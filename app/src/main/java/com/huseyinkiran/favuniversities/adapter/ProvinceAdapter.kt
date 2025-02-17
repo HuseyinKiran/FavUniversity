@@ -17,15 +17,16 @@ class ProvinceAdapter(
     private val onWebsiteClick: (String, String) -> Unit,
     private val onProvinceExpand: (String) -> Unit,
     private val onUniversityExpand: (String) -> Unit,
+    private val isUniversityExpandable: (University) -> Boolean
 ) :
     RecyclerView.Adapter<ProvinceAdapter.ProvinceViewHolder>() {
 
     class ProvinceViewHolder(val binding: CellProvinceBinding) : ViewHolder(binding.root)
 
     private var provinceList: List<Province> = listOf()
-    private var favoriteUniversities: List<University> = listOf()
-    private var expandedProvinces: Set<String> = setOf()
-    private var expandedUniversities: Set<String> = setOf()
+    private var favoriteUniversities: List<String> = listOf()
+    private var expandedProvinces: List<String> = listOf()
+    private var expandedUniversities: List<String> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProvinceViewHolder {
         val view = CellProvinceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -45,12 +46,13 @@ class ProvinceAdapter(
             val universityAdapter = UniversityAdapter(
                 onFavoriteClick = onFavoriteClick,
                 onWebsiteClick = onWebsiteClick,
-                onUniversityExpand = onUniversityExpand
+                onUniversityExpand = onUniversityExpand,
+                isUniversityExpandable = isUniversityExpandable
             )
 
             universityAdapter.updateUniversities(province.universities)
             universityAdapter.updateExpandedUniversities(expandedUniversities)
-            universityAdapter.updateFavoriteUniversities(favoriteUniversities.map { it.name }.toSet())
+            universityAdapter.updateFavoriteUniversities(favoriteUniversities)
 
             uniRv.layoutManager = LinearLayoutManager(root.context)
             uniRv.adapter = universityAdapter
@@ -78,20 +80,20 @@ class ProvinceAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateFavoriteUniversities(newFavorites: List<University>) {
+    fun updateFavoriteUniversities(newFavorites: List<String>) {
         favoriteUniversities = newFavorites
         notifyDataSetChanged()
     }
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateExpandedUniversities(newExpandedUniversities: Set<String>) {
+    fun updateExpandedUniversities(newExpandedUniversities: List<String>) {
         expandedUniversities = newExpandedUniversities
         notifyDataSetChanged()
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateExpandedProvinces(newExpandedProvinces: Set<String>) {
+    fun updateExpandedProvinces(newExpandedProvinces: List<String>) {
         expandedProvinces = newExpandedProvinces
         notifyDataSetChanged()
     }

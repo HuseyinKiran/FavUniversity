@@ -13,7 +13,7 @@ interface UniversityDAO {
     @Upsert
     suspend fun upsertUniversity(university: University)
 
-    @Query("SELECT * FROM favorites WHERE isFavorite = 1")
+    @Query("SELECT * FROM favorites")
     fun getAllFavorites() : LiveData<List<University>>
 
     @Delete

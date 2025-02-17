@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyinkiran.favuniversities.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,6 +28,8 @@ class SplashFragment : Fragment() {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.splash_background)
 
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = View.GONE
+
         lifecycleScope.launch {
             delay(2500)
             val action = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
@@ -39,6 +42,7 @@ class SplashFragment : Fragment() {
         super.onDestroyView()
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.toolbar_softCyan)
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = View.VISIBLE
     }
 
 }

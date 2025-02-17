@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/provinceCell_softCyan"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,8 +29,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/provinceCell_softCyan"
                     android:clickable="false"
-                    android:src="@drawable/baseline_add_24"
-                    android:contentDescription="@string/province_expand_button" />
+                    android:contentDescription="@string/province_expand_button"
+                    android:src="@drawable/baseline_add_24" />
 
                 <TextView
                     android:id="@+id/txtCityName"

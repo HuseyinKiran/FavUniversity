@@ -16,5 +16,4 @@ data class University(
     val phone: String,
     val rector: String,
     val website: String,
-    var isFavorite: Boolean
 )

@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +18,7 @@ import com.huseyinkiran.favuniversities.adapter.ProvinceAdapter
 import com.huseyinkiran.favuniversities.databinding.FragmentHomeBinding
 import com.huseyinkiran.favuniversities.viewmodel.ProvinceViewModel
 import com.huseyinkiran.favuniversities.viewmodel.UniversityViewModel
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -22,8 +26,8 @@ class HomeFragment : Fragment() {
     private lateinit var provinceAdapter: ProvinceAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val provinceViewModel: ProvinceViewModel by hiltNavGraphViewModels(R.id.nav_graph)
-    private val favoriteViewModel: UniversityViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private lateinit var provinceViewModel: ProvinceViewModel
+    private lateinit var favoriteViewModel: UniversityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -34,6 +38,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        provinceViewModel = ViewModelProvider(requireActivity())[ProvinceViewModel::class.java]
+        favoriteViewModel = ViewModelProvider(requireActivity())[UniversityViewModel::class.java]
 
         binding.goToFavorite.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToFavoritesFragment()
@@ -55,7 +62,7 @@ class HomeFragment : Fragment() {
 
         provinceAdapter = ProvinceAdapter(
             onFavoriteClick = {
-                favoriteViewModel.updateFavorites(it)
+                favoriteViewModel.toggleFavorite(it)
             },
             onWebsiteClick = { websiteUrl, uniName ->
                 val action =
@@ -67,11 +74,14 @@ class HomeFragment : Fragment() {
             },
             onUniversityExpand = {
                 provinceViewModel.checkUniversityExpansion(it)
-            }
+            },
+            isUniversityExpandable = favoriteViewModel::isUniversityExpandable
         )
 
-        binding.provinceRv.adapter = provinceAdapter
-        binding.provinceRv.layoutManager = LinearLayoutManager(requireContext())
+        binding.provinceRv.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = provinceAdapter
+        }
 
         binding.provinceRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -106,17 +116,16 @@ class HomeFragment : Fragment() {
         }
 
         provinceViewModel.expandedProvinces.observe(viewLifecycleOwner) { expandedCities ->
-            provinceAdapter.updateExpandedProvinces(expandedCities)
+            provinceAdapter.updateExpandedProvinces(expandedCities.map { it })
         }
 
         provinceViewModel.expandedUniversities.observe(viewLifecycleOwner) { expandedUniversities ->
-            provinceAdapter.updateExpandedUniversities(expandedUniversities)
+            provinceAdapter.updateExpandedUniversities(expandedUniversities.map { it })
         }
 
         favoriteViewModel.favoriteUniversities.observe(viewLifecycleOwner) { favorites ->
-            provinceAdapter.updateFavoriteUniversities(favorites)
+            provinceAdapter.updateFavoriteUniversities(favorites.map { it.name })
         }
-
 
         binding.progressBar.visibility = View.VISIBLE
         provinceViewModel.loadProvinces()

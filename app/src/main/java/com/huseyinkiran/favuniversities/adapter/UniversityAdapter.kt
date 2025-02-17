@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.huseyinkiran.favuniversities.R
@@ -19,15 +19,16 @@ import com.huseyinkiran.favuniversities.model.University
 class UniversityAdapter(
     private val onFavoriteClick: (University) -> Unit,
     private val onWebsiteClick: (String, String) -> Unit,
-    private val onUniversityExpand: (String) -> Unit
+    private val onUniversityExpand: (String) -> Unit,
+    private val isUniversityExpandable: (University) -> Boolean
 ) :
     RecyclerView.Adapter<UniversityAdapter.UniversityViewHolder>() {
 
     class UniversityViewHolder(val binding: CellUniversityBinding) : ViewHolder(binding.root)
 
     private var universityList: List<University> = listOf()
-    private var favoriteUniversities: Set<String> = setOf()
-    private var expandedUniversities: Set<String> = setOf()
+    private var favoriteUniversities: List<String> = listOf()
+    private var expandedUniversities: List<String> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UniversityViewHolder {
         val view = CellUniversityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,8 +38,11 @@ class UniversityAdapter(
     override fun getItemCount(): Int = universityList.size
 
     override fun onBindViewHolder(holder: UniversityViewHolder, position: Int) {
+
         val university = universityList[position]
+
         holder.binding.apply {
+
             txtUniName.text = university.name
             txtAddress.text = university.address
             txtFax.text = university.fax
@@ -56,16 +60,13 @@ class UniversityAdapter(
             )
 
             val isExpanded = expandedUniversities.contains(university.name)
-            if (university.rector == "-" && university.phone == "-" &&
-                university.fax == "-" && university.address == "-" && university.email == "-"
-            ) {
-                btnExpand.visibility = View.INVISIBLE
-            } else {
-                cardUnivInfo.visibility =
-                    if (isExpanded) View.VISIBLE else View.GONE
+            val expandable = isUniversityExpandable(university)
+            Log.d("Adapter", "Position: $position, Name: ${university.name}, Expandable: ${isUniversityExpandable(university)}")
+            btnExpand.visibility = if (expandable) View.VISIBLE else View.INVISIBLE
+            if (expandable) {
+                cardUnivInfo.visibility = if (isExpanded) View.VISIBLE else View.GONE
                 btnExpand.setImageResource(
-                    if (isExpanded) R.drawable.baseline_remove_24
-                    else R.drawable.baseline_add_24
+                    if (isExpanded) R.drawable.baseline_remove_24 else R.drawable.baseline_add_24
                 )
             }
 
@@ -82,14 +83,11 @@ class UniversityAdapter(
             }
 
             btnFavorite.setOnClickListener {
-                university.isFavorite = !university.isFavorite
                 onFavoriteClick(university)
-                val message =
-                    if (university.isFavorite) R.string.added_to_favorites else R.string.removed_from_favorites
-                Toast.makeText(holder.itemView.context, message, Toast.LENGTH_SHORT).show()
             }
 
         }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -99,13 +97,13 @@ class UniversityAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateFavoriteUniversities(newFavorites: Set<String>) {
+    fun updateFavoriteUniversities(newFavorites: List<String>) {
         favoriteUniversities = newFavorites
         notifyDataSetChanged()
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateExpandedUniversities(newExpandedUniversities: Set<String>) {
+    fun updateExpandedUniversities(newExpandedUniversities: List<String>) {
         expandedUniversities = newExpandedUniversities
         notifyDataSetChanged()
     }

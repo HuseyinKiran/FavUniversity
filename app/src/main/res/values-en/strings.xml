@@ -11,12 +11,14 @@
     <string name="province_expand_button">Province Expand Button</string>
     <string name="university_favorite_button">University Favorite Button</string>
 
-    <string name="added_to_favorites">Added to favorites</string>
-    <string name="removed_from_favorites">Removed from favorites</string>
+    <string name="added_to_favorites">added to favorites</string>
+    <string name="removed_from_favorites">removed from favorites</string>
 
     <string name="phone">phone:</string>
     <string name="fax">fax:</string>
     <string name="website">website:</string>
     <string name="address">address:</string>
     <string name="rector">rector:</string>
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
 </resources>

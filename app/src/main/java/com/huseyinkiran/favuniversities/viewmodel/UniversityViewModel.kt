@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.huseyinkiran.favuniversities.model.University
 import com.huseyinkiran.favuniversities.repository.UniversityRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,12 +17,11 @@ class UniversityViewModel @Inject constructor(
 
     val favoriteUniversities: LiveData<List<University>> = repository.getAllUniversities()
 
-    private val _expandedUniversities = MutableLiveData<MutableSet<String>>()
-    val expandedUniversities: LiveData<MutableSet<String>> = _expandedUniversities
-
+    private val _expandedUniversities = MutableLiveData<MutableList<String>>()
+    val expandedUniversities: LiveData<MutableList<String>> = _expandedUniversities
 
     fun checkUniversityExpansion(universityName: String) {
-        val currentSet = _expandedUniversities.value ?: mutableSetOf()
+        val currentSet = _expandedUniversities.value ?: mutableListOf()
         if (currentSet.contains(universityName)) {
             currentSet.remove(universityName)
         } else {
@@ -32,26 +30,26 @@ class UniversityViewModel @Inject constructor(
         _expandedUniversities.value = currentSet
     }
 
-    fun updateFavorites(university: University) {
+    fun isUniversityExpandable(university: University): Boolean {
+        return !(university.rector == "-" && university.phone == "-" && university.fax == "-"
+                && university.address == "-" && university.email == "-")
+    }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val universityInDb = repository.getUniversityByName(university.name)
-                if (universityInDb != null) {
-                    repository.deleteUniversity(universityInDb)
-                    university.isFavorite = false
-                } else {
-                    repository.upsertUniversity(university)
-                    university.isFavorite = true
-                }
-
-                university.isFavorite = universityInDb == null
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+    fun toggleFavorite(university: University) = viewModelScope.launch {
+        val universityInDb = repository.getUniversityByName(university.name)
+        if (universityInDb == null) {
+            upsertUniversity(university)
+        } else {
+            deleteUniversity(universityInDb)
         }
+    }
 
+    fun upsertUniversity(university: University) = viewModelScope.launch {
+        repository.upsertUniversity(university)
+    }
+
+    fun deleteUniversity(university: University) = viewModelScope.launch {
+        repository.deleteUniversity(university)
     }
 
 }

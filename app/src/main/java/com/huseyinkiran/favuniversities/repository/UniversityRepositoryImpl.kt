@@ -3,38 +3,33 @@ package com.huseyinkiran.favuniversities.repository
 import androidx.lifecycle.LiveData
 import com.huseyinkiran.favuniversities.model.Response
 import com.huseyinkiran.favuniversities.model.University
-import com.huseyinkiran.favuniversities.room.UniversityDAO
-import com.huseyinkiran.favuniversities.service.UniversityAPI
+import com.huseyinkiran.favuniversities.repository.local.UniversityLocalRepository
+import com.huseyinkiran.favuniversities.repository.remote.UniversityRemoteRepository
 import javax.inject.Inject
 
 class UniversityRepositoryImpl @Inject constructor(
-    private val universityDAO: UniversityDAO,
-    private val universityAPI: UniversityAPI
+    private val localRepository: UniversityLocalRepository,
+    private val remoteRepository: UniversityRemoteRepository
 ) : UniversityRepository {
 
     override suspend fun upsertUniversity(university: University) {
-        universityDAO.upsertUniversity(university)
+        localRepository.upsertUniversity(university)
     }
 
     override suspend fun deleteUniversity(university: University) {
-        universityDAO.deleteUniversity(university)
+        localRepository.deleteUniversity(university)
     }
 
     override fun getAllUniversities(): LiveData<List<University>> {
-        return universityDAO.getAllFavorites()
-    }
-
-    override suspend fun getProvinces(pageNumber: Int): Response {
-        return universityAPI.getUniversities(pageNumber)
+        return localRepository.getAllUniversities()
     }
 
     override suspend fun getUniversityByName(universityName: String): University? {
-        return universityDAO.getFavoriteByName(universityName)
+        return localRepository.getUniversityByName(universityName)
     }
 
-    override suspend fun isUniversityFavorite(universityName: String?): Boolean {
-        if (universityName == null) return false
-        return universityDAO.getFavoriteByName(universityName) != null
+    override suspend fun getProvinces(pageNumber: Int): Response {
+        return remoteRepository.getProvinces(pageNumber)
     }
 
 }

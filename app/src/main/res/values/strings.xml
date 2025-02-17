@@ -11,12 +11,14 @@
     <string name="province_expand_button">Province Expand Button</string>
     <string name="university_favorite_button">University Favorite Button</string>
 
-    <string name="added_to_favorites">Favorilere eklendi</string>
-    <string name="removed_from_favorites">Favorilerden kaldırıldı</string>
+    <string name="added_to_favorites">favorilere eklendi</string>
+    <string name="removed_from_favorites">favorilerden kaldırıldı</string>
 
     <string name="phone">telefon:</string>
     <string name="fax">fax:</string>
     <string name="website">website:</string>
     <string name="address">adres:</string>
     <string name="rector">rektör:</string>
+    <string name="home">Ana Sayfa</string>
+    <string name="favorites">Favoriler</string>
 </resources>
