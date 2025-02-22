@@ -1,24 +1,24 @@
-package com.huseyinkiran.favuniversities.view
+package com.huseyinkiran.favuniversities.presentation
 
-import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.testing.TestNavHostController
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.launchFragmentInHiltContainer
+import com.huseyinkiran.favuniversities.presentation.website.WebsiteFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
 
 @HiltAndroidTest
-class HomeFragmentTest {
+@ExperimentalCoroutinesApi
+class WebsiteFragmentTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -29,19 +29,16 @@ class HomeFragmentTest {
     }
 
     @Test
-    fun testNavigationFromHomeToFavorites() {
+    fun testNavigationWebsiteToPopBackStack() {
 
         val navController = Mockito.mock(NavController::class.java)
-        TestNavHostController(ApplicationProvider.getApplicationContext())
 
-        launchFragmentInHiltContainer<HomeFragment> {
+        launchFragmentInHiltContainer<WebsiteFragment> {
             Navigation.setViewNavController(requireView(), navController)
         }
 
-        Espresso.onView(withId(R.id.homeFragment)).perform(click())
-
-        Mockito.verify(navController)
-            .navigate(HomeFragmentDirections.actionHomeFragmentToFavoritesFragment())
+        Espresso.onView(withId(R.id.goBack)).perform(click())
+        Mockito.verify(navController).popBackStack()
 
     }
 

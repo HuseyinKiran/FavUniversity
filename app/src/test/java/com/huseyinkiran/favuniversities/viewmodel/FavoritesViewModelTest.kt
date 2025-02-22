@@ -3,7 +3,7 @@ package com.huseyinkiran.favuniversities.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.huseyinkiran.favuniversities.MainCoroutineRule
 import com.huseyinkiran.favuniversities.getOrAwaitValue
-import com.huseyinkiran.favuniversities.model.University
+import com.huseyinkiran.favuniversities.model.dto.UniversityDto
 import com.huseyinkiran.favuniversities.repository.FakeUniversityRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -11,11 +11,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.flow.first
+import com.huseyinkiran.favuniversities.presentation.favorites.FavoritesViewModel
+import com.huseyinkiran.favuniversities.repository.PermissionRepository
 import kotlinx.coroutines.test.advanceUntilIdle
 
 @ExperimentalCoroutinesApi
-class UniversityViewModelTest {
+class FavoritesViewModelTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -24,18 +25,20 @@ class UniversityViewModelTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var repository: FakeUniversityRepository
-    private lateinit var viewModel: UniversityViewModel
+    private lateinit var permission: PermissionRepository
+    private lateinit var viewModel: FavoritesViewModel
 
     @Before
     fun setup() {
         repository = FakeUniversityRepository()
-        viewModel = UniversityViewModel(repository)
+        permission = PermissionRepository()
+        viewModel = FavoritesViewModel(repository, permission)
     }
 
     @Test
     fun upsertUniversityTest() = runTest {
 
-        val university = University(
+        val university = UniversityDto(
             id = 1,
             name = "Test University",
             address = "123 Test Street",
@@ -56,7 +59,7 @@ class UniversityViewModelTest {
     @Test
     fun deleteUniversityTest() = runTest {
 
-        val university = University(
+        val university = UniversityDto(
             id = 1,
             name = "Test University",
             address = "123 Test Street",
@@ -73,65 +76,6 @@ class UniversityViewModelTest {
         advanceUntilIdle()
         val afterRemove = viewModel.favoriteUniversities.getOrAwaitValue()
         assertThat(afterRemove).doesNotContain(university)
-
-    }
-
-    @Test
-    fun `isUniversityExpandable should return false when all fields are dash`() {
-
-        val university = University(
-            id = 1,
-            name = "Test University",
-            address = "-",
-            email = "-",
-            fax = "-",
-            phone = "-",
-            rector = "-",
-            website = "-",
-        )
-
-        val notExpandable = viewModel.isUniversityExpandable(university)
-        assertThat(notExpandable).isFalse()
-
-    }
-
-    @Test
-    fun `isUniversityExpandable should return true when university has valid fields`() {
-
-        val university = University(
-            id = 1,
-            name = "Test University",
-            address = "123 Test Street",
-            email = "info@testuniversity.edu",
-            fax = "123-456-7890",
-            phone = "987-654-3210",
-            rector = "Test President",
-            website = "https://testuniversity.edu",
-        )
-
-        val expandable = viewModel.isUniversityExpandable(university)
-        assertThat(expandable).isTrue()
-
-    }
-
-    @Test
-    fun `checkUniversityExpansion should expand if not expanded`() {
-
-        val universityName = "Test University"
-        viewModel.checkUniversityExpansion(universityName)
-        val afterExpand = viewModel.expandedUniversities.getOrAwaitValue()
-        assertThat(afterExpand).contains(universityName)
-
-    }
-
-    @Test
-    fun `checkUniversityExpansion should collapse if already expanded`() {
-
-        val universityName = "Test University"
-        viewModel.checkUniversityExpansion(universityName)
-        viewModel.checkUniversityExpansion(universityName)
-        val afterCollapsed = viewModel.expandedUniversities.getOrAwaitValue()
-        assertThat(afterCollapsed).doesNotContain(universityName)
 
     }
 

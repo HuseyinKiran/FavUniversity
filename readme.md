@@ -17,8 +17,8 @@ Favorilerinize ekleme/çıkarma işlemlerini yapabilir ve Favorilerim sayfasınd
 görüntüleyebilirsiniz.
 
 ![SplashFragment](./images/SplashScreen.png)
-![HomeFragment](./images/HomeFirst.png)
-![HomeFragment](./images/HomeSecond.png)
-![FavoritesFragment](./images/FavoritesFirst.png)
-![FavoritesFragment](./images/FavoritesSecond.png)
+![HomeFragment](./images/HomeFragment.png)
+![HomeFragment](./images/HomeFragmentSecond.png)
+![FavoritesFragment](./images/FavoritesFragment.png)
+![FavoritesFragment](./images/FavoritesFragmentSecond.png)
 ![WebsiteFragment](./images/WebsiteFragment.png)

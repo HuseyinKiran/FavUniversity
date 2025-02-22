@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.view
+package com.huseyinkiran.favuniversities.presentation
 
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

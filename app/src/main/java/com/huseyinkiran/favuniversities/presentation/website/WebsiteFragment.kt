@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.view
+package com.huseyinkiran.favuniversities.presentation.website
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -13,7 +14,6 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.FragmentWebsiteBinding
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -33,7 +33,7 @@ class WebsiteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = View.GONE
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).isGone = true
         }
 
         val bundle: WebsiteFragmentArgs by navArgs()
@@ -49,25 +49,28 @@ class WebsiteFragment : Fragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = View.VISIBLE
-    }
-
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView(url: String) {
-        with(binding.webView.settings) {
-            javaScriptEnabled = true
-            domStorageEnabled = true
-            loadWithOverviewMode = true
-            useWideViewPort = true
+        with(binding.webView) {
+            with(settings) {
+                javaScriptEnabled = true
+                domStorageEnabled = true
+                loadWithOverviewMode = true
+                useWideViewPort = true
+            }
+            webViewClient = WebViewClient()
+            if (url.contains("https://")) {
+                loadUrl(url)
+            } else {
+                loadUrl("https://$url")
+            }
         }
-        binding.webView.webViewClient = WebViewClient()
-        if (url.contains("https://")) {
-            binding.webView.loadUrl(url)
-        } else {
-            binding.webView.loadUrl("https://$url")
-        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility =
+            View.VISIBLE
     }
 
 }

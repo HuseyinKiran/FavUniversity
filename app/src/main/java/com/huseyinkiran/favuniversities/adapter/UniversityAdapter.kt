@@ -1,34 +1,30 @@
 package com.huseyinkiran.favuniversities.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
 import android.graphics.Paint
-import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.CellUniversityBinding
 import com.huseyinkiran.favuniversities.model.University
+import com.huseyinkiran.favuniversities.util.ExpandStateManager
 
 
 class UniversityAdapter(
+    private val fragmentType: String,
     private val onFavoriteClick: (University) -> Unit,
     private val onWebsiteClick: (String, String) -> Unit,
-    private val onUniversityExpand: (String) -> Unit,
-    private val isUniversityExpandable: (University) -> Boolean
+    private val onPhoneClick: (String) -> Unit
 ) :
     RecyclerView.Adapter<UniversityAdapter.UniversityViewHolder>() {
 
     class UniversityViewHolder(val binding: CellUniversityBinding) : ViewHolder(binding.root)
 
     private var universityList: List<University> = listOf()
-    private var favoriteUniversities: List<String> = listOf()
-    private var expandedUniversities: List<String> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UniversityViewHolder {
         val view = CellUniversityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,6 +33,7 @@ class UniversityAdapter(
 
     override fun getItemCount(): Int = universityList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: UniversityViewHolder, position: Int) {
 
         val university = universityList[position]
@@ -53,37 +50,45 @@ class UniversityAdapter(
             txtPhone.paintFlags = txtPhone.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             txtWebsite.paintFlags = txtWebsite.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-            val isFavorite = favoriteUniversities.contains(university.name)
             btnFavorite.setImageResource(
-                if (isFavorite) R.drawable.baseline_favorite_24
+                if (university.isFavorite) R.drawable.baseline_favorite_24
                 else R.drawable.baseline_favorite_border_24
             )
 
-            val isExpanded = expandedUniversities.contains(university.name)
-            val expandable = isUniversityExpandable(university)
-            Log.d("Adapter", "Position: $position, Name: ${university.name}, Expandable: ${isUniversityExpandable(university)}")
-            btnExpand.visibility = if (expandable) View.VISIBLE else View.INVISIBLE
-            if (expandable) {
-                cardUnivInfo.visibility = if (isExpanded) View.VISIBLE else View.GONE
-                btnExpand.setImageResource(
-                    if (isExpanded) R.drawable.baseline_remove_24 else R.drawable.baseline_add_24
-                )
-            }
+            val expandedList =
+                when (fragmentType) {
+                    "Home" -> ExpandStateManager.homeExpandedUniversities
+                    else -> ExpandStateManager.favoritesExpandedUniversities
+                }
+
+            university.isExpanded = expandedList[university.name] ?: false
+
+            btnExpand.isInvisible = !university.isExpandable
+            cardUnivInfo.isGone = !university.isExpanded
+
+            btnExpand.setImageResource(
+                if (university.isExpanded) R.drawable.baseline_keyboard_arrow_up_24
+                else R.drawable.baseline_keyboard_arrow_down_24
+            )
 
             universityLayout.setOnClickListener {
-                onUniversityExpand(university.name)
-            }
-
-            txtPhone.setOnClickListener {
-                callPhoneNumber(university, it.context)
-            }
-
-            txtWebsite.setOnClickListener {
-                onWebsiteClick(university.website, university.name)
+                if (university.isExpandable) {
+                    university.isExpanded = !university.isExpanded
+                    expandedList[university.name] = university.isExpanded
+                    notifyDataSetChanged()
+                }
             }
 
             btnFavorite.setOnClickListener {
                 onFavoriteClick(university)
+            }
+
+            txtPhone.setOnClickListener {
+                onPhoneClick(university.phone)
+            }
+
+            txtWebsite.setOnClickListener {
+                onWebsiteClick(university.website, university.name)
             }
 
         }
@@ -94,24 +99,6 @@ class UniversityAdapter(
     fun updateUniversities(newUniversities: List<University>) {
         universityList = newUniversities
         notifyDataSetChanged()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateFavoriteUniversities(newFavorites: List<String>) {
-        favoriteUniversities = newFavorites
-        notifyDataSetChanged()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateExpandedUniversities(newExpandedUniversities: List<String>) {
-        expandedUniversities = newExpandedUniversities
-        notifyDataSetChanged()
-    }
-
-    private fun callPhoneNumber(university: University, context: Context) {
-        val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:${university.phone}")
-        context.startActivity(intent)
     }
 
 }

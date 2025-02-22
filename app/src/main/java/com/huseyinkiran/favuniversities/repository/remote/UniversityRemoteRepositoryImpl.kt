@@ -1,6 +1,6 @@
 package com.huseyinkiran.favuniversities.repository.remote
 
-import com.huseyinkiran.favuniversities.model.Response
+import com.huseyinkiran.favuniversities.model.dto.Response
 import com.huseyinkiran.favuniversities.service.UniversityAPI
 import javax.inject.Inject
 

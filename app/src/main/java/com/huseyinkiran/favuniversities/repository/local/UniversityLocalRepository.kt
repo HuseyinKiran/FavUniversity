@@ -1,16 +1,16 @@
 package com.huseyinkiran.favuniversities.repository.local
 
 import androidx.lifecycle.LiveData
-import com.huseyinkiran.favuniversities.model.University
+import com.huseyinkiran.favuniversities.model.dto.UniversityDto
 
 interface UniversityLocalRepository {
 
-    suspend fun upsertUniversity(university: University)
+    suspend fun upsertUniversity(university: UniversityDto)
 
-    suspend fun deleteUniversity(university: University)
+    suspend fun deleteUniversity(university: UniversityDto)
 
-    fun getAllUniversities() : LiveData<List<University>>
+    fun getAllUniversities() : LiveData<List<UniversityDto>>
 
-    suspend fun getUniversityByName(universityName: String): University?
+    suspend fun getUniversityByName(universityName: String): UniversityDto?
 
 }

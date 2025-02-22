@@ -1,8 +1,8 @@
 package com.huseyinkiran.favuniversities.repository
 
 import androidx.lifecycle.LiveData
-import com.huseyinkiran.favuniversities.model.Response
-import com.huseyinkiran.favuniversities.model.University
+import com.huseyinkiran.favuniversities.model.dto.Response
+import com.huseyinkiran.favuniversities.model.dto.UniversityDto
 import com.huseyinkiran.favuniversities.repository.local.UniversityLocalRepository
 import com.huseyinkiran.favuniversities.repository.remote.UniversityRemoteRepository
 import javax.inject.Inject
@@ -12,19 +12,19 @@ class UniversityRepositoryImpl @Inject constructor(
     private val remoteRepository: UniversityRemoteRepository
 ) : UniversityRepository {
 
-    override suspend fun upsertUniversity(university: University) {
+    override suspend fun upsertUniversity(university: UniversityDto) {
         localRepository.upsertUniversity(university)
     }
 
-    override suspend fun deleteUniversity(university: University) {
+    override suspend fun deleteUniversity(university: UniversityDto) {
         localRepository.deleteUniversity(university)
     }
 
-    override fun getAllUniversities(): LiveData<List<University>> {
+    override fun getAllUniversities(): LiveData<List<UniversityDto>> {
         return localRepository.getAllUniversities()
     }
 
-    override suspend fun getUniversityByName(universityName: String): University? {
+    override suspend fun getUniversityByName(universityName: String): UniversityDto? {
         return localRepository.getUniversityByName(universityName)
     }
 

@@ -2,33 +2,33 @@ package com.huseyinkiran.favuniversities.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.huseyinkiran.favuniversities.model.Province
-import com.huseyinkiran.favuniversities.model.Response
-import com.huseyinkiran.favuniversities.model.University
+import com.huseyinkiran.favuniversities.model.dto.ProvinceDto
+import com.huseyinkiran.favuniversities.model.dto.Response
+import com.huseyinkiran.favuniversities.model.dto.UniversityDto
 
 class FakeUniversityRepository : UniversityRepository {
 
-    private val universities = mutableListOf<University>()
-    private val universitiesLiveData = MutableLiveData<List<University>>(universities)
+    private val universities = mutableListOf<UniversityDto>()
+    private val universitiesLiveData = MutableLiveData<List<UniversityDto>>(universities)
 
-    private val fakeProvinces = mutableListOf<Province>()
+    private val fakeProvinces = mutableListOf<ProvinceDto>()
     private var shouldReturnError = false
 
-    override suspend fun upsertUniversity(university: University) {
+    override suspend fun upsertUniversity(university: UniversityDto) {
         universities.add(university)
         refreshData()
     }
 
-    override suspend fun deleteUniversity(university: University) {
+    override suspend fun deleteUniversity(university: UniversityDto) {
         universities.remove(university)
         refreshData()
     }
 
-    override fun getAllUniversities(): LiveData<List<University>> {
+    override fun getAllUniversities(): LiveData<List<UniversityDto>> {
         return universitiesLiveData
     }
 
-    override suspend fun getUniversityByName(universityName: String): University? {
+    override suspend fun getUniversityByName(universityName: String): UniversityDto? {
         return universities.firstOrNull { it.name == universityName }
     }
 
@@ -40,7 +40,7 @@ class FakeUniversityRepository : UniversityRepository {
         universitiesLiveData.postValue(universities)
     }
 
-    fun setFakeProvinces(provinces: List<Province>) {
+    fun setFakeProvinces(provinces: List<ProvinceDto>) {
         fakeProvinces.clear()
         fakeProvinces.addAll(provinces)
     }

@@ -11,6 +11,7 @@ import com.huseyinkiran.favuniversities.repository.UniversityRepositoryImpl
 import com.huseyinkiran.favuniversities.room.UniversityDAO
 import com.huseyinkiran.favuniversities.room.UniversityDatabase
 import com.huseyinkiran.favuniversities.service.UniversityAPI
+import com.huseyinkiran.favuniversities.repository.PermissionRepository
 import com.huseyinkiran.favuniversities.util.Util.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -63,5 +64,8 @@ object AppModule {
         localRepository: UniversityLocalRepository,
         remoteRepository: UniversityRemoteRepository
     ): UniversityRepository = UniversityRepositoryImpl(localRepository, remoteRepository)
+
+    @[Singleton Provides]
+    fun providePermissionRepository(): PermissionRepository = PermissionRepository()
 
 }

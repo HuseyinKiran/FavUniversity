@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.model
+package com.huseyinkiran.favuniversities.model.dto
 
 data class Response(
     val currentPage: Int,
@@ -6,5 +6,5 @@ data class Response(
     val pageSize: Int,
     val total: Int,
     val totalPage: Int,
-    val data: List<Province>
+    val data: List<ProvinceDto>
 )
