@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.repository
+package com.huseyinkiran.favuniversities.utils
 
 
 class PermissionRepository {

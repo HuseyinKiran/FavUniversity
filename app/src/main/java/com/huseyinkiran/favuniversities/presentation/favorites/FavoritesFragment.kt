@@ -15,11 +15,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.huseyinkiran.favuniversities.adapter.UniversityAdapter
+import com.huseyinkiran.favuniversities.presentation.adapter.UniversityAdapter
 import com.huseyinkiran.favuniversities.databinding.FragmentFavoritesBinding
-import com.huseyinkiran.favuniversities.model.toUI
-import com.huseyinkiran.favuniversities.model.toUniversity
-import com.huseyinkiran.favuniversities.util.CallPermissionDialog
+import com.huseyinkiran.favuniversities.domain.model.toUI
+import com.huseyinkiran.favuniversities.domain.model.toUniversity
+import com.huseyinkiran.favuniversities.utils.CallPermissionDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

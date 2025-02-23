@@ -3,7 +3,7 @@ package com.huseyinkiran.favuniversities.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.huseyinkiran.favuniversities.MainCoroutineRule
 import com.huseyinkiran.favuniversities.getOrAwaitValue
-import com.huseyinkiran.favuniversities.model.dto.UniversityDto
+import com.huseyinkiran.favuniversities.data.local.UniversityEntity
 import com.huseyinkiran.favuniversities.repository.FakeUniversityRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -12,7 +12,7 @@ import org.junit.Rule
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
 import com.huseyinkiran.favuniversities.presentation.favorites.FavoritesViewModel
-import com.huseyinkiran.favuniversities.repository.PermissionRepository
+import com.huseyinkiran.favuniversities.utils.PermissionRepository
 import kotlinx.coroutines.test.advanceUntilIdle
 
 @ExperimentalCoroutinesApi
@@ -38,7 +38,7 @@ class FavoritesViewModelTest {
     @Test
     fun upsertUniversityTest() = runTest {
 
-        val university = UniversityDto(
+        val university = UniversityEntity(
             id = 1,
             name = "Test University",
             address = "123 Test Street",
@@ -59,7 +59,7 @@ class FavoritesViewModelTest {
     @Test
     fun deleteUniversityTest() = runTest {
 
-        val university = UniversityDto(
+        val university = UniversityEntity(
             id = 1,
             name = "Test University",
             address = "123 Test Street",

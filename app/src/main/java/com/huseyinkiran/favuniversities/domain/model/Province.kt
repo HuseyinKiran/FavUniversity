@@ -1,7 +1,7 @@
-package com.huseyinkiran.favuniversities.model
+package com.huseyinkiran.favuniversities.domain.model
 
-import com.huseyinkiran.favuniversities.model.dto.ProvinceDto
-import com.huseyinkiran.favuniversities.model.dto.UniversityDto
+import com.huseyinkiran.favuniversities.data.remote.dto.ProvinceDto
+import com.huseyinkiran.favuniversities.data.local.UniversityEntity
 
 data class Province(
     val name: String,
@@ -19,6 +19,6 @@ fun ProvinceDto.toUI(): Province {
     )
 }
 
-fun isProvinceExpandable(universities: List<UniversityDto>): Boolean {
+fun isProvinceExpandable(universities: List<UniversityEntity>): Boolean {
     return universities.isNotEmpty()
 }

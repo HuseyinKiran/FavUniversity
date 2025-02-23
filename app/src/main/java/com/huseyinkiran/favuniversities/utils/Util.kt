@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.util
+package com.huseyinkiran.favuniversities.utils
 
 object Util {
 

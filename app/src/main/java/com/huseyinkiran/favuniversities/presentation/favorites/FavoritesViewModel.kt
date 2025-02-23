@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.huseyinkiran.favuniversities.model.dto.UniversityDto
-import com.huseyinkiran.favuniversities.repository.UniversityRepository
-import com.huseyinkiran.favuniversities.repository.PermissionRepository
+import com.huseyinkiran.favuniversities.data.local.UniversityEntity
+import com.huseyinkiran.favuniversities.domain.repository.UniversityRepository
+import com.huseyinkiran.favuniversities.utils.PermissionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class FavoritesViewModel @Inject constructor(
     private val permission: PermissionRepository
 ) : ViewModel() {
 
-    val favoriteUniversities: LiveData<List<UniversityDto>> = repository.getAllUniversities()
+    val favoriteUniversities: LiveData<List<UniversityEntity>> = repository.getAllUniversities()
 
     private val _callPhoneEvent = MutableLiveData<String?>()
     val callPhoneEvent: LiveData<String?> = _callPhoneEvent
@@ -38,15 +38,15 @@ class FavoritesViewModel @Inject constructor(
         _callPhoneEvent.value = null
     }
 
-    fun upsertUniversity(university: UniversityDto) = viewModelScope.launch {
+    fun upsertUniversity(university: UniversityEntity) = viewModelScope.launch {
         repository.upsertUniversity(university)
     }
 
-    fun deleteUniversity(university: UniversityDto) = viewModelScope.launch {
+    fun deleteUniversity(university: UniversityEntity) = viewModelScope.launch {
         repository.deleteUniversity(university)
     }
 
-    fun toggleFavorite(university: UniversityDto) = viewModelScope.launch {
+    fun toggleFavorite(university: UniversityEntity) = viewModelScope.launch {
         val universityInDb = repository.getUniversityByName(university.name)
         if (universityInDb == null) {
             upsertUniversity(university)

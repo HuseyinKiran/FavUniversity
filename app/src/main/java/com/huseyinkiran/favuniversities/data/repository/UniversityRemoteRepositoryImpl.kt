@@ -1,7 +1,8 @@
-package com.huseyinkiran.favuniversities.repository.remote
+package com.huseyinkiran.favuniversities.data.repository
 
-import com.huseyinkiran.favuniversities.model.dto.Response
-import com.huseyinkiran.favuniversities.service.UniversityAPI
+import com.huseyinkiran.favuniversities.data.remote.dto.Response
+import com.huseyinkiran.favuniversities.data.remote.UniversityAPI
+import com.huseyinkiran.favuniversities.domain.repository.UniversityRemoteRepository
 import javax.inject.Inject
 
 class UniversityRemoteRepositoryImpl @Inject constructor(

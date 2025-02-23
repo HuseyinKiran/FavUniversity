@@ -4,10 +4,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.huseyinkiran.favuniversities.MainCoroutineRule
 import com.huseyinkiran.favuniversities.getOrAwaitValue
-import com.huseyinkiran.favuniversities.model.dto.ProvinceDto
+import com.huseyinkiran.favuniversities.data.remote.dto.ProvinceDto
 import com.huseyinkiran.favuniversities.presentation.home.HomeViewModel
 import com.huseyinkiran.favuniversities.repository.FakeUniversityRepository
-import com.huseyinkiran.favuniversities.repository.PermissionRepository
+import com.huseyinkiran.favuniversities.utils.PermissionRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest

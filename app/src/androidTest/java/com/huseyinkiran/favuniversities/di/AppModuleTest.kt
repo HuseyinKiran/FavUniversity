@@ -2,7 +2,7 @@ package com.huseyinkiran.favuniversities.di
 
 import android.content.Context
 import androidx.room.Room
-import com.huseyinkiran.favuniversities.room.UniversityDatabase
+import com.huseyinkiran.favuniversities.data.local.UniversityDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

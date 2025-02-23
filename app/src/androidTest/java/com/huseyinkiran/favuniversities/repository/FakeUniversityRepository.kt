@@ -2,33 +2,34 @@ package com.huseyinkiran.favuniversities.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.huseyinkiran.favuniversities.model.dto.ProvinceDto
-import com.huseyinkiran.favuniversities.model.dto.Response
-import com.huseyinkiran.favuniversities.model.dto.UniversityDto
+import com.huseyinkiran.favuniversities.data.remote.dto.ProvinceDto
+import com.huseyinkiran.favuniversities.data.remote.dto.Response
+import com.huseyinkiran.favuniversities.data.local.UniversityEntity
+import com.huseyinkiran.favuniversities.domain.repository.UniversityRepository
 
 class FakeUniversityRepository : UniversityRepository {
 
-    private val universities = mutableListOf<UniversityDto>()
-    private val universitiesLiveData = MutableLiveData<List<UniversityDto>>(universities)
+    private val universities = mutableListOf<UniversityEntity>()
+    private val universitiesLiveData = MutableLiveData<List<UniversityEntity>>(universities)
 
     private val fakeProvinces = mutableListOf<ProvinceDto>()
     private var shouldReturnError = false
 
-    override suspend fun upsertUniversity(university: UniversityDto) {
+    override suspend fun upsertUniversity(university: UniversityEntity) {
         universities.add(university)
         refreshData()
     }
 
-    override suspend fun deleteUniversity(university: UniversityDto) {
+    override suspend fun deleteUniversity(university: UniversityEntity) {
         universities.remove(university)
         refreshData()
     }
 
-    override fun getAllUniversities(): LiveData<List<UniversityDto>> {
+    override fun getAllUniversities(): LiveData<List<UniversityEntity>> {
         return universitiesLiveData
     }
 
-    override suspend fun getUniversityByName(universityName: String): UniversityDto? {
+    override suspend fun getUniversityByName(universityName: String): UniversityEntity? {
         return universities.firstOrNull { it.name == universityName }
     }
 

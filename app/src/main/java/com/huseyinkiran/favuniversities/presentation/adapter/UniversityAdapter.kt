@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.adapter
+package com.huseyinkiran.favuniversities.presentation.adapter
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.CellUniversityBinding
-import com.huseyinkiran.favuniversities.model.University
-import com.huseyinkiran.favuniversities.util.ExpandStateManager
+import com.huseyinkiran.favuniversities.domain.model.University
+import com.huseyinkiran.favuniversities.utils.ExpandStateManager
 
 
 class UniversityAdapter(

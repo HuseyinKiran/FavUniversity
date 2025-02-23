@@ -18,11 +18,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.huseyinkiran.favuniversities.adapter.ProvinceAdapter
+import com.huseyinkiran.favuniversities.presentation.adapter.ProvinceAdapter
 import com.huseyinkiran.favuniversities.databinding.FragmentHomeBinding
-import com.huseyinkiran.favuniversities.model.toUI
-import com.huseyinkiran.favuniversities.model.toUniversity
-import com.huseyinkiran.favuniversities.util.CallPermissionDialog
+import com.huseyinkiran.favuniversities.domain.model.toUI
+import com.huseyinkiran.favuniversities.domain.model.toUniversity
+import com.huseyinkiran.favuniversities.utils.CallPermissionDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

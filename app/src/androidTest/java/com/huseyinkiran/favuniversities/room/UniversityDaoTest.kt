@@ -3,8 +3,10 @@ package com.huseyinkiran.favuniversities.room
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.huseyinkiran.favuniversities.getOrAwaitValue
-import com.huseyinkiran.favuniversities.model.dto.UniversityDto
+import com.huseyinkiran.favuniversities.data.local.UniversityEntity
 import com.google.common.truth.Truth.assertThat
+import com.huseyinkiran.favuniversities.data.local.UniversityDAO
+import com.huseyinkiran.favuniversities.data.local.UniversityDatabase
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,7 +43,7 @@ class UniversityDaoTest {
     @Test
     fun getAllFavorites() = runTest {
 
-        val university = UniversityDto(
+        val university = UniversityEntity(
             id = 1,
             name = "Test University",
             address = "123 Test Street",
@@ -65,7 +67,7 @@ class UniversityDaoTest {
     @Test
     fun upsertUniversityTest() = runTest {
 
-        val university = UniversityDto(
+        val university = UniversityEntity(
             id = 1,
             name = "Test University",
             address = "123 Test Street",
@@ -85,7 +87,7 @@ class UniversityDaoTest {
     @Test
     fun deleteUniversityTest() = runTest {
 
-        val university = UniversityDto(
+        val university = UniversityEntity(
             id = 1,
             name = "Test University",
             address = "123 Test Street",
@@ -106,7 +108,7 @@ class UniversityDaoTest {
     @Test
     fun getFavoriteByName() = runTest {
 
-        val university = UniversityDto(
+        val university = UniversityEntity(
             id = 1,
             name = "Test University",
             address = "123 Test Street",
@@ -117,7 +119,7 @@ class UniversityDaoTest {
             website = "https://testuniversity.edu",
         )
 
-        val university2 = UniversityDto(
+        val university2 = UniversityEntity(
             id = 2,
             name = "Test University 2",
             address = "123 Test Street",

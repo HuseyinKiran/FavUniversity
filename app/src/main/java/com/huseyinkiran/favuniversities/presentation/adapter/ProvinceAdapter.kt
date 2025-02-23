@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.adapter
+package com.huseyinkiran.favuniversities.presentation.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.CellProvinceBinding
-import com.huseyinkiran.favuniversities.model.Province
-import com.huseyinkiran.favuniversities.model.University
-import com.huseyinkiran.favuniversities.util.ExpandStateManager
+import com.huseyinkiran.favuniversities.domain.model.Province
+import com.huseyinkiran.favuniversities.domain.model.University
+import com.huseyinkiran.favuniversities.utils.ExpandStateManager
 
 class ProvinceAdapter(
     private val onFavoriteClick: (University) -> Unit,

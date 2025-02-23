@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.model.dto
+package com.huseyinkiran.favuniversities.data.remote.dto
 
 data class Response(
     val currentPage: Int,

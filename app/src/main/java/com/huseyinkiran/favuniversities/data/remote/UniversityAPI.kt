@@ -1,6 +1,6 @@
-package com.huseyinkiran.favuniversities.service
+package com.huseyinkiran.favuniversities.data.remote
 
-import com.huseyinkiran.favuniversities.model.dto.Response
+import com.huseyinkiran.favuniversities.data.remote.dto.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 

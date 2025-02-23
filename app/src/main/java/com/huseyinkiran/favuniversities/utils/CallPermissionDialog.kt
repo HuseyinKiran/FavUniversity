@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.util
+package com.huseyinkiran.favuniversities.utils
 
 import android.app.AlertDialog
 import android.content.Context

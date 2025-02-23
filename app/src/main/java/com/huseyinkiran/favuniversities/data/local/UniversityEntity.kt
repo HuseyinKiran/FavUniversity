@@ -1,11 +1,11 @@
-package com.huseyinkiran.favuniversities.model.dto
+package com.huseyinkiran.favuniversities.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "favorites")
-data class UniversityDto(
+data class UniversityEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,
     val name: String,

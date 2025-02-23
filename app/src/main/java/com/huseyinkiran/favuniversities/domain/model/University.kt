@@ -1,7 +1,6 @@
-package com.huseyinkiran.favuniversities.model
+package com.huseyinkiran.favuniversities.domain.model
 
-import com.huseyinkiran.favuniversities.model.dto.UniversityDto
-
+import com.huseyinkiran.favuniversities.data.local.UniversityEntity
 
 data class University(
     val name: String,
@@ -15,7 +14,7 @@ data class University(
     var isFavorite: Boolean
 )
 
-fun UniversityDto.toUI() : University {
+fun UniversityEntity.toUI() : University {
     return University(
         name = name,
         address = address,
@@ -29,8 +28,8 @@ fun UniversityDto.toUI() : University {
     )
 }
 
-fun University.toUniversity(): UniversityDto {
-    return UniversityDto(
+fun University.toUniversity(): UniversityEntity {
+    return UniversityEntity(
         id = null,
         name = name,
         address = address,
@@ -43,7 +42,7 @@ fun University.toUniversity(): UniversityDto {
 }
 
 
-fun isUniversityExpandable(university: UniversityDto): Boolean {
+fun isUniversityExpandable(university: UniversityEntity): Boolean {
     return !(university.rector == "-" && university.phone == "-" && university.fax == "-"
             && university.address == "-" && university.email == "-")
 }
