@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.huseyinkiran.favuniversities.presentation.adapter.UniversityAdapter
 import com.huseyinkiran.favuniversities.databinding.FragmentFavoritesBinding
+import com.huseyinkiran.favuniversities.domain.model.isUniversityExpandable
 import com.huseyinkiran.favuniversities.domain.model.toUI
 import com.huseyinkiran.favuniversities.domain.model.toUniversity
 import com.huseyinkiran.favuniversities.utils.CallPermissionDialog
@@ -68,8 +69,11 @@ class FavoritesFragment : Fragment() {
     private fun observeViewModel() {
 
         viewModel.favoriteUniversities.observe(viewLifecycleOwner) { favorites ->
-            adapter.updateUniversities(favorites.map { it.toUI() }.map {  university ->
-                university.copy(isFavorite = true)
+            adapter.updateUniversities(favorites.map { it.toUI() }.map { university ->
+                university.copy(
+                    isFavorite = true,
+                    isExpandable = isUniversityExpandable(university.toUniversity())
+                )
             })
         }
 
@@ -87,8 +91,9 @@ class FavoritesFragment : Fragment() {
                     }
 
                     ActivityCompat.shouldShowRequestPermissionRationale(
-                        requireActivity(), Manifest.permission.CALL_PHONE) -> {
-                            viewModel.increaseDeniedCount()
+                        requireActivity(), Manifest.permission.CALL_PHONE
+                    ) -> {
+                        viewModel.increaseDeniedCount()
                         if (viewModel.shouldRedirectToSettings()) {
                             CallPermissionDialog.showGoToSettingsDialog(requireContext())
                             viewModel.clearCallEvent()

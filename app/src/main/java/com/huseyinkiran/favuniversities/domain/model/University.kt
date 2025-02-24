@@ -44,5 +44,5 @@ fun University.toUniversity(): UniversityEntity {
 
 fun isUniversityExpandable(university: UniversityEntity): Boolean {
     return !(university.rector == "-" && university.phone == "-" && university.fax == "-"
-            && university.address == "-" && university.email == "-")
+            && university.address == "-" && university.website == "-")
 }
