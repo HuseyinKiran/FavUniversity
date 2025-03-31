@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.CellUniversityBinding
-import com.huseyinkiran.favuniversities.domain.model.University
+import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
 import com.huseyinkiran.favuniversities.utils.ExpandStateManager
 
 
 class UniversityAdapter(
     private val fragmentType: String,
-    private val onFavoriteClick: (University) -> Unit,
+    private val onFavoriteClick: (UniversityUIModel) -> Unit,
     private val onWebsiteClick: (String, String) -> Unit,
     private val onPhoneClick: (String) -> Unit
 ) :
@@ -24,7 +24,7 @@ class UniversityAdapter(
 
     class UniversityViewHolder(val binding: CellUniversityBinding) : ViewHolder(binding.root)
 
-    private var universityList: List<University> = listOf()
+    private var universityList: List<UniversityUIModel> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UniversityViewHolder {
         val view = CellUniversityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -96,9 +96,10 @@ class UniversityAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateUniversities(newUniversities: List<University>) {
+    fun updateUniversities(newUniversities: List<UniversityUIModel>) {
         universityList = newUniversities
         notifyDataSetChanged()
+        //submitList(newUniversities)
     }
 
 }

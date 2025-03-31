@@ -1,11 +1,11 @@
 package com.huseyinkiran.favuniversities.data.repository
 
-import androidx.lifecycle.LiveData
-import com.huseyinkiran.favuniversities.data.remote.dto.Response
-import com.huseyinkiran.favuniversities.data.local.UniversityEntity
+import com.huseyinkiran.favuniversities.domain.model.ProvinceUIModel
+import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
 import com.huseyinkiran.favuniversities.domain.repository.UniversityLocalRepository
 import com.huseyinkiran.favuniversities.domain.repository.UniversityRemoteRepository
 import com.huseyinkiran.favuniversities.domain.repository.UniversityRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UniversityRepositoryImpl @Inject constructor(
@@ -13,24 +13,24 @@ class UniversityRepositoryImpl @Inject constructor(
     private val remoteRepository: UniversityRemoteRepository
 ) : UniversityRepository {
 
-    override suspend fun upsertUniversity(university: UniversityEntity) {
+    override suspend fun upsertUniversity(university: UniversityUIModel) {
         localRepository.upsertUniversity(university)
     }
 
-    override suspend fun deleteUniversity(university: UniversityEntity) {
+    override suspend fun deleteUniversity(university: UniversityUIModel) {
         localRepository.deleteUniversity(university)
     }
 
-    override fun getAllUniversities(): LiveData<List<UniversityEntity>> {
-        return localRepository.getAllUniversities()
+    override fun getAllFavorites(): Flow<List<UniversityUIModel>> {
+        return localRepository.getAllFavorites()
     }
 
-    override suspend fun getUniversityByName(universityName: String): UniversityEntity? {
+    override suspend fun getUniversityByName(universityName: String): UniversityUIModel? {
         return localRepository.getUniversityByName(universityName)
     }
 
-    override suspend fun getProvinces(pageNumber: Int): Response {
-        return remoteRepository.getProvinces(pageNumber)
+    override suspend fun getUniversities(pageNumber: Int): List<ProvinceUIModel> {
+        return remoteRepository.getUniversities(pageNumber)
     }
 
 }

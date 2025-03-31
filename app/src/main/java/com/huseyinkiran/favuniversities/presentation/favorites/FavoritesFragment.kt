@@ -14,14 +14,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.huseyinkiran.favuniversities.presentation.adapter.UniversityAdapter
 import com.huseyinkiran.favuniversities.databinding.FragmentFavoritesBinding
-import com.huseyinkiran.favuniversities.domain.model.isUniversityExpandable
-import com.huseyinkiran.favuniversities.domain.model.toUI
-import com.huseyinkiran.favuniversities.domain.model.toUniversity
 import com.huseyinkiran.favuniversities.utils.CallPermissionDialog
+import com.huseyinkiran.favuniversities.utils.ExpandStateManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
@@ -49,16 +51,17 @@ class FavoritesFragment : Fragment() {
 
         adapter = UniversityAdapter(
             fragmentType = "Favorites",
-            onFavoriteClick = {
-                viewModel.toggleFavorite(it.toUniversity())
+            onFavoriteClick = { university ->
+                viewModel.toggleFavorite(university)
+                ExpandStateManager.collapseUniversity(university.name)
             },
             onWebsiteClick = { websiteUrl, uniName ->
                 val action = FavoritesFragmentDirections
                     .actionFavoritesFragmentToWebsiteFragment(websiteUrl, uniName)
                 findNavController().navigate(action)
             },
-            onPhoneClick = {
-                viewModel.requestCall(it)
+            onPhoneClick = { phoneNumber ->
+                viewModel.requestCall(phoneNumber)
             }
         )
 
@@ -68,18 +71,16 @@ class FavoritesFragment : Fragment() {
 
     private fun observeViewModel() {
 
-        viewModel.favoriteUniversities.observe(viewLifecycleOwner) { favorites ->
-            adapter.updateUniversities(favorites.map { it.toUI() }.map { university ->
-                university.copy(
-                    isFavorite = true,
-                    isExpandable = isUniversityExpandable(university.toUniversity())
-                )
-            })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.favorites.collect { favorites ->
+                    adapter.updateUniversities(favorites)
+                }
+            }
         }
 
         viewModel.callPhoneEvent.observe(viewLifecycleOwner) { phoneNumber ->
             phoneNumber?.let {
-
                 when {
 
                     ContextCompat.checkSelfPermission(

@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.CellProvinceBinding
-import com.huseyinkiran.favuniversities.domain.model.Province
-import com.huseyinkiran.favuniversities.domain.model.University
+import com.huseyinkiran.favuniversities.domain.model.ProvinceUIModel
+import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
 import com.huseyinkiran.favuniversities.utils.ExpandStateManager
 
 class ProvinceAdapter(
-    private val onFavoriteClick: (University) -> Unit,
+    private val onFavoriteClick: (UniversityUIModel) -> Unit,
     private val onWebsiteClick: (String, String) -> Unit,
     private val onPhoneClick: (String) -> Unit
 ) :
@@ -23,8 +23,8 @@ class ProvinceAdapter(
 
     class ProvinceViewHolder(val binding: CellProvinceBinding) : ViewHolder(binding.root)
 
-    private var provinceList: List<Province> = listOf()
-    private var favoriteUniversities: List<University> = listOf()
+    private var provinceList: List<ProvinceUIModel> = listOf()
+    private var favoriteUniversities: List<UniversityUIModel> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProvinceViewHolder {
         val view = CellProvinceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -50,9 +50,7 @@ class ProvinceAdapter(
             )
 
             universityAdapter.updateUniversities(province.universities.map { university ->
-                university.copy(
-                    isFavorite = favoriteUniversities.any { it.name == university.name }
-                )
+                university.copy(isFavorite = favoriteUniversities.any { it.name == university.name })
             })
 
             uniRv.layoutManager = LinearLayoutManager(root.context)
@@ -82,13 +80,13 @@ class ProvinceAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateProvinces(newProvinces: List<Province>) {
+    fun updateProvinces(newProvinces: List<ProvinceUIModel>) {
         provinceList = newProvinces
         notifyDataSetChanged()
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateFavoriteUniversities(newFavorites: List<University>) {
+    fun updateFavoriteUniversities(newFavorites: List<UniversityUIModel>) {
         favoriteUniversities = newFavorites
         notifyDataSetChanged()
     }

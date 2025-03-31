@@ -1,29 +1,34 @@
 package com.huseyinkiran.favuniversities.data.repository
 
-import androidx.lifecycle.LiveData
-import com.huseyinkiran.favuniversities.data.local.UniversityEntity
 import com.huseyinkiran.favuniversities.data.local.UniversityDAO
+import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
+import com.huseyinkiran.favuniversities.domain.model.toEntity
+import com.huseyinkiran.favuniversities.domain.model.toUI
 import com.huseyinkiran.favuniversities.domain.repository.UniversityLocalRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UniversityLocalRepositoryImpl @Inject constructor(
     private val dao: UniversityDAO
 ) : UniversityLocalRepository {
 
-    override suspend fun upsertUniversity(university: UniversityEntity) {
-        dao.upsertUniversity(university)
+    override suspend fun upsertUniversity(university: UniversityUIModel) {
+        dao.upsertUniversity(university.toEntity())
     }
 
-    override suspend fun deleteUniversity(university: UniversityEntity) {
-        dao.deleteUniversity(university)
+    override suspend fun deleteUniversity(university: UniversityUIModel) {
+        dao.deleteUniversity(university.toEntity())
     }
 
-    override fun getAllUniversities(): LiveData<List<UniversityEntity>> {
-        return dao.getAllFavorites()
+    override fun getAllFavorites(): Flow<List<UniversityUIModel>> {
+        return dao.getAllFavorites().map { list ->
+            list.map { it.toUI() }
+        }
     }
 
-    override suspend fun getUniversityByName(universityName: String): UniversityEntity? {
-        return dao.getFavoriteByName(universityName)
+    override suspend fun getUniversityByName(universityName: String): UniversityUIModel? {
+        return dao.getFavoriteByName(universityName)?.toUI()
     }
 
 }

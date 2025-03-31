@@ -7,4 +7,8 @@ object ExpandStateManager {
     val homeExpandedUniversities = mutableMapOf<String, Boolean>()
     val favoritesExpandedUniversities = mutableMapOf<String, Boolean>()
 
+    fun collapseUniversity(name: String) {
+        favoritesExpandedUniversities[name] = false
+    }
+
 }

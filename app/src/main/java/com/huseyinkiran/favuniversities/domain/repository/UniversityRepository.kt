@@ -1,19 +1,19 @@
 package com.huseyinkiran.favuniversities.domain.repository
 
-import androidx.lifecycle.LiveData
-import com.huseyinkiran.favuniversities.data.remote.dto.Response
-import com.huseyinkiran.favuniversities.data.local.UniversityEntity
+import com.huseyinkiran.favuniversities.domain.model.ProvinceUIModel
+import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
+import kotlinx.coroutines.flow.Flow
 
 interface UniversityRepository {
 
-    suspend fun upsertUniversity(university: UniversityEntity)
+    suspend fun upsertUniversity(university: UniversityUIModel)
 
-    suspend fun deleteUniversity(university: UniversityEntity)
+    suspend fun deleteUniversity(university: UniversityUIModel)
 
-    fun getAllUniversities() : LiveData<List<UniversityEntity>>
+    fun getAllFavorites() : Flow<List<UniversityUIModel>>
 
-    suspend fun getUniversityByName(universityName: String): UniversityEntity?
+    suspend fun getUniversityByName(universityName: String): UniversityUIModel?
 
-    suspend fun getProvinces(pageNumber: Int) : Response
+    suspend fun getUniversities(pageNumber: Int) : List<ProvinceUIModel>
 
 }
