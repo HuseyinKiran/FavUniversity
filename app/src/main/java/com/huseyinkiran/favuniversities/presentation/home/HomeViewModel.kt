@@ -4,16 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.huseyinkiran.favuniversities.domain.model.ProvinceUIModel
+import com.huseyinkiran.favuniversities.domain.model.CityUIModel
 import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
 import com.huseyinkiran.favuniversities.domain.repository.UniversityRepository
 import com.huseyinkiran.favuniversities.utils.PermissionRepository
+import com.huseyinkiran.favuniversities.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,8 +26,8 @@ class HomeViewModel @Inject constructor(
     private val permission: PermissionRepository
 ) : ViewModel() {
 
-    private val _provinceList = MutableLiveData<List<ProvinceUIModel>>()
-    val provinceList: LiveData<List<ProvinceUIModel>> = _provinceList
+    private val _cityList = MutableStateFlow<Resource<List<CityUIModel>>>(Resource.Loading())
+    val cityList: Flow<Resource<List<CityUIModel>>> = _cityList
 
     val favorites: StateFlow<List<UniversityUIModel>> = repository.getAllFavorites().stateIn(
         scope = viewModelScope,
@@ -34,12 +38,13 @@ class HomeViewModel @Inject constructor(
     private val _callPhoneEvent = MutableLiveData<String?>()
     val callPhoneEvent: LiveData<String?> = _callPhoneEvent
 
-    private val _errorMessage = MutableLiveData<Boolean>()
-    val errorMessage: LiveData<Boolean> get() = _errorMessage
-
-    private var currentList: MutableList<ProvinceUIModel> = mutableListOf()
+    private var currentList: MutableList<CityUIModel> = mutableListOf()
     private var currentPage = 1
-    private var isLoading = false
+    private val mutex = Mutex()
+
+    init {
+        loadCities()
+    }
 
     fun increaseDeniedCount() {
         permission.increaseDeniedCount()
@@ -74,31 +79,28 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun loadProvinces() {
-
+    private var isLoading = false
+    fun loadCities()  {
         if (isLoading || currentPage > 3) return
-        isLoading = true
 
         viewModelScope.launch {
-            try {
-                val response = repository.getUniversities(currentPage)
-                if (response.isNotEmpty()) {
-                    currentList.addAll(response)
-                    _provinceList.value = currentList
-                    currentPage++
-                    _errorMessage.value = false
-                } else {
-                    _errorMessage.value = true
+            mutex.withLock {
+                isLoading = true
+                try {
+                    _cityList.value = Resource.Loading()
+                    val response = repository.getUniversities(pageNumber = currentPage)
+                    if (response.isNotEmpty()) {
+                        currentList.addAll(response)
+                        _cityList.value = Resource.Success(currentList.toList())
+                        currentPage++
+                    }
+                } catch (e: Exception) {
+                    _cityList.value = Resource.Error(e.localizedMessage ?: "Bilinmeyen Hata !")
+                } finally {
+                    isLoading = false
                 }
-            } catch (e: HttpException) {
-                _errorMessage.value = true
-            } catch (e: Exception) {
-                _errorMessage.value = true
-            } finally {
-                isLoading = false
             }
         }
-
     }
 
 }

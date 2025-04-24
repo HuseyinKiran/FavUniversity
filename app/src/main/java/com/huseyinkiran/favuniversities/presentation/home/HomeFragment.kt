@@ -20,17 +20,23 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.huseyinkiran.favuniversities.presentation.adapter.ProvinceAdapter
+import com.huseyinkiran.favuniversities.presentation.adapter.city.CityAdapter
 import com.huseyinkiran.favuniversities.databinding.FragmentHomeBinding
+import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
+import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
+import com.huseyinkiran.favuniversities.presentation.adapter.university.UniversityAdapter
 import com.huseyinkiran.favuniversities.utils.CallPermissionDialog
+import com.huseyinkiran.favuniversities.common.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private lateinit var adapter: ProvinceAdapter
+    private lateinit var adapter: CityAdapter
     private val viewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -49,63 +55,97 @@ class HomeFragment : Fragment() {
         observeViewModel()
     }
 
-    private fun setupAdapter() {
+    private fun setupAdapter() = with(binding) {
 
-        adapter = ProvinceAdapter(
-            onFavoriteClick = { university ->
-                viewModel.toggleFavorite(university)
-            },
-            onWebsiteClick = { websiteUrl, uniName ->
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToWebsiteFragment(websiteUrl, uniName)
-                findNavController().navigate(action)
-            },
-            onPhoneClick = { phoneNumber ->
-                viewModel.requestCall(phoneNumber)
-            }
-        )
-
-        binding.provinceRv.adapter = adapter
-
-        binding.provinceRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) {
-                    viewModel.loadProvinces()
+        adapter = CityAdapter(fragmentType = AdapterFragmentType.HOME,
+            callbacks = object : UniversityAdapter.UniversityClickListener {
+                override fun onFavoriteClick(university: UniversityUIModel) {
+                    viewModel.toggleFavorite(university)
                 }
-            }
-        })
+
+                override fun onWebsiteClick(websiteUrl: String, universityName: String) {
+                    val action = HomeFragmentDirections.actionHomeFragmentToWebsiteFragment(
+                        websiteUrl,
+                        universityName
+                    )
+                    findNavController().navigate(action)
+                }
+
+                override fun onPhoneClick(phoneNumber: String) {
+                    viewModel.requestCall(phoneNumber)
+                }
+
+            })
+
+        rvCity.adapter = adapter
+        rvCity.itemAnimator = null
 
     }
 
-    private fun observeViewModel() {
-
-        viewModel.provinceList.observe(viewLifecycleOwner) { provinces ->
-            binding.progressBar.isGone = true
-            if (provinces.isNullOrEmpty()) {
-                binding.txtError.isVisible = true
-            } else {
-                binding.progressBar.isGone = true
-                adapter.updateProvinces(provinces)
-            }
-        }
-
-        viewModel.errorMessage.observe(viewLifecycleOwner) { isError ->
-            if (isError) {
-                binding.txtError.isVisible = true
-                binding.progressBar.isGone = true
-            } else {
-                binding.txtError.isGone = true
-            }
-        }
+    private fun observeViewModel() = with(binding) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.favorites.collect { favorites ->
-                    adapter.updateFavoriteUniversities(favorites)
+                viewModel.cityList.combine(viewModel.favorites) { resource, favorites ->
+                    when (resource) {
+
+                        is Resource.Loading -> resource
+
+                        is Resource.Success -> {
+                            val updatedCities = resource.data?.map { city ->
+                                city.copy(
+                                    universities = city.universities.map { university ->
+                                        university.copy(isFavorite = favorites.any { it.name == university.name })
+                                    }
+                                )
+                            } ?: emptyList()
+                            Resource.Success(updatedCities)
+                        }
+
+                        is Resource.Error -> Resource.Error(
+                            resource.message ?: "Hata",
+                            resource.data
+                        )
+                    }
+                }.collect { result ->
+                    when (result) {
+                        is Resource.Loading -> {
+                            progressBar.isVisible = true
+                            txtError.isGone = true
+                        }
+
+                        is Resource.Success -> {
+                            progressBar.isGone = true
+                            txtError.isGone = true
+                            rvCity.isVisible = true
+                            result.data?.let { adapter.submitList(it) }
+                        }
+
+                        is Resource.Error -> {
+                            progressBar.isGone = true
+                            txtError.isVisible = true
+                            rvCity.isGone = true
+                        }
+                    }
                 }
             }
         }
+
+        rvCity.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val totalItemCount = layoutManager.itemCount
+                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+
+                val isAtBottom = lastVisibleItemPosition == totalItemCount - 1
+
+                if (isAtBottom) {
+                    viewModel.loadCities()
+                }
+            }
+        })
 
         viewModel.callPhoneEvent.observe(viewLifecycleOwner) { phoneNumber ->
             phoneNumber?.let {
@@ -142,9 +182,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-
-        binding.progressBar.isVisible = true
-        viewModel.loadProvinces()
 
     }
 

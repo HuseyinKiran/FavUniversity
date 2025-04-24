@@ -1,7 +1,6 @@
-package com.huseyinkiran.favuniversities.utils
+package com.huseyinkiran.favuniversities.common
 
-object Util {
-
+object ApiConstants {
     const val BASE_URL = "https://storage.googleapis.com/invio-com/usg-challenge/"
 
 }

@@ -6,7 +6,7 @@
     <string name="back_button">Back Button</string>
 
     <string name="university_expand_button">University Expand Button</string>
-    <string name="province_expand_button">Province Expand Button</string>
+    <string name="city_expand_button">City Expand Button</string>
     <string name="university_favorite_button">University Favorite Button</string>
 
     <string name="added_to_favorites">added to favorites</string>

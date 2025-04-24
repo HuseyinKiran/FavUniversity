@@ -18,8 +18,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.huseyinkiran.favuniversities.presentation.adapter.UniversityAdapter
+import com.huseyinkiran.favuniversities.presentation.adapter.university.UniversityAdapter
 import com.huseyinkiran.favuniversities.databinding.FragmentFavoritesBinding
+import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
+import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
 import com.huseyinkiran.favuniversities.utils.CallPermissionDialog
 import com.huseyinkiran.favuniversities.utils.ExpandStateManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,25 +49,30 @@ class FavoritesFragment : Fragment() {
         observeViewModel()
     }
 
-    private fun setupAdapter() {
+    private fun setupAdapter() = with(binding) {
 
         adapter = UniversityAdapter(
-            fragmentType = "Favorites",
-            onFavoriteClick = { university ->
-                viewModel.toggleFavorite(university)
-                ExpandStateManager.collapseUniversity(university.name)
-            },
-            onWebsiteClick = { websiteUrl, uniName ->
-                val action = FavoritesFragmentDirections
-                    .actionFavoritesFragmentToWebsiteFragment(websiteUrl, uniName)
-                findNavController().navigate(action)
-            },
-            onPhoneClick = { phoneNumber ->
-                viewModel.requestCall(phoneNumber)
-            }
-        )
+            fragmentType = AdapterFragmentType.FAVORITES,
+            callbacks = object : UniversityAdapter.UniversityClickListener {
+                override fun onFavoriteClick(university: UniversityUIModel) {
+                    viewModel.toggleFavorite(university)
+                    ExpandStateManager.collapseUniversity(university.name)
+                }
 
-        binding.favoritesRv.adapter = adapter
+                override fun onWebsiteClick(websiteUrl: String, universityName: String) {
+                    val action = FavoritesFragmentDirections
+                        .actionFavoritesFragmentToWebsiteFragment(websiteUrl, universityName)
+                    findNavController().navigate(action)
+                }
+
+                override fun onPhoneClick(phoneNumber: String) {
+                    viewModel.requestCall(phoneNumber)
+                }
+
+            })
+
+        rvFavorites.adapter = adapter
+        rvFavorites.itemAnimator = null
 
     }
 
@@ -74,7 +81,7 @@ class FavoritesFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.favorites.collect { favorites ->
-                    adapter.updateUniversities(favorites)
+                    adapter.submitList(favorites)
                 }
             }
         }

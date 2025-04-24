@@ -2,7 +2,6 @@ package com.huseyinkiran.favuniversities.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.huseyinkiran.favuniversities.MainCoroutineRule
-import com.huseyinkiran.favuniversities.getOrAwaitValue
 import com.huseyinkiran.favuniversities.data.local.UniversityEntity
 import com.huseyinkiran.favuniversities.repository.FakeUniversityRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,7 +10,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
-import com.huseyinkiran.favuniversities.domain.model.toUI
+import com.huseyinkiran.favuniversities.domain.model.toUIModel
 import com.huseyinkiran.favuniversities.presentation.favorites.FavoritesViewModel
 import com.huseyinkiran.favuniversities.utils.PermissionRepository
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -49,7 +48,7 @@ class FavoritesViewModelTest {
             website = "https://testuniversity.edu",
         )
 
-        viewModel.upsertUniversity(university.toUI())
+        viewModel.upsertUniversity(university.toUIModel())
         advanceUntilIdle()
         val afterAdd = viewModel.getFavorites()
         assertThat(afterAdd).contains(university)
@@ -69,9 +68,9 @@ class FavoritesViewModelTest {
             website = "https://testuniversity.edu",
         )
 
-        viewModel.upsertUniversity(university.toUI())
+        viewModel.upsertUniversity(university.toUIModel())
         advanceUntilIdle()
-        viewModel.deleteUniversity(university.toUI())
+        viewModel.deleteUniversity(university.toUIModel())
         advanceUntilIdle()
         val afterRemove = viewModel.getFavorites()
         assertThat(afterRemove).doesNotContain(university)

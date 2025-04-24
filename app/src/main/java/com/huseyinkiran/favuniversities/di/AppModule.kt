@@ -12,7 +12,7 @@ import com.huseyinkiran.favuniversities.data.local.UniversityDAO
 import com.huseyinkiran.favuniversities.data.local.UniversityDatabase
 import com.huseyinkiran.favuniversities.data.remote.UniversityAPI
 import com.huseyinkiran.favuniversities.utils.PermissionRepository
-import com.huseyinkiran.favuniversities.utils.Util.BASE_URL
+import com.huseyinkiran.favuniversities.common.ApiConstants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

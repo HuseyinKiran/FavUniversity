@@ -6,5 +6,5 @@ data class Response(
     val pageSize: Int,
     val total: Int,
     val totalPage: Int,
-    val data: List<ProvinceDto>
+    val data: List<CityDto>
 )

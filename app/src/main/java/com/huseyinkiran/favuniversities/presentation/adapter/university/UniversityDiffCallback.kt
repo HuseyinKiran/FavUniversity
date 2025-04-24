@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.presentation.adapter
+package com.huseyinkiran.favuniversities.presentation.adapter.university
 
 import androidx.recyclerview.widget.DiffUtil
 import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
@@ -9,10 +9,7 @@ class UniversityDiffCallback : DiffUtil.ItemCallback<UniversityUIModel>() {
         return oldItem.name == newItem.name
     }
 
-    override fun areContentsTheSame(
-        oldItem: UniversityUIModel,
-        newItem: UniversityUIModel
-    ): Boolean {
+    override fun areContentsTheSame(oldItem: UniversityUIModel, newItem: UniversityUIModel): Boolean {
         return oldItem == newItem
     }
 

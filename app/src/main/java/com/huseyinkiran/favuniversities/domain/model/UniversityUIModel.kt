@@ -15,7 +15,7 @@ data class UniversityUIModel(
     var isFavorite: Boolean
 )
 
-fun UniversityEntity.toUI(): UniversityUIModel {
+fun UniversityEntity.toUIModel(): UniversityUIModel {
     return UniversityUIModel(
         name = name,
         address = address,
@@ -29,7 +29,7 @@ fun UniversityEntity.toUI(): UniversityUIModel {
     )
 }
 
-fun UniversityDto.toUI(): UniversityUIModel {
+fun UniversityDto.toUIModel(): UniversityUIModel {
     return UniversityUIModel(
         name = name,
         address = address,

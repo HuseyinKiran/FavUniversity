@@ -1,6 +1,6 @@
 package com.huseyinkiran.favuniversities.data.repository
 
-import com.huseyinkiran.favuniversities.domain.model.ProvinceUIModel
+import com.huseyinkiran.favuniversities.domain.model.CityUIModel
 import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
 import com.huseyinkiran.favuniversities.domain.repository.UniversityLocalRepository
 import com.huseyinkiran.favuniversities.domain.repository.UniversityRemoteRepository
@@ -29,7 +29,7 @@ class UniversityRepositoryImpl @Inject constructor(
         return localRepository.getUniversityByName(universityName)
     }
 
-    override suspend fun getUniversities(pageNumber: Int): List<ProvinceUIModel> {
+    override suspend fun getUniversities(pageNumber: Int): List<CityUIModel> {
         return remoteRepository.getUniversities(pageNumber)
     }
 

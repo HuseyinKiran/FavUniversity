@@ -6,6 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyinkiran.favuniversities.R
+import com.huseyinkiran.favuniversities.utils.ExpandStateManager
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -23,4 +24,10 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         bottomNav.setupWithNavController(navController)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ExpandStateManager.clearExpandState()
+    }
+
 }

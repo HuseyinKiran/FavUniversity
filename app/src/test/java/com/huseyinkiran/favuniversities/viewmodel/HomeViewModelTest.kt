@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.huseyinkiran.favuniversities.MainCoroutineRule
 import com.huseyinkiran.favuniversities.getOrAwaitValue
-import com.huseyinkiran.favuniversities.data.remote.dto.ProvinceDto
+import com.huseyinkiran.favuniversities.data.remote.dto.CityDto
 import com.huseyinkiran.favuniversities.presentation.home.HomeViewModel
 import com.huseyinkiran.favuniversities.repository.FakeUniversityRepository
 import com.huseyinkiran.favuniversities.utils.PermissionRepository
@@ -36,19 +36,19 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `loadProvinces should update provinceList on success`() = runTest {
+    fun `loadCities should update cityList on success`() = runTest {
 
-        val fakeProvinces = listOf(
-            ProvinceDto(id = 1, name = "Test Province 1", universities = emptyList()),
-            ProvinceDto(id = 2, name = "Test Province 2", universities = emptyList())
+        val fakeCities = listOf(
+            CityDto(id = 1, name = "Test City 1", universities = emptyList()),
+            CityDto(id = 2, name = "Test City 2", universities = emptyList())
         )
 
-        repository.setFakeProvinces(fakeProvinces)
-        viewModel.loadProvinces()
+        repository.setFakeCities(fakeCities)
+        viewModel.loadCities()
         advanceUntilIdle()
-        val afterAdd = viewModel.provinceList.getOrAwaitValue()
-        assertThat(afterAdd).isEqualTo(fakeProvinces)
-        assertThat(afterAdd).contains(ProvinceDto(id = 1, name = "Test Province 1", universities = emptyList()))
+        val afterAdd = viewModel.cityList.getOrAwaitValue()
+        assertThat(afterAdd).isEqualTo(fakeCities)
+        assertThat(afterAdd).contains(CityDto(id = 1, name = "Test City 1", universities = emptyList()))
 
     }
 

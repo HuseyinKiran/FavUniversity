@@ -6,7 +6,7 @@
 
     <color name="splash_background">#0e2c54</color>
     <color name="toolbar_softCyan">#88C0D0</color>
-    <color name="provinceCell_softCyan">#81A1C1</color>
+    <color name="cell_city_softCyan">#81A1C1</color>
     <color name="universityDetails_softCyan">#BDEFFD</color>
 
 </resources>

@@ -25,27 +25,28 @@
 
                 <ImageButton
                     android:id="@+id/btnExpand"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:backgroundTint="@color/toolbar_softCyan"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_btn_bg"
                     android:clickable="false"
                     android:contentDescription="@string/university_expand_button"
                     android:src="@drawable/baseline_keyboard_arrow_down_24" />
 
                 <TextView
                     android:id="@+id/txtUniName"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="4"
                     android:gravity="center_vertical"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                 <ImageButton
                     android:id="@+id/btnFavorite"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_btn_bg"
                     android:backgroundTint="@color/toolbar_softCyan"
                     android:contentDescription="@string/university_favorite_button"
                     android:src="@drawable/baseline_favorite_border_24" />

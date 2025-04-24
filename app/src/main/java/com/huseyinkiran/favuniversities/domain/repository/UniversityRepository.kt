@@ -1,6 +1,6 @@
 package com.huseyinkiran.favuniversities.domain.repository
 
-import com.huseyinkiran.favuniversities.domain.model.ProvinceUIModel
+import com.huseyinkiran.favuniversities.domain.model.CityUIModel
 import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
 import kotlinx.coroutines.flow.Flow
 
@@ -14,6 +14,6 @@ interface UniversityRepository {
 
     suspend fun getUniversityByName(universityName: String): UniversityUIModel?
 
-    suspend fun getUniversities(pageNumber: Int) : List<ProvinceUIModel>
+    suspend fun getUniversities(pageNumber: Int) : List<CityUIModel>
 
 }
