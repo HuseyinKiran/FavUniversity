@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.huseyinkiran.favuniversities.common.Resource
 import com.huseyinkiran.favuniversities.domain.model.CityUIModel
 import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
 import com.huseyinkiran.favuniversities.domain.repository.UniversityRepository
 import com.huseyinkiran.favuniversities.utils.PermissionRepository
-import com.huseyinkiran.favuniversities.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,8 +18,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,16 +35,10 @@ class HomeViewModel @Inject constructor(
         initialValue = emptyList()
     )
 
+    val cityPagingFlow: Flow<PagingData<CityUIModel>> = repository.getCityPagingFlow().cachedIn(viewModelScope)
+
     private val _callPhoneEvent = MutableLiveData<String?>()
     val callPhoneEvent: LiveData<String?> = _callPhoneEvent
-
-    private var currentList: MutableList<CityUIModel> = mutableListOf()
-    private var currentPage = 1
-    private val mutex = Mutex()
-
-    init {
-        loadCities()
-    }
 
     fun increaseDeniedCount() {
         permission.increaseDeniedCount()
@@ -76,30 +70,6 @@ class HomeViewModel @Inject constructor(
             upsertUniversity(university)
         } else {
             deleteUniversity(university)
-        }
-    }
-
-    private var isLoading = false
-    fun loadCities()  {
-        if (isLoading || currentPage > 3) return
-
-        viewModelScope.launch {
-            mutex.withLock {
-                isLoading = true
-                try {
-                    _cityList.value = Resource.Loading()
-                    val response = repository.getUniversities(pageNumber = currentPage)
-                    if (response.isNotEmpty()) {
-                        currentList.addAll(response)
-                        _cityList.value = Resource.Success(currentList.toList())
-                        currentPage++
-                    }
-                } catch (e: Exception) {
-                    _cityList.value = Resource.Error(e.localizedMessage ?: "Bilinmeyen Hata !")
-                } finally {
-                    isLoading = false
-                }
-            }
         }
     }
 

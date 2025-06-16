@@ -1,5 +1,9 @@
 package com.huseyinkiran.favuniversities.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.huseyinkiran.favuniversities.data.paging.CityPagingSource
 import com.huseyinkiran.favuniversities.domain.model.CityUIModel
 import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
 import com.huseyinkiran.favuniversities.domain.repository.UniversityLocalRepository
@@ -31,6 +35,18 @@ class UniversityRepositoryImpl @Inject constructor(
 
     override suspend fun getUniversities(pageNumber: Int): List<CityUIModel> {
         return remoteRepository.getUniversities(pageNumber)
+    }
+
+    override fun getCityPagingFlow(): Flow<PagingData<CityUIModel>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 30,
+                initialLoadSize = 30,
+                prefetchDistance = 5,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { CityPagingSource(this) }
+        ).flow
     }
 
 }

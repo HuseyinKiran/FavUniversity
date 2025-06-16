@@ -1,6 +1,7 @@
 package com.huseyinkiran.favuniversities.presentation.website
 
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,8 @@ class WebsiteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         lifecycleScope.launch {
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).isGone = true
         }
@@ -58,6 +61,7 @@ class WebsiteFragment : Fragment() {
                 loadWithOverviewMode = true
                 useWideViewPort = true
             }
+
             webViewClient = WebViewClient()
             if (url.contains("https://")) {
                 loadUrl(url)
@@ -71,6 +75,7 @@ class WebsiteFragment : Fragment() {
         super.onDestroyView()
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility =
             View.VISIBLE
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 
 }

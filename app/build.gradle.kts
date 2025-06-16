@@ -41,13 +41,14 @@ android {
     }
 }
 
-val room_version = "2.6.1"
-val nav_version = "2.8.4"
-val lifecycle_version = "2.8.7"
+val roomVersion = "2.6.1"
+val navVersion = "2.8.4"
+val lifecycleVersion = "2.8.7"
 val androidXTestVersion = "1.6.1"
 val mockitoVersion = "4.8.1"
 val mockitoKotlinVersion = "4.1.0"
 val mockkVersion = "1.13.5"
+val pagingVersion = "3.3.6"
 
 dependencies {
 
@@ -90,31 +91,33 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.51.1")
     androidTestImplementation("androidx.fragment:fragment-testing:1.8.5")
     debugImplementation("androidx.fragment:fragment-testing-manifest:1.8.5")
-    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+    androidTestImplementation("androidx.navigation:navigation-testing:$navVersion")
     androidTestImplementation("org.mockito:mockito-android:$mockitoVersion")
     // Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     // Room
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
     // Navigation
-    implementation("androidx.navigation:navigation-fragment:$nav_version")
-    implementation("androidx.navigation:navigation-ui:$nav_version")
+    implementation("androidx.navigation:navigation-fragment:$navVersion")
+    implementation("androidx.navigation:navigation-ui:$navVersion")
     implementation("androidx.fragment:fragment-ktx:1.8.5")
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
     // Splash
     implementation("androidx.core:core-splashscreen:1.0.0")
     // Mockito
     implementation("org.mockito:mockito-android:$mockitoVersion")
+    // Paging3
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
 }
