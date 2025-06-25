@@ -29,13 +29,23 @@ class HomeViewModel @Inject constructor(
     private val _cityList = MutableStateFlow<Resource<List<CityUIModel>>>(Resource.Loading())
     val cityList: Flow<Resource<List<CityUIModel>>> = _cityList
 
+    private val _cityPagingFlow = MutableStateFlow<PagingData<CityUIModel>>(PagingData.empty())
+    val cityPagingFlow: StateFlow<PagingData<CityUIModel>> = _cityPagingFlow
+
     val favorites: StateFlow<List<UniversityUIModel>> = repository.getAllFavorites().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList()
     )
 
-    val cityPagingFlow: Flow<PagingData<CityUIModel>> = repository.getCityPagingFlow().cachedIn(viewModelScope)
+    init {
+        viewModelScope.launch {
+            val pageSize = repository.getPageSize()
+            repository.getCityPagingFlow(pageSize = pageSize).cachedIn(viewModelScope).collect {
+                _cityPagingFlow.value = it
+            }
+        }
+    }
 
     private val _callPhoneEvent = MutableLiveData<String?>()
     val callPhoneEvent: LiveData<String?> = _callPhoneEvent

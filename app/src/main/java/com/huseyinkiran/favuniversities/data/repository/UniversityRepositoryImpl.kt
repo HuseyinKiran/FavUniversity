@@ -37,16 +37,24 @@ class UniversityRepositoryImpl @Inject constructor(
         return remoteRepository.getUniversities(pageNumber)
     }
 
-    override fun getCityPagingFlow(): Flow<PagingData<CityUIModel>> {
+    override fun getCityPagingFlow(pageSize: Int): Flow<PagingData<CityUIModel>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 30,
-                initialLoadSize = 30,
+                pageSize = pageSize,
+                initialLoadSize = pageSize,
                 prefetchDistance = 5,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { CityPagingSource(this) }
         ).flow
+    }
+
+    override suspend fun getTotalPage(): Int {
+        return remoteRepository.getTotalPage()
+    }
+
+    override suspend fun getPageSize(): Int {
+        return remoteRepository.getPageSize()
     }
 
 }

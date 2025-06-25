@@ -21,7 +21,8 @@ class CityPagingSource(
 
         return try {
             val cities = repository.getUniversities(page)
-            val isLastPage = page >= 3
+            val totalPage = repository.getTotalPage()
+            val isLastPage = page >= totalPage
 
             LoadResult.Page(
                 data = cities,
