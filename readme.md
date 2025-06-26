@@ -1,24 +1,31 @@
 # FavUniversity
 
-## 📌 Kullanılan Teknolojiler
-- **Clean Architecture** – Katmanlı mimari ile bağımsız, test edilebilir ve ölçeklenebilir kod yapısı
-- **Room Database** – Favori üniversiteleri saklamak ve yönetmek için yerel veritabanı yönetimi
-- **Navigation Component** – Single Activity yapısıyla Fragment'lar arasında akıcı geçişler
-- **Retrofit** – API istekleriyle şehir ve üniversite verilerini almak için
-- **ViewModel & LiveData** – UI verilerini reaktif şekilde yönetmek için
-- **Hilt (Dependency Injection)** – Bağımlılık yönetimini kolaylaştırarak modüler ve yönetilebilir kod yapısı
+## 📸 Screenshots
 
-**Projenin Özeti** <br/>
+<p float="left">
+  <img src="images/SplashScreen.png" width="32%" style="margin-right: 2%;" />
+  <img src="images/HomeFragment.png" width="32%" style="margin-right: 2%;" />
+  <img src="images/HomeFragmentSecond.png" width="32%" />
+</p>
 
-Türkiye'deki şehirlerin listelendiği ana sayfada, şehirlere tıklayarak genişleyen alanda
-şehirlerdeki üniversiteleri görüntüleyebilirsiniz. Üniversitelere tıklayarak genişleyen 
-alanda üniversite bilgilerini inceleyebilir ve üniversiteyi arayabilir veya websitesine 
-gidebilirsiniz. Favorilerinize ekleme/çıkarma işlemlerini yapabilir ve Favorilerim sayfasında
-favori üniversitelerinizi görüntüleyebilirsiniz.
+<p float="left">
+  <img src="images/FavoritesFragment.png" width="32%" style="margin-right: 2%;" />
+  <img src="images/FavoritesFragmentSecond.png" width="32%" style="margin-right: 2%;" />
+  <img src="images/WebsiteFragment.png" width="32%" style="margin-right: 2%;" />
+</p>
 
-![SplashFragment](./images/SplashScreen.png)
-![HomeFragment](./images/HomeFragment.png)
-![HomeFragment](./images/HomeFragmentSecond.png)
-![FavoritesFragment](./images/FavoritesFragment.png)
-![FavoritesFragment](./images/FavoritesFragmentSecond.png)
-![WebsiteFragment](./images/WebsiteFragment.png)
+## 📄 Project Overview
+
+You can tap a city to expand and view the universities within on the main screen listing cities in Türkiye.
+By tapping on a university, you can expand the section to examine university details, make a phone call,
+or visit its website. You can add or remove universities from your favorites and view them in the
+Favorites screen.
+
+## 📌 Tech Stack
+- **Clean Architecture** – Layered architecture for a scalable, testable, and maintainable codebase
+- **Room Database** – Local database to store and manage favorite universities
+- **Navigation Component** – Single activity multiple fragments approach
+- **Retrofit** – For fetching city and university data via API requests
+- **ViewModel & LiveData** – Managing UI data in a reactive way
+- **Hilt (Dependency Injection)** – Simplifies dependency management for a modular codebase
+- **ViewBinding** – Easy and type-safe access to XML layout views
