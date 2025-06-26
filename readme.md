@@ -29,3 +29,4 @@ Favorites screen.
 - **ViewModel & LiveData** – Managing UI data in a reactive way
 - **Hilt (Dependency Injection)** – Simplifies dependency management for a modular codebase
 - **ViewBinding** – Easy and type-safe access to XML layout views
+- **Coroutines (Flow & StateFlow)** – For reactive and asynchronous data streams; `Flow` for API responses, `StateFlow` for UI state management
