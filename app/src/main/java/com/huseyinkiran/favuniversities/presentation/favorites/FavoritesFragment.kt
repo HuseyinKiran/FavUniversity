@@ -26,21 +26,15 @@ import com.huseyinkiran.favuniversities.utils.CallPermissionDialog
 import com.huseyinkiran.favuniversities.utils.ExpandStateManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
+import com.huseyinkiran.favuniversities.R
+import com.huseyinkiran.favuniversities.utils.viewBinding
 
 @AndroidEntryPoint
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
-    private lateinit var adapter: UniversityAdapter
     private val viewModel: FavoritesViewModel by viewModels()
-    private var _binding: FragmentFavoritesBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val binding by viewBinding(FragmentFavoritesBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,9 +43,8 @@ class FavoritesFragment : Fragment() {
         observeViewModel()
     }
 
-    private fun setupAdapter() = with(binding) {
-
-        adapter = UniversityAdapter(
+    private val adapter by lazy {
+        UniversityAdapter(
             fragmentType = AdapterFragmentType.FAVORITES,
             callbacks = object : UniversityAdapter.UniversityClickListener {
                 override fun onFavoriteClick(university: UniversityUIModel) {
@@ -69,11 +62,13 @@ class FavoritesFragment : Fragment() {
                     viewModel.requestCall(phoneNumber)
                 }
 
-            })
+            }
+        )
+    }
 
+    private fun setupAdapter() = with(binding) {
         rvFavorites.adapter = adapter
         rvFavorites.itemAnimator = null
-
     }
 
     private fun observeViewModel() {
@@ -132,7 +127,7 @@ class FavoritesFragment : Fragment() {
 
     private fun callPhoneNumber(phoneNumber: String) {
         val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:$phoneNumber")
+        intent.data = "tel:$phoneNumber".toUri()
         startActivity(intent)
     }
 

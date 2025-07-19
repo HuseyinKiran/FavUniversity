@@ -37,13 +37,14 @@ class HomeViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList()
     )
+    
+    private var isLoaded = false
 
-    init {
-        viewModelScope.launch {
-            val pageSize = repository.getPageSize()
-            repository.getCityPagingFlow(pageSize = pageSize).cachedIn(viewModelScope).collect {
-                _cityPagingFlow.value = it
-            }
+    fun getCities() = viewModelScope.launch {
+        if (isLoaded) return@launch
+        repository.getCityPagingFlow().cachedIn(viewModelScope).collect {
+            _cityPagingFlow.value = it
+            isLoaded = true
         }
     }
 

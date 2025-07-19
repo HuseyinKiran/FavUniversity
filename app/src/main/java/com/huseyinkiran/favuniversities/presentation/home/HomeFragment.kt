@@ -4,9 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.core.app.ActivityCompat
@@ -21,42 +19,35 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.map
+import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.FragmentHomeBinding
 import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
 import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
 import com.huseyinkiran.favuniversities.presentation.adapter.city.CityPagingAdapter
 import com.huseyinkiran.favuniversities.presentation.adapter.university.UniversityAdapter
 import com.huseyinkiran.favuniversities.utils.CallPermissionDialog
+import com.huseyinkiran.favuniversities.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private lateinit var adapter: CityPagingAdapter
     private val viewModel: HomeViewModel by viewModels()
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private  val binding by viewBinding(FragmentHomeBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         exitOnBackPressed()
         setupAdapter()
         observeViewModel()
+        viewModel.getCities()
     }
 
-    private fun setupAdapter() = with(binding) {
-
-        adapter = CityPagingAdapter(
+    private val adapter: CityPagingAdapter by lazy {
+        CityPagingAdapter(
             fragmentType = AdapterFragmentType.HOME,
             callbacks = object : UniversityAdapter.UniversityClickListener {
                 override fun onFavoriteClick(university: UniversityUIModel) {
@@ -75,11 +66,13 @@ class HomeFragment : Fragment() {
                     viewModel.requestCall(phoneNumber)
                 }
 
-            })
+            }
+        )
+    }
 
+    private fun setupAdapter() = with(binding) {
         rvCity.adapter = adapter
         rvCity.itemAnimator = null
-
     }
 
     private fun observeViewModel() = with(binding) {
