@@ -2,6 +2,9 @@ package com.huseyinkiran.favuniversities.di
 
 import android.content.Context
 import androidx.room.Room
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import com.huseyinkiran.favuniversities.domain.repository.UniversityLocalRepository
 import com.huseyinkiran.favuniversities.data.repository.UniversityLocalRepositoryImpl
 import com.huseyinkiran.favuniversities.domain.repository.UniversityRemoteRepository
@@ -18,6 +21,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -36,13 +41,43 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideUniversityAPI(): UniversityAPI {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+    fun provideChuckerInterceptor(@ApplicationContext context: Context): ChuckerInterceptor {
+        val chuckerCollector = ChuckerCollector(
+            context = context,
+            showNotification = true,
+            retentionPeriod = RetentionManager.Period.ONE_HOUR
+        )
+        return ChuckerInterceptor.Builder(context).collector(chuckerCollector)
+            .maxContentLength(250_000L)
+            .alwaysReadResponseBody(true)
             .build()
-            .create(UniversityAPI::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(
+        chuckerInterceptor: ChuckerInterceptor,
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient = OkHttpClient.Builder().apply {
+        addInterceptor(loggingInterceptor)
+        addInterceptor(chuckerInterceptor)
+    }.build()
+
+    @Singleton
+    @Provides
+    fun provideUniversityAPI(
+        okHttpClient: OkHttpClient
+    ): UniversityAPI = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(UniversityAPI::class.java)
 
     @Singleton
     @Provides
