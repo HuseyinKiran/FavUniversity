@@ -15,16 +15,4 @@ class UniversityRemoteRepositoryImpl @Inject constructor(
         return response.data.map { it.toUIModel() }
     }
 
-    override suspend fun getTotalPage(): Int {
-        val response = api.getUniversities(1)
-        val totalPage = response.totalPage
-        return totalPage
-    }
-
-    override suspend fun getPageSize(): Int {
-        val response = api.getUniversities(1)
-        val pageSize = response.pageSize
-        return pageSize
-    }
-
 }

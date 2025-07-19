@@ -17,10 +17,6 @@ interface UniversityRepository {
 
     suspend fun getUniversities(pageNumber: Int) : List<CityUIModel>
 
-    fun getCityPagingFlow(pageSize: Int): Flow<PagingData<CityUIModel>>
-
-    suspend fun getTotalPage(): Int
-
-    suspend fun getPageSize(): Int
+    fun getCityPagingFlow(): Flow<PagingData<CityUIModel>>
 
 }

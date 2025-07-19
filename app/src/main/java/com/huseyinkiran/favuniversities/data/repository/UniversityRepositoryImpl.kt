@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.huseyinkiran.favuniversities.data.paging.CityPagingSource
+import com.huseyinkiran.favuniversities.data.paging.CityPagingSource.Companion.NETWORK_PAGE_SIZE
 import com.huseyinkiran.favuniversities.domain.model.CityUIModel
 import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
 import com.huseyinkiran.favuniversities.domain.repository.UniversityLocalRepository
@@ -37,24 +38,15 @@ class UniversityRepositoryImpl @Inject constructor(
         return remoteRepository.getUniversities(pageNumber)
     }
 
-    override fun getCityPagingFlow(pageSize: Int): Flow<PagingData<CityUIModel>> {
+    override fun getCityPagingFlow(): Flow<PagingData<CityUIModel>> {
         return Pager(
             config = PagingConfig(
-                pageSize = pageSize,
-                initialLoadSize = pageSize,
-                prefetchDistance = 5,
+                pageSize = NETWORK_PAGE_SIZE,
+                prefetchDistance = 10,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { CityPagingSource(this) }
         ).flow
-    }
-
-    override suspend fun getTotalPage(): Int {
-        return remoteRepository.getTotalPage()
-    }
-
-    override suspend fun getPageSize(): Int {
-        return remoteRepository.getPageSize()
     }
 
 }
