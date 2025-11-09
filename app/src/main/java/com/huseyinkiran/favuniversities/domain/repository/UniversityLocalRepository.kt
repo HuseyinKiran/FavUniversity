@@ -1,16 +1,16 @@
 package com.huseyinkiran.favuniversities.domain.repository
 
-import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
+import com.huseyinkiran.favuniversities.domain.model.University
 import kotlinx.coroutines.flow.Flow
 
 interface UniversityLocalRepository {
 
-    suspend fun upsertUniversity(university: UniversityUIModel)
+    suspend fun upsertUniversity(university: University)
 
-    suspend fun deleteUniversity(university: UniversityUIModel)
+    suspend fun deleteUniversity(university: University)
 
-    fun getAllFavorites() : Flow<List<UniversityUIModel>>
+    fun getAllFavorites() : Flow<List<University>>
 
-    suspend fun getUniversityByName(universityName: String): UniversityUIModel?
+    suspend fun getUniversityByName(universityName: String): University?
 
 }

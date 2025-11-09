@@ -1,64 +1,50 @@
 package com.huseyinkiran.favuniversities.presentation.favorites
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
-import com.huseyinkiran.favuniversities.domain.repository.UniversityRepository
-import com.huseyinkiran.favuniversities.utils.PermissionRepository
+import com.huseyinkiran.favuniversities.domain.use_case.UniversityUseCases
+import com.huseyinkiran.favuniversities.presentation.mapper.toDomain
+import com.huseyinkiran.favuniversities.presentation.mapper.toUI
+import com.huseyinkiran.favuniversities.presentation.model.UniversityUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val repository: UniversityRepository,
-    private val permission: PermissionRepository
+    private val useCases: UniversityUseCases
 ) : ViewModel() {
 
-    val favorites: StateFlow<List<UniversityUIModel>> = repository.getAllFavorites().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
-    )
+    private val _expandedFavUniversities = MutableStateFlow<Set<String>>(emptySet())
+    val expandedFavUnis: StateFlow<Set<String>> = _expandedFavUniversities
 
-    private val _callPhoneEvent = MutableLiveData<String?>()
-    val callPhoneEvent: LiveData<String?> = _callPhoneEvent
-
-    fun increaseDeniedCount() {
-        permission.increaseDeniedCount()
-    }
-
-    fun shouldRedirectToSettings() : Boolean {
-        return permission.shouldRedirectToSettings()
-    }
-
-    fun requestCall(phoneNumber: String) {
-        _callPhoneEvent.value = phoneNumber
-    }
-
-    fun clearCallEvent() {
-        _callPhoneEvent.value = null
-    }
-
-    fun upsertUniversity(university: UniversityUIModel) = viewModelScope.launch {
-        repository.upsertUniversity(university)
-    }
-
-    fun deleteUniversity(university: UniversityUIModel) = viewModelScope.launch {
-        repository.deleteUniversity(university)
-    }
+    val favorites: StateFlow<List<UniversityUIModel>> =
+        useCases.getAllFavoritesUseCase()
+            .map { list -> list.map { it.toUI() } }
+            .combine(expandedFavUnis) { list, expanded ->
+                list.map { university ->
+                    university.copy(isExpanded = university.name in expanded)
+                }
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = emptyList()
+            )
 
     fun toggleFavorite(university: UniversityUIModel) = viewModelScope.launch {
-        val universityInDb = repository.getUniversityByName(university.name)
-        if (universityInDb == null) {
-            upsertUniversity(university)
-        } else {
-            deleteUniversity(university)
+        useCases.toggleFavoriteUniversityUseCase(university.toDomain())
+    }
+
+    fun onFavUniversityExpanded(name: String) {
+        _expandedFavUniversities.value = _expandedFavUniversities.value.toMutableSet().apply {
+            if (!add(name)) remove(name)
         }
     }
 

@@ -1,43 +1,48 @@
 package com.huseyinkiran.favuniversities.repository
 
+import androidx.paging.PagingData
+import com.huseyinkiran.favuniversities.data.mapper.toCity
 import com.huseyinkiran.favuniversities.data.remote.dto.CityDto
 import com.huseyinkiran.favuniversities.data.remote.dto.Response
-import com.huseyinkiran.favuniversities.domain.model.CityUIModel
-import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
-import com.huseyinkiran.favuniversities.domain.model.toUIModel
+import com.huseyinkiran.favuniversities.domain.model.City
+import com.huseyinkiran.favuniversities.domain.model.University
 import com.huseyinkiran.favuniversities.domain.repository.UniversityRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class FakeUniversityRepository : UniversityRepository {
 
-    private val universities = mutableListOf<UniversityUIModel>()
-    private val universitiesLiveData = MutableStateFlow<List<UniversityUIModel>>(universities)
+    private val universities = mutableListOf<University>()
+    private val universitiesLiveData = MutableStateFlow<List<University>>(universities)
 
     private val fakeCities = mutableListOf<CityDto>()
     private var shouldReturnError = false
 
-    override suspend fun upsertUniversity(university: UniversityUIModel) {
+    override suspend fun upsertUniversity(university: University) {
         universities.add(university)
         refreshData()
     }
 
-    override suspend fun deleteUniversity(university: UniversityUIModel) {
+    override suspend fun deleteUniversity(university: University) {
         universities.remove(university)
         refreshData()
     }
 
-    override fun getAllFavorites(): Flow<List<UniversityUIModel>> {
+    override fun getAllFavorites(): Flow<List<University>> {
         return universitiesLiveData
     }
 
-    override suspend fun getUniversityByName(universityName: String): UniversityUIModel? {
+    override suspend fun getUniversityByName(universityName: String): University? {
         return universities.firstOrNull { it.name == universityName }
     }
 
-    override suspend fun getUniversities(pageNumber: Int): List<CityUIModel> {
+    override suspend fun getCities(pageNumber: Int): List<City> {
         val response = Response(1, 1, 1, 1, 1, fakeCities)
-        return response.data.map { it.toUIModel() }
+        return response.data.map { it.toCity() }
+    }
+
+    override fun getCityPagingFlow(): Flow<PagingData<City>> {
+        TODO("Not yet implemented")
     }
 
     private fun refreshData() {

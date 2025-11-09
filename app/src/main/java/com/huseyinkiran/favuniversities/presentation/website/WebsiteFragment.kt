@@ -17,7 +17,6 @@ import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.FragmentWebsiteBinding
 import kotlinx.coroutines.launch
 
-
 class WebsiteFragment : Fragment() {
 
     private var _binding: FragmentWebsiteBinding? = null

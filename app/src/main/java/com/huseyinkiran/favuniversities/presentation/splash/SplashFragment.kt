@@ -16,7 +16,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyinkiran.favuniversities.R
 import kotlinx.coroutines.launch
 
-
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private val viewModel: SplashViewModel by viewModels()
@@ -41,7 +40,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private fun startedSplash() {
         requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireContext(), R.color.splash_background)
+            ContextCompat.getColor(requireContext(), R.color.bg_splash)
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).isGone = true
     }
@@ -55,7 +54,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     override fun onDestroyView() {
         super.onDestroyView()
         requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireContext(), R.color.toolbar_softCyan)
+            ContextCompat.getColor(requireContext(), R.color.bg_toolbar)
 
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).isVisible = true
     }

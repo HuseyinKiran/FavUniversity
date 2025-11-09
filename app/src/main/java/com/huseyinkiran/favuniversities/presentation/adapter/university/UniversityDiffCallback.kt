@@ -1,7 +1,7 @@
 package com.huseyinkiran.favuniversities.presentation.adapter.university
 
 import androidx.recyclerview.widget.DiffUtil
-import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
+import com.huseyinkiran.favuniversities.presentation.model.UniversityUIModel
 
 class UniversityDiffCallback : DiffUtil.ItemCallback<UniversityUIModel>() {
 

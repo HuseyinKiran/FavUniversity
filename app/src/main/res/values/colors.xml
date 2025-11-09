@@ -3,10 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">@color/material_dynamic_neutral90</color>
+    <color name="city_text_color">#f2f2f2</color>
 
-    <color name="splash_background">#0e2c54</color>
-    <color name="toolbar_softCyan">#88C0D0</color>
-    <color name="cell_city_softCyan">#81A1C1</color>
-    <color name="universityDetails_softCyan">#BDEFFD</color>
+    <color name="bg_splash">#0e2c54</color>
+    <color name="bg_toolbar">#f4610f</color>
+    <color name="bg_cell_city">#4677A6</color>
+    <color name="bg_cell_university">#C4E1E6</color>
+    <color name="bg_uni_detail_card">#FBE4C4</color>
 
 </resources>

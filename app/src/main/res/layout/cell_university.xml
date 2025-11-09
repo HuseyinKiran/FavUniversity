@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,11 +9,14 @@
         android:id="@+id/cardUni"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/toolbar_softCyan"
+        android:backgroundTint="@color/bg_cell_university"
         app:cardCornerRadius="8dp"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -21,7 +24,10 @@
                 android:id="@+id/universityLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
                     android:id="@+id/btnExpand"
@@ -47,25 +53,26 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/custom_btn_bg"
-                    android:backgroundTint="@color/toolbar_softCyan"
+                    android:backgroundTint="@color/bg_toolbar"
                     android:contentDescription="@string/university_favorite_button"
                     android:src="@drawable/baseline_favorite_border_24" />
-
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardUnivInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/universityLayout"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="0dp">
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/universityLayout">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/universityDetails_softCyan"
+                    android:background="@color/bg_uni_detail_card"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -78,6 +85,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/phone"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
@@ -86,7 +94,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:textColor="@color/black" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -98,6 +105,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/fax"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
@@ -106,7 +114,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:textColor="@color/black" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -118,6 +125,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/website"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
@@ -126,7 +134,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:textColor="@color/black" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -138,6 +145,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/address"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
@@ -146,7 +154,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:textColor="@color/black" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -158,6 +165,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/rector"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
@@ -166,15 +174,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:textColor="@color/black" />
-
                     </LinearLayout>
 
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
-
-        </RelativeLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

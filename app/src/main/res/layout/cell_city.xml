@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,12 +8,15 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardCity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/cell_city_softCyan"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/bg_cell_city"
         app:cardCornerRadius="8dp"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -21,7 +24,10 @@
                 android:id="@+id/cityLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
                     android:id="@+id/imgBtn"
@@ -31,7 +37,8 @@
                     android:background="@drawable/custom_btn_bg"
                     android:clickable="false"
                     android:contentDescription="@string/city_expand_button"
-                    android:src="@drawable/baseline_keyboard_arrow_down_24" />
+                    android:src="@drawable/baseline_keyboard_arrow_down_24"
+                    app:tint="@color/city_text_color" />
 
                 <TextView
                     android:id="@+id/txtCityName"
@@ -39,19 +46,20 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:gravity="center_vertical"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@color/city_text_color" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvUniversity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cityLayout"
-                android:visibility="gone" />
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cityLayout" />
 
-        </RelativeLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

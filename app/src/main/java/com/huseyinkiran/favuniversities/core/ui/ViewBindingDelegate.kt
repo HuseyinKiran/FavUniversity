@@ -1,4 +1,4 @@
-package com.huseyinkiran.favuniversities.utils
+package com.huseyinkiran.favuniversities.core.ui
 
 import android.view.View
 import androidx.fragment.app.Fragment

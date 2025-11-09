@@ -10,9 +10,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
-import com.huseyinkiran.favuniversities.domain.model.toUIModel
+import com.huseyinkiran.favuniversities.domain.model.toUniversity
 import com.huseyinkiran.favuniversities.presentation.favorites.FavoritesViewModel
-import com.huseyinkiran.favuniversities.utils.PermissionRepository
 import kotlinx.coroutines.test.advanceUntilIdle
 
 @ExperimentalCoroutinesApi
@@ -48,7 +47,7 @@ class FavoritesViewModelTest {
             website = "https://testuniversity.edu",
         )
 
-        viewModel.upsertUniversity(university.toUIModel())
+        viewModel.upsertUniversity(university.toUniversity())
         advanceUntilIdle()
         val afterAdd = viewModel.getFavorites()
         assertThat(afterAdd).contains(university)
@@ -68,9 +67,9 @@ class FavoritesViewModelTest {
             website = "https://testuniversity.edu",
         )
 
-        viewModel.upsertUniversity(university.toUIModel())
+        viewModel.upsertUniversity(university.toUniversity())
         advanceUntilIdle()
-        viewModel.deleteUniversity(university.toUIModel())
+        viewModel.deleteUniversity(university.toUniversity())
         advanceUntilIdle()
         val afterRemove = viewModel.getFavorites()
         assertThat(afterRemove).doesNotContain(university)

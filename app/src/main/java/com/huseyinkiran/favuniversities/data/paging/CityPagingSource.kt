@@ -1,29 +1,28 @@
 package com.huseyinkiran.favuniversities.data.paging
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.huseyinkiran.favuniversities.domain.model.CityUIModel
+import com.huseyinkiran.favuniversities.domain.model.City
 import com.huseyinkiran.favuniversities.domain.repository.UniversityRepository
 import okio.IOException
 import retrofit2.HttpException
 
 class CityPagingSource(
     private val repository: UniversityRepository
-) : PagingSource<Int, CityUIModel>() {
+) : PagingSource<Int, City>() {
 
-    override fun getRefreshKey(state: PagingState<Int, CityUIModel>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, City>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CityUIModel> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, City> {
         val pageIndex = params.key ?: PAGE_INDEX
 
         return try {
-            val cities = repository.getUniversities(pageIndex)
+            val cities = repository.getCities(pageIndex)
 
             LoadResult.Page(
                 data = cities,

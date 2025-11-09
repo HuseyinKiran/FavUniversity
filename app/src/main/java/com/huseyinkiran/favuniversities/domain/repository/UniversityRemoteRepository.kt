@@ -1,9 +1,9 @@
 package com.huseyinkiran.favuniversities.domain.repository
 
-import com.huseyinkiran.favuniversities.domain.model.CityUIModel
+import com.huseyinkiran.favuniversities.domain.model.City
 
 interface UniversityRemoteRepository {
 
-    suspend fun getUniversities(pageNumber: Int) : List<CityUIModel>
+    suspend fun getCities(pageNumber: Int) : List<City>
 
 }

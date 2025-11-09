@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class CityDto(
     val id: Int,
-    @SerializedName("province")
-    val name: String,
+    @SerializedName("province") val name: String,
     val universities: List<UniversityDto>
 )

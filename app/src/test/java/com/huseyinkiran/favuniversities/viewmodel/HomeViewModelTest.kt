@@ -7,7 +7,6 @@ import com.huseyinkiran.favuniversities.getOrAwaitValue
 import com.huseyinkiran.favuniversities.data.remote.dto.CityDto
 import com.huseyinkiran.favuniversities.presentation.home.HomeViewModel
 import com.huseyinkiran.favuniversities.repository.FakeUniversityRepository
-import com.huseyinkiran.favuniversities.utils.PermissionRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest

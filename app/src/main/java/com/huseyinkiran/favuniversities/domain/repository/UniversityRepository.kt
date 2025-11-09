@@ -1,22 +1,22 @@
 package com.huseyinkiran.favuniversities.domain.repository
 
 import androidx.paging.PagingData
-import com.huseyinkiran.favuniversities.domain.model.CityUIModel
-import com.huseyinkiran.favuniversities.domain.model.UniversityUIModel
+import com.huseyinkiran.favuniversities.domain.model.City
+import com.huseyinkiran.favuniversities.domain.model.University
 import kotlinx.coroutines.flow.Flow
 
 interface UniversityRepository {
 
-    suspend fun upsertUniversity(university: UniversityUIModel)
+    suspend fun upsertUniversity(university: University)
 
-    suspend fun deleteUniversity(university: UniversityUIModel)
+    suspend fun deleteUniversity(university: University)
 
-    fun getAllFavorites() : Flow<List<UniversityUIModel>>
+    fun getAllFavorites() : Flow<List<University>>
 
-    suspend fun getUniversityByName(universityName: String): UniversityUIModel?
+    suspend fun getUniversityByName(universityName: String): University?
 
-    suspend fun getUniversities(pageNumber: Int) : List<CityUIModel>
+    suspend fun getCities(pageNumber: Int) : List<City>
 
-    fun getCityPagingFlow(): Flow<PagingData<CityUIModel>>
+    fun getCityPagingFlow(): Flow<PagingData<City>>
 
 }
