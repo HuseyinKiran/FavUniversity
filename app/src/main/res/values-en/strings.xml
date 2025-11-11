@@ -12,11 +12,13 @@
     <string name="added_to_favorites">added to favorites</string>
     <string name="removed_from_favorites">removed from favorites</string>
 
-    <string name="phone">phone:</string>
-    <string name="fax">fax:</string>
-    <string name="website">website:</string>
-    <string name="address">address:</string>
-    <string name="rector">rector:</string>
+    <string name="university_type">University Type:</string>
+    <string name="phone">Phone:</string>
+    <string name="fax">Fax:</string>
+    <string name="website">Website:</string>
+    <string name="address">Address:</string>
+    <string name="rector">Rector:</string>
+    <string name="email">E-mail:</string>
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
 

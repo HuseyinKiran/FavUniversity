@@ -12,11 +12,13 @@
     <string name="added_to_favorites">favorilere eklendi</string>
     <string name="removed_from_favorites">favorilerden kaldırıldı</string>
 
-    <string name="phone">telefon:</string>
-    <string name="fax">fax:</string>
-    <string name="website">website:</string>
-    <string name="address">adres:</string>
-    <string name="rector">rektör:</string>
+    <string name="university_type">Üniversite Türü:</string>
+    <string name="phone">Telefon:</string>
+    <string name="fax">Faks:</string>
+    <string name="website">Web Sitesi:</string>
+    <string name="address">Adres:</string>
+    <string name="rector">Rektör:</string>
+    <string name="email">E-posta:</string>
     <string name="home">Ana Sayfa</string>
     <string name="favorites">Favoriler</string>
 

@@ -18,12 +18,14 @@ class UniversityViewHolder(private val binding: CellUniversityBinding) :
         callbacks: UniversityAdapter.UniversityClickListener,
     ) = with(binding) {
 
+        txtUniType.text = university.universityType
         txtUniName.text = university.name
         txtAddress.text = university.address
         txtFax.text = university.fax
         txtPhone.text = university.phone
         txtRector.text = university.rector
         txtWebsite.text = university.website
+        txtEmail.text = university.email
 
         txtPhone.paintFlags = txtPhone.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         txtWebsite.paintFlags = txtWebsite.paintFlags or Paint.UNDERLINE_TEXT_FLAG
