@@ -12,13 +12,13 @@ interface UniversityDAO {
     @Upsert
     suspend fun upsertUniversity(university: UniversityEntity)
 
-    @Query("SELECT * FROM favorites")
+    @Query("SELECT * FROM favorites ORDER BY addedAt DESC")
     fun getAllFavorites() : Flow<List<UniversityEntity>>
 
     @Delete
     suspend fun deleteUniversity(university: UniversityEntity)
 
-    @Query("SELECT * FROM favorites WHERE name = :universityName")
-    suspend fun getFavoriteByName(universityName: String): UniversityEntity?
+    @Query("SELECT * FROM favorites WHERE id = :universityId")
+    suspend fun getFavoriteById(universityId: Int): UniversityEntity?
 
 }

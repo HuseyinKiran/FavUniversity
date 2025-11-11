@@ -9,7 +9,7 @@ class ToggleFavoriteUniversityUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(university: University) = runCatching {
-        val existing = repository.getUniversityByName(university.name)
+        val existing = repository.getUniversityById(university.id)
         if (existing == null) {
             repository.upsertUniversity(university)
         } else {

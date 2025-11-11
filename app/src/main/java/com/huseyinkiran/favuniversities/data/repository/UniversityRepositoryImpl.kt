@@ -1,6 +1,5 @@
 package com.huseyinkiran.favuniversities.data.repository
 
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -31,8 +30,8 @@ class UniversityRepositoryImpl @Inject constructor(
         return localRepository.getAllFavorites()
     }
 
-    override suspend fun getUniversityByName(universityName: String): University? {
-        return localRepository.getUniversityByName(universityName)
+    override suspend fun getUniversityById(universityId: Int): University? {
+        return localRepository.getUniversityById(universityId)
     }
 
     override suspend fun getCities(pageNumber: Int): List<City> {

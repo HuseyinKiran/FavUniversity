@@ -11,6 +11,6 @@ interface UniversityLocalRepository {
 
     fun getAllFavorites() : Flow<List<University>>
 
-    suspend fun getUniversityByName(universityName: String): University?
+    suspend fun getUniversityById(universityId: Int): University?
 
 }

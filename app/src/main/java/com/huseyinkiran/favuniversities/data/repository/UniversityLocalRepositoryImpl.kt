@@ -27,8 +27,8 @@ class UniversityLocalRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUniversityByName(universityName: String): University? {
-        return dao.getFavoriteByName(universityName)?.toUniversity()
+    override suspend fun getUniversityById(universityId: Int): University? {
+        return dao.getFavoriteById(universityId)?.toUniversity()
     }
 
 }
