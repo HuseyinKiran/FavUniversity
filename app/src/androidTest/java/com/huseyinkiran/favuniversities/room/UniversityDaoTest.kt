@@ -2,7 +2,6 @@ package com.huseyinkiran.favuniversities.room
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
-import com.huseyinkiran.favuniversities.getOrAwaitValue
 import com.huseyinkiran.favuniversities.data.local.UniversityEntity
 import com.google.common.truth.Truth.assertThat
 import com.huseyinkiran.favuniversities.data.local.UniversityDAO
@@ -44,12 +43,15 @@ class UniversityDaoTest {
     fun getAllFavorites() = runTest {
 
         val university = UniversityEntity(
+            id = 51,
+            universityType = "Devlet",
             name = "Test University",
             address = "123 Test Street",
             fax = "123-456-7890",
             phone = "987-654-3210",
             rector = "Test President",
             website = "https://testuniversity.edu",
+            email = ""
         )
 
         //val allFavorites = dao.getAllFavorites().getOrAwaitValue()
@@ -66,12 +68,15 @@ class UniversityDaoTest {
     fun upsertUniversityTest() = runTest {
 
         val university = UniversityEntity(
+            id = 51,
+            universityType = "Devlet",
             name = "Test University",
             address = "123 Test Street",
             fax = "123-456-7890",
             phone = "987-654-3210",
             rector = "Test President",
             website = "https://testuniversity.edu",
+            email = ""
         )
 
         dao.upsertUniversity(university)
@@ -84,12 +89,15 @@ class UniversityDaoTest {
     fun deleteUniversityTest() = runTest {
 
         val university = UniversityEntity(
+            id = 51,
+            universityType = "Devlet",
             name = "Test University",
             address = "123 Test Street",
             fax = "123-456-7890",
             phone = "987-654-3210",
             rector = "Test President",
             website = "https://testuniversity.edu",
+            email = ""
         )
 
         dao.upsertUniversity(university)
@@ -103,28 +111,34 @@ class UniversityDaoTest {
     fun getFavoriteByName() = runTest {
 
         val university = UniversityEntity(
+            id = 51,
+            universityType = "Devlet",
             name = "Test University",
             address = "123 Test Street",
             fax = "123-456-7890",
             phone = "987-654-3210",
             rector = "Test President",
             website = "https://testuniversity.edu",
+            email = ""
         )
 
         val university2 = UniversityEntity(
+            id = 57,
+            universityType = "Devlet",
             name = "Test University 2",
             address = "123 Test Street",
             fax = "123-456-7890",
             phone = "987-654-3210",
             rector = "Test President",
             website = "https://testuniversity.edu",
+            email = ""
         )
 
         dao.upsertUniversity(university)
         dao.upsertUniversity(university2)
-        val getFavoriteByName = dao.getFavoriteByName(university2.name)
-        assertThat(getFavoriteByName?.name).isNotEqualTo(university.name)
-        assertThat(getFavoriteByName?.name).isEqualTo(university2.name)
+        val getFavoriteById = dao.getFavoriteById(university2.id)
+        assertThat(getFavoriteById?.id).isNotEqualTo(university.id)
+        assertThat(getFavoriteById?.id).isEqualTo(university2.id)
 
     }
 

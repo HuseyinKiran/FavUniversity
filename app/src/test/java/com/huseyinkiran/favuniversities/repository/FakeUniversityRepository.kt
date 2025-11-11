@@ -1,11 +1,12 @@
 package com.huseyinkiran.favuniversities.repository
 
 
+import androidx.paging.PagingData
+import com.huseyinkiran.favuniversities.data.mapper.toCity
 import com.huseyinkiran.favuniversities.data.remote.dto.CityDto
 import com.huseyinkiran.favuniversities.data.remote.dto.Response
 import com.huseyinkiran.favuniversities.domain.model.City
 import com.huseyinkiran.favuniversities.domain.model.University
-import com.huseyinkiran.favuniversities.domain.model.toUniversity
 import com.huseyinkiran.favuniversities.domain.repository.UniversityRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,13 +32,17 @@ class FakeUniversityRepository : UniversityRepository {
         return universitiesLiveData
     }
 
-    override suspend fun getUniversityByName(universityName: String): University? {
-        return universities.firstOrNull { it.name == universityName }
+    override suspend fun getUniversityById(universityId: Int): University? {
+        return universities.firstOrNull { it.id == universityId }
     }
 
     override suspend fun getCities(pageNumber: Int): List<City> {
         val response = Response(1,1,1,1,1,fakeCities)
-        return response.data.map { it.toUniversity() }
+        return response.data.map { it.toCity() }
+    }
+
+    override fun getCityPagingFlow(): Flow<PagingData<City>> {
+        TODO("Not yet implemented")
     }
 
     private fun refreshData() {

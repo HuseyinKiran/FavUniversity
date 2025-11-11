@@ -32,8 +32,8 @@ class FakeUniversityRepository : UniversityRepository {
         return universitiesLiveData
     }
 
-    override suspend fun getUniversityByName(universityName: String): University? {
-        return universities.firstOrNull { it.name == universityName }
+    override suspend fun getUniversityById(universityId: Int): University? {
+        return universities.firstOrNull { it.id == universityId }
     }
 
     override suspend fun getCities(pageNumber: Int): List<City> {
