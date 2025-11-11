@@ -16,35 +16,44 @@ fun CityDto.toCity(): City {
 
 fun UniversityEntity.toUniversity(): University {
     return University(
+        id = id,
+        universityType = universityType,
         name = name,
         address = address,
         fax = fax,
         phone = phone,
         rector = rector,
         website = website,
+        email = email,
         isFavorite = true
     )
 }
 
 fun UniversityDto.toUniversity(): University {
     return University(
+        id = id,
+        universityType = universityType,
         name = name,
         address = address,
         fax = fax,
         phone = phone,
         rector = rector,
         website = website,
+        email = email,
         isFavorite = false
     )
 }
 
 fun University.toEntity(): UniversityEntity {
     return UniversityEntity(
+        id = id,
+        universityType = universityType,
         name = name,
         fax = fax,
         phone = phone,
         website = website,
         address = address,
         rector = rector,
+        email = email
     )
 }

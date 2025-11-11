@@ -19,7 +19,7 @@ fun University.toUI(): UniversityUIModel {
     val expandable = listOf(address, fax, phone, rector, website)
         .any { it.isNotBlank() && it != "-" }
     return UniversityUIModel(
-        name, address, fax, phone, rector, website,
+        id, universityType, name, address, fax, phone, rector, website, email,
         isFavorite = isFavorite,
         isExpandable = expandable,
         isExpanded = false
@@ -27,11 +27,14 @@ fun University.toUI(): UniversityUIModel {
 }
 
 fun UniversityUIModel.toDomain(): University = University(
+    id = id,
+    universityType = universityType,
     name = name,
     address = address,
     fax = fax,
     phone = phone,
     rector = rector,
     website = website,
+    email = email,
     isFavorite = isFavorite
 )
