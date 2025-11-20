@@ -1,6 +1,6 @@
 package com.huseyinkiran.favuniversities.core.network
 
 object ApiConstants {
-    const val BASE_URL = "http://195.85.207.100:3001/"
+    const val BASE_URL = "https://favuniversity.huseyinkiran.site/"
 
 }

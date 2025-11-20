@@ -3,6 +3,7 @@ package com.huseyinkiran.favuniversities.presentation.adapter.city
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.huseyinkiran.favuniversities.databinding.CellCityBinding
 import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
 import com.huseyinkiran.favuniversities.presentation.adapter.university.UniversityAdapter
@@ -14,13 +15,19 @@ class CityPagingAdapter(
     private val cityCallback: CityClickListener
 ) : PagingDataAdapter<CityUIModel, CityViewHolder>(CityDiffCallback()) {
 
-    interface CityClickListener{
+    private val viewPool = RecyclerView.RecycledViewPool()
+
+    interface CityClickListener {
         fun onCityExpanded(cityName: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityViewHolder {
-        val view = CellCityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CityViewHolder(view)
+        val binding = CellCityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+        val holder = CityViewHolder(binding)
+        holder.setRecycledViewPool(viewPool)
+
+        return holder
     }
 
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {

@@ -22,6 +22,10 @@ class CityViewHolder(private val binding: CellCityBinding) :
         }
     }
 
+    fun setRecycledViewPool(viewPool: RecyclerView.RecycledViewPool) {
+        binding.rvUniversity.setRecycledViewPool(viewPool)
+    }
+
     fun bind(
         city: CityUIModel,
         isExpanded: Boolean,
@@ -44,7 +48,5 @@ class CityViewHolder(private val binding: CellCityBinding) :
         cardCity.setOnClickListener {
             cityCallback.onCityExpanded(city.name)
         }
-
     }
-
 }
