@@ -3,30 +3,40 @@
 ## 📸 Screenshots
 
 <p float="left">
-  <img src="images/SplashScreen.png" width="32%" style="margin-right: 2%;" />
-  <img src="images/HomeFragment.png" width="32%" style="margin-right: 2%;" />
-  <img src="images/HomeFragmentSecond.png" width="32%" />
+  <img src="images/favuni.png" width="31%" style="margin-right: 2%;" />
+  <img src="images/favuni2.png" width="31%" style="margin-right: 2%;" />
+  <img src="images/favuni3.png" width="31%" />
 </p>
 
 <p float="left">
-  <img src="images/FavoritesFragment.png" width="32%" style="margin-right: 2%;" />
-  <img src="images/FavoritesFragmentSecond.png" width="32%" style="margin-right: 2%;" />
-  <img src="images/WebsiteFragment.png" width="32%" style="margin-right: 2%;" />
+  <img src="images/favuni4.png" width="31%" style="margin-right: 2%;" />
+  <img src="images/favuni5.png" width="31%" style="margin-right: 2%;" />
+  <img src="images/favuni6.png" width="31%" />
+</p>
+
+<p float="left">
+  <img src="images/favuni7.png" width="31%" style="margin-right: 2%;" />
+  <img src="images/favuni8.png" width="31%" />
 </p>
 
 ## 📄 Project Overview
 
-You can tap a city to expand and view the universities within on the main screen listing cities in Türkiye.
-By tapping on a university, you can expand the section to examine university details, make a phone call,
-or visit its website. You can add or remove universities from your favorites and view them in the
-Favorites screen.
+FavUniversity lists the cities in Türkiye and the universities within each city.
+
+- Tap a city to expand and see its universities.
+- Tap a university to expand its section and view details such as phone, address, rector, and website.
+- You can directly call the university or open its website.
+- Universities can be added to or removed from favorites, and all favorites are listed on a dedicated Favorites screen.
 
 ## 📌 Tech Stack
-- **Clean Architecture** – Layered architecture for a scalable, testable, and maintainable codebase
-- **Room Database** – Local database to store and manage favorite universities
-- **Navigation Component** – Single activity multiple fragments approach
-- **Retrofit** – For fetching city and university data via API requests
-- **ViewModel & LiveData** – Managing UI data in a reactive way
-- **Hilt (Dependency Injection)** – Simplifies dependency management for a modular codebase
-- **ViewBinding** – Easy and type-safe access to XML layout views
-- **Coroutines (Flow & StateFlow)** – For reactive and asynchronous data streams; `Flow` for API responses, `StateFlow` for UI state management
+
+- **Architecture (MVVM + Clean Architecture)** – Layered, maintainable structure with separate `presentation`, `data`, `domain`, `core`, and `di` packages.
+- **Kotlin Coroutines (Flow & StateFlow)** – Asynchronous and reactive data handling
+    - `Flow` for data streams from API and Room
+    - `StateFlow` for exposing UI state from ViewModels
+- **Room Database** – Local persistence layer for storing and managing favorite universities.
+- **Retrofit** – HTTP client for fetching city and university data from the REST API.
+- **RecyclerView + ListAdapter (DiffUtil)** – Efficient list rendering, item animations, and partial updates for cities and universities.
+- **Navigation Component** – Single-activity, multi-fragment navigation with a type-safe back stack.
+- **Hilt (Dependency Injection)** – Simplifies dependency management and provides scoped components across layers.
+- **ViewBinding** – Type-safe access to XML views without `findViewById`.
