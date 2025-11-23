@@ -128,4 +128,6 @@ dependencies {
     // Chucker
     debugImplementation("com.github.chuckerteam.chucker:library:4.1.0")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.1.0")
+    // Material
+    implementation("com.google.android.material:material:1.13.0")
 }

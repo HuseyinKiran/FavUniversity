@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_homeFragment_to_websiteFragment"
             app:destination="@id/websiteFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
 
     </fragment>
 
@@ -59,6 +62,14 @@
             android:name="UNIVERSITY_NAME"
             app:argType="string" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.huseyinkiran.favuniversities.presentation.search.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_websiteFragment"
+            app:destination="@id/websiteFragment" />
     </fragment>
 
 </navigation>

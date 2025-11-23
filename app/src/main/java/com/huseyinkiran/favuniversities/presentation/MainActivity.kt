@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         val appBarConfig = AppBarConfiguration(
             setOf(
                 R.id.homeFragment,
+                R.id.searchFragment,
                 R.id.favoritesFragment
             )
         )
@@ -51,11 +52,7 @@ class MainActivity : AppCompatActivity() {
 
             if (!toolbar.isGone) {
                 toolbar.isTitleCentered = true
-                toolbar.title = when (dest.id) {
-                    R.id.homeFragment -> getString(R.string.home_fragment_title)
-                    R.id.favoritesFragment -> getString(R.string.favorites_fragment_title)
-                    else -> ""
-                }
+                toolbar.title = ""
             }
         }
     }

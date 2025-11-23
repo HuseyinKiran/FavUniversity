@@ -21,6 +21,9 @@
     <string name="email">E-posta:</string>
     <string name="home">Ana Sayfa</string>
     <string name="favorites">Favoriler</string>
+    <string name="search">Arama</string>
+
+    <string name="hint_text">Üniversite Ara…</string>
 
     <string name="dialog_title">Telefon Arama İzni Gerekli</string>
     <string name="dialog_message">Bu özellik telefon numarasını arayabilmeniz için gereklidir.</string>

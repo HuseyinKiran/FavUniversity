@@ -1,0 +1,40 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardCity"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="8dp"
+    app:strokeColor="@color/bg_cell_city">
+
+    <LinearLayout
+        android:id="@+id/cityLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/city_header_gradient"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imgBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/custom_btn_bg"
+            android:clickable="false"
+            android:contentDescription="@string/city_expand_button"
+            android:src="@drawable/baseline_keyboard_arrow_down_24"
+            app:tint="@color/city_text_color" />
+
+        <TextView
+            android:id="@+id/txtCityName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/city_text_color" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

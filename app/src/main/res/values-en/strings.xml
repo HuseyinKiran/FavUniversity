@@ -21,6 +21,9 @@
     <string name="email">E-mail:</string>
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
+    <string name="search">Search</string>
+
+    <string name="hint_text">Search University…</string>
 
     <string name="dialog_title">Phone Call Permission Required</string>
     <string name="dialog_message">This feature is required to make phone calls.</string>

@@ -6,7 +6,7 @@ import com.huseyinkiran.favuniversities.presentation.model.UniversityUIModel
 class UniversityDiffCallback : DiffUtil.ItemCallback<UniversityUIModel>() {
 
     override fun areItemsTheSame(oldItem: UniversityUIModel, newItem: UniversityUIModel): Boolean {
-        return oldItem.name == newItem.name
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: UniversityUIModel, newItem: UniversityUIModel): Boolean {

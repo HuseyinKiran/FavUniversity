@@ -1,5 +1,6 @@
 package com.huseyinkiran.favuniversities.presentation.home
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
@@ -11,12 +12,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.core.ui.callPhoneNumber
+import com.huseyinkiran.favuniversities.core.ui.dpToPx
 import com.huseyinkiran.favuniversities.core.ui.viewBinding
 import com.huseyinkiran.favuniversities.databinding.FragmentHomeBinding
 import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
-import com.huseyinkiran.favuniversities.presentation.adapter.city.CityPagingAdapter
+import com.huseyinkiran.favuniversities.presentation.adapter.home.HomeAdapter
+import com.huseyinkiran.favuniversities.presentation.adapter.home.HomeItem
 import com.huseyinkiran.favuniversities.presentation.adapter.university.UniversityAdapter
 import com.huseyinkiran.favuniversities.presentation.model.UniversityUIModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,8 +40,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         observeViewModel()
     }
 
-    private val adapter: CityPagingAdapter by lazy {
-        CityPagingAdapter(
+    private val adapter: HomeAdapter by lazy {
+        HomeAdapter(
             fragmentType = AdapterFragmentType.HOME,
             universityCallbacks = object : UniversityAdapter.UniversityClickListener {
                 override fun onFavoriteClick(university: UniversityUIModel) {
@@ -58,7 +62,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     viewModel.onUniversityExpanded(universityName)
                 }
             },
-            cityCallback = object : CityPagingAdapter.CityClickListener {
+            cityClickListener = object : HomeAdapter.CityClickListener {
                 override fun onCityExpanded(cityName: String) {
                     viewModel.onCityExpanded(cityName)
                 }
@@ -66,9 +70,29 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         )
     }
 
+
     private fun setupAdapter() = with(binding) {
         rvCity.adapter = adapter
         rvCity.itemAnimator = null
+
+        rvCity.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
+                val position = parent.getChildAdapterPosition(view)
+                val adapter = parent.adapter as? HomeAdapter ?: return
+
+                val item = adapter.peek(position)
+                if (item is HomeItem.UniversityRow) {
+                    outRect.right = 8.dpToPx(parent.context)
+                    outRect.left = 8.dpToPx(parent.context)
+                }
+            }
+        })
+
     }
 
     private fun observeViewModel() = with(binding) {
@@ -84,6 +108,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             rvCity.isVisible = loadState.source.refresh is LoadState.NotLoading
         }
     }
+
 
     private fun exitOnBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
