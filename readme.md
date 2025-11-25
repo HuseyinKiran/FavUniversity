@@ -2,21 +2,21 @@
 
 ## 📸 Screenshots
 
-<p float="left">
-  <img src="images/favuni.png" width="31%" style="margin-right: 2%;" />
-  <img src="images/favuni2.png" width="31%" style="margin-right: 2%;" />
-  <img src="images/favuni3.png" width="31%" />
+<p align="center">
+  <img src="images/splash.png" width="31%" style="margin-right: 2%;" />
+  <img src="images/home1.png" width="31%" style="margin-right: 2%;" />
+  <img src="images/home2.png" width="31%" />
 </p>
 
-<p float="left">
-  <img src="images/favuni4.png" width="31%" style="margin-right: 2%;" />
-  <img src="images/favuni5.png" width="31%" style="margin-right: 2%;" />
-  <img src="images/favuni6.png" width="31%" />
+<p align="center">
+  <img src="images/search1.png" width="31%" style="margin-right: 2%;" />
+  <img src="images/search2.png" width="31%" style="margin-right: 2%;" />
+  <img src="images/favorites.png" width="31%" />
 </p>
 
-<p float="left">
-  <img src="images/favuni7.png" width="31%" style="margin-right: 2%;" />
-  <img src="images/favuni8.png" width="31%" />
+<p align="center">
+  <img src="images/favorites2.png" width="31%" style="margin-right: 2%;" />
+  <img src="images/website.png" width="31%" />
 </p>
 
 ## 📄 Project Overview
