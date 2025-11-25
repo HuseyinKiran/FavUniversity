@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.core.ui.callPhoneNumber
+import com.huseyinkiran.favuniversities.core.ui.exitOnBackPressed
 import com.huseyinkiran.favuniversities.core.ui.viewBinding
 import com.huseyinkiran.favuniversities.databinding.FragmentSearchBinding
 import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
@@ -29,6 +30,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        exitOnBackPressed(requireActivity(), viewLifecycleOwner)
         setupAdapter()
         setupSearchListener()
         observeResults()

@@ -33,11 +33,13 @@ class MainActivity : AppCompatActivity() {
 
         bottomNav.setupWithNavController(navController)
 
+        val homeFragment = R.id.homeFragment
+        val searchFragment = R.id.searchFragment
+        val favoritesFragment = R.id.favoritesFragment
+
         val appBarConfig = AppBarConfiguration(
             setOf(
-                R.id.homeFragment,
-                R.id.searchFragment,
-                R.id.favoritesFragment
+                homeFragment, searchFragment, favoritesFragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfig)
@@ -52,7 +54,12 @@ class MainActivity : AppCompatActivity() {
 
             if (!toolbar.isGone) {
                 toolbar.isTitleCentered = true
-                toolbar.title = ""
+                toolbar.title = when(dest.id) {
+                    homeFragment -> getString(R.string.home_fragment_title)
+                    searchFragment -> getString(R.string.search_fragment_title)
+                    favoritesFragment -> getString(R.string.favorites_fragment_title)
+                    else -> ""
+                }
             }
         }
     }

@@ -3,7 +3,6 @@ package com.huseyinkiran.favuniversities.presentation.home
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
-import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.core.ui.callPhoneNumber
 import com.huseyinkiran.favuniversities.core.ui.dpToPx
+import com.huseyinkiran.favuniversities.core.ui.exitOnBackPressed
 import com.huseyinkiran.favuniversities.core.ui.viewBinding
 import com.huseyinkiran.favuniversities.databinding.FragmentHomeBinding
 import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
@@ -35,7 +35,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        exitOnBackPressed()
+        exitOnBackPressed(requireActivity(), viewLifecycleOwner)
         setupAdapter()
         observeViewModel()
     }
@@ -109,10 +109,4 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-
-    private fun exitOnBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            requireActivity().finish()
-        }
-    }
 }

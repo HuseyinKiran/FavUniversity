@@ -2,7 +2,6 @@ package com.huseyinkiran.favuniversities.presentation.favorites
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -15,6 +14,7 @@ import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
 import com.huseyinkiran.favuniversities.presentation.adapter.university.UniversityAdapter
 import com.huseyinkiran.favuniversities.presentation.model.UniversityUIModel
 import com.huseyinkiran.favuniversities.core.ui.callPhoneNumber
+import com.huseyinkiran.favuniversities.core.ui.exitOnBackPressed
 import com.huseyinkiran.favuniversities.core.ui.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,7 +27,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        exitOnBackPressed()
+        exitOnBackPressed(requireActivity(), viewLifecycleOwner)
         setupAdapter()
         observeViewModel()
     }
@@ -74,9 +74,4 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         }
     }
 
-    private fun exitOnBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            requireActivity().finish()
-        }
-    }
 }
