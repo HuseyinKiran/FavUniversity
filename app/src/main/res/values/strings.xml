@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">FavUniversity</string>
-    <string name="home_fragment_title">Üniversiteler</string>
-    <string name="favorites_fragment_title">Favorilerim</string>
+    <string name="home_fragment_title">Üniversite Rehberi</string>
+    <string name="favorites_fragment_title">Favoriler</string>
+    <string name="search_fragment_title">Üniversite Ara</string>
     <string name="error_text">İnternet bağlantınızı kontrol ediniz.</string>
     <string name="back_button">Back Button</string>
 
