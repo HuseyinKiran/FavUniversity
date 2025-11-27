@@ -6,27 +6,43 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
+val releaseStoreFile: String? = project.findProperty("RELEASE_STORE_FILE") as String?
+val releaseStorePassword: String? = project.findProperty("RELEASE_STORE_PASSWORD") as String?
+val releaseKeyAlias: String? = project.findProperty("RELEASE_KEY_ALIAS") as String?
+val releaseKeyPassword: String? = project.findProperty("RELEASE_KEY_PASSWORD") as String?
+
 android {
     namespace = "com.huseyinkiran.favuniversities"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.huseyinkiran.favuniversity"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 35
+        versionCode = 4
+        versionName = "1.1"
 
         testInstrumentationRunner = "com.huseyinkiran.favuniversities.HiltTestRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = releaseStoreFile?.let { file(it) }
+
+            storePassword = releaseStorePassword
+            keyAlias = releaseKeyAlias
+            keyPassword = releaseKeyPassword
+        }
+    }
+
     buildTypes {
-        release {
-            isMinifyEnabled = true
+        getByName("release") {
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -129,4 +145,6 @@ dependencies {
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.1.0")
     // Material
     implementation("com.google.android.material:material:1.13.0")
+    // Shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }

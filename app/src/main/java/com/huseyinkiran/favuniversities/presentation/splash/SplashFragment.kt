@@ -2,6 +2,7 @@ package com.huseyinkiran.favuniversities.presentation.splash
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
@@ -12,7 +13,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyinkiran.favuniversities.R
 import kotlinx.coroutines.launch
 
@@ -42,7 +42,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.bg_splash)
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).isGone = true
+        requireActivity().findViewById<LinearLayout>(R.id.customBottomBar).isGone = true
     }
 
     private fun exitOnBackPressed() {
@@ -56,7 +56,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         requireActivity().window.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.bg_toolbar)
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).isVisible = true
+        requireActivity().findViewById<LinearLayout>(R.id.customBottomBar).isVisible = true
     }
 
 }

@@ -7,6 +7,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilSearch"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -17,18 +18,24 @@
         app:boxCornerRadiusTopStart="8dp"
         app:boxStrokeColor="@color/bg_cell_city"
         app:boxStrokeWidth="2dp"
-        app:hintTextColor="@color/black"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:startIconDrawable="@drawable/outline_search_24">
+        app:startIconDrawable="@drawable/outline_search_24"
+        app:startIconTint="#99000000">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_text" />
+            android:inputType="text"
+            android:textColorHint="#99000000"
+            android:textColor="#99000000"
+            android:hint="@string/hint_text"
+            />
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchResults"

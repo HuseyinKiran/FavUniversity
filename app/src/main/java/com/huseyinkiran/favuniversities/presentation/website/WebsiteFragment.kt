@@ -7,12 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
+import android.widget.LinearLayout
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.databinding.FragmentWebsiteBinding
 import kotlinx.coroutines.launch
@@ -35,7 +35,7 @@ class WebsiteFragment : Fragment() {
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         lifecycleScope.launch {
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).isGone = true
+            requireActivity().findViewById<LinearLayout>(R.id.customBottomBar).isGone = true
         }
 
         val bundle: WebsiteFragmentArgs by navArgs()
@@ -72,7 +72,7 @@ class WebsiteFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav).visibility =
+        requireActivity().findViewById<LinearLayout>(R.id.customBottomBar).visibility =
             View.VISIBLE
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
