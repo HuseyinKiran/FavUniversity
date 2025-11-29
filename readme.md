@@ -11,7 +11,7 @@
 <p align="center">
   <img src="images/search1.png" width="31%" style="margin-right: 2%;" />
   <img src="images/search2.png" width="31%" style="margin-right: 2%;" />
-  <img src="images/favorites.png" width="31%" />
+  <img src="images/favorites1.png" width="31%" />
 </p>
 
 <p align="center">
