@@ -26,7 +26,6 @@ class UniversityViewHolder(private val binding: CellUniversityBinding) :
         }
 
         val endPaddingPx = endPaddingDp.dpToPx(root.context)
-
         txtUniName.setPadding(0,0,endPaddingPx,0)
 
         txtUniType.text = university.universityType
@@ -40,6 +39,8 @@ class UniversityViewHolder(private val binding: CellUniversityBinding) :
 
         txtPhone.paintFlags = txtPhone.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         txtWebsite.paintFlags = txtWebsite.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        txtEmail.paintFlags = txtEmail.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        txtAddress.paintFlags = txtAddress.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         btnFavorite.setImageResource(
             if (university.isFavorite) R.drawable.baseline_favorite_24
@@ -60,5 +61,7 @@ class UniversityViewHolder(private val binding: CellUniversityBinding) :
         btnFavorite.setOnClickListener { callbacks.onFavoriteClick(university) }
         txtPhone.setOnClickListener { callbacks.onPhoneClick(university.phone) }
         txtWebsite.setOnClickListener { callbacks.onWebsiteClick(university.website, university.name) }
+        txtEmail.setOnClickListener { callbacks.onEmailClick(university.email) }
+        txtAddress.setOnClickListener { callbacks.onAddressClick(university.address) }
     }
 }

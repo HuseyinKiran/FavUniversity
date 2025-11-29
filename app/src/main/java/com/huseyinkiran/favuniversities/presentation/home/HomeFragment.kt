@@ -16,6 +16,8 @@ import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.core.ui.callPhoneNumber
 import com.huseyinkiran.favuniversities.core.ui.dpToPx
 import com.huseyinkiran.favuniversities.core.ui.exitOnBackPressed
+import com.huseyinkiran.favuniversities.core.ui.openAddressLocation
+import com.huseyinkiran.favuniversities.core.ui.openEmail
 import com.huseyinkiran.favuniversities.core.ui.viewBinding
 import com.huseyinkiran.favuniversities.databinding.FragmentHomeBinding
 import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
@@ -45,7 +47,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             fragmentType = AdapterFragmentType.HOME,
             universityCallbacks = object : UniversityAdapter.UniversityClickListener {
                 override fun onFavoriteClick(university: UniversityUIModel) {
-                    viewModel.toggleFavorite(university)
+                    viewModel.toggleFavorite(university = university)
                 }
 
                 override fun onWebsiteClick(websiteUrl: String, universityName: String) {
@@ -55,11 +57,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
 
                 override fun onPhoneClick(phoneNumber: String) {
-                    callPhoneNumber(phoneNumber)
+                    callPhoneNumber(phoneNumber = phoneNumber)
+                }
+
+                override fun onEmailClick(email: String) {
+                    openEmail(email = email)
+                }
+
+                override fun onAddressClick(address: String) {
+                    openAddressLocation(address = address, view = binding.root)
                 }
 
                 override fun onUniversityExpanded(universityName: String) {
-                    viewModel.onUniversityExpanded(universityName)
+                    viewModel.onUniversityExpanded(universityName = universityName)
                 }
             },
             cityClickListener = object : HomeAdapter.CityClickListener {

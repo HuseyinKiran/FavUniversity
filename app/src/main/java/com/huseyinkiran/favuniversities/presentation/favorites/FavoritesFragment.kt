@@ -9,13 +9,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.huseyinkiran.favuniversities.R
+import com.huseyinkiran.favuniversities.core.ui.callPhoneNumber
+import com.huseyinkiran.favuniversities.core.ui.exitOnBackPressed
+import com.huseyinkiran.favuniversities.core.ui.openAddressLocation
+import com.huseyinkiran.favuniversities.core.ui.openEmail
+import com.huseyinkiran.favuniversities.core.ui.viewBinding
 import com.huseyinkiran.favuniversities.databinding.FragmentFavoritesBinding
 import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
 import com.huseyinkiran.favuniversities.presentation.adapter.university.UniversityAdapter
 import com.huseyinkiran.favuniversities.presentation.model.UniversityUIModel
-import com.huseyinkiran.favuniversities.core.ui.callPhoneNumber
-import com.huseyinkiran.favuniversities.core.ui.exitOnBackPressed
-import com.huseyinkiran.favuniversities.core.ui.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -34,7 +36,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private val universityAdapterCallbacks = object : UniversityAdapter.UniversityClickListener {
         override fun onFavoriteClick(university: UniversityUIModel) {
-            viewModel.toggleFavorite(university)
+            viewModel.toggleFavorite(university = university)
         }
 
         override fun onWebsiteClick(websiteUrl: String, universityName: String) {
@@ -44,12 +46,21 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         }
 
         override fun onPhoneClick(phoneNumber: String) {
-            callPhoneNumber(phoneNumber)
+            callPhoneNumber(phoneNumber = phoneNumber)
         }
 
         override fun onUniversityExpanded(universityName: String) {
-            viewModel.onFavUniversityExpanded(universityName)
+            viewModel.onFavUniversityExpanded(name = universityName)
         }
+
+        override fun onEmailClick(email: String) {
+            openEmail(email = email)
+        }
+
+        override fun onAddressClick(address: String) {
+            openAddressLocation(address = address, view = binding.root)
+        }
+
     }
 
     private val adapter: UniversityAdapter by lazy {

@@ -17,6 +17,8 @@ class UniversityAdapter :
         fun onFavoriteClick(university: UniversityUIModel)
         fun onWebsiteClick(websiteUrl: String, universityName: String)
         fun onPhoneClick(phoneNumber: String)
+        fun onEmailClick(email: String)
+        fun onAddressClick(address: String)
         fun onUniversityExpanded(universityName: String)
     }
 
