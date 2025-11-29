@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">FavUniversity</string>
+    <string name="app_name">Fav University</string>
     <string name="home_fragment_title">Üniversite Rehberi</string>
-    <string name="favorites_fragment_title">Favoriler</string>
+    <string name="favorites_fragment_title">Favorilerim</string>
     <string name="search_fragment_title">Üniversite Ara</string>
     <string name="error_text">İnternet bağlantınızı kontrol ediniz.</string>
     <string name="back_button">Back Button</string>
@@ -9,9 +9,6 @@
     <string name="university_expand_button">University Expand Button</string>
     <string name="city_expand_button">City Expand Button</string>
     <string name="university_favorite_button">University Favorite Button</string>
-
-    <string name="added_to_favorites">favorilere eklendi</string>
-    <string name="removed_from_favorites">favorilerden kaldırıldı</string>
 
     <string name="university_type">Üniversite Türü:</string>
     <string name="phone">Telefon:</string>
@@ -25,14 +22,6 @@
     <string name="search">Arama</string>
 
     <string name="hint_text">Üniversite Ara…</string>
-
-    <string name="dialog_title">Telefon Arama İzni Gerekli</string>
-    <string name="dialog_message">Bu özellik telefon numarasını arayabilmeniz için gereklidir.</string>
-    <string name="dialog_positive_text">Tamam</string>
-
-    <string name="settings_dialog_title">İzin Gerekli</string>
-    <string name="settings_dialog_message">Arama yapmak için telefon iznine ihtiyacımız var. Lütfen ayarlardan izin verin.</string>
-    <string name="settings_dialog_positive_text">Ayarları Aç</string>
-    <string name="dialog_negative_text">İptal</string>
+    <string name="error_no_map_or_browser">Harita uygulaması veya tarayıcı bulunamadı</string>
 
 </resources>

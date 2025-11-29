@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         val searchFragment = R.id.searchFragment
         val favoritesFragment = R.id.favoritesFragment
         val splashFragment = R.id.splashFragment
+        val websiteFragment = R.id.websiteFragment
 
         val appBarConfig = AppBarConfiguration(
             setOf(homeFragment, searchFragment, favoritesFragment)
@@ -83,8 +84,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, dest, _ ->
             val hideOn = setOf(
-                R.id.splashFragment,
-                R.id.websiteFragment
+                splashFragment, websiteFragment
             )
 
             toolbar.isGone = dest.id in hideOn
@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
             binding.bgNavigationBar.setBackgroundColor(
                 when (dest.id) {
                     splashFragment -> getColor(R.color.bg_splash)
+                    websiteFragment -> getColor(R.color.white)
                     else -> getColor(R.color.bg_app)
                 }
             )

@@ -12,6 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.huseyinkiran.favuniversities.R
 import com.huseyinkiran.favuniversities.core.ui.callPhoneNumber
 import com.huseyinkiran.favuniversities.core.ui.exitOnBackPressed
+import com.huseyinkiran.favuniversities.core.ui.hideKeyboard
+import com.huseyinkiran.favuniversities.core.ui.openAddressLocation
+import com.huseyinkiran.favuniversities.core.ui.openEmail
 import com.huseyinkiran.favuniversities.core.ui.viewBinding
 import com.huseyinkiran.favuniversities.databinding.FragmentSearchBinding
 import com.huseyinkiran.favuniversities.presentation.adapter.AdapterFragmentType
@@ -19,7 +22,6 @@ import com.huseyinkiran.favuniversities.presentation.adapter.university.Universi
 import com.huseyinkiran.favuniversities.presentation.model.UniversityUIModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(R.layout.fragment_search) {
@@ -33,7 +35,18 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         exitOnBackPressed(requireActivity(), viewLifecycleOwner)
         setupAdapter()
         setupSearchListener()
+        setupKeyboardDismissOnScroll()
         observeResults()
+    }
+
+    private fun setupKeyboardDismissOnScroll() = with(binding) {
+        rvSearchResults.setOnTouchListener { _, _ ->
+            if (etSearch.isFocused) {
+                etSearch.clearFocus()
+                root.hideKeyboard()
+            }
+            false
+        }
     }
 
     private fun setupAdapter() = with(binding) {
@@ -42,7 +55,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
             callbacks = object : UniversityAdapter.UniversityClickListener {
                 override fun onFavoriteClick(university: UniversityUIModel) {
-                    viewModel.toggleFavorite(university)
+                    viewModel.toggleFavorite(university = university)
                 }
 
                 override fun onWebsiteClick(
@@ -57,7 +70,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
 
                 override fun onPhoneClick(phoneNumber: String) {
-                    callPhoneNumber(phoneNumber)
+                    callPhoneNumber(phoneNumber = phoneNumber)
+                }
+
+                override fun onEmailClick(email: String) {
+                    openEmail(email = email)
+                }
+
+                override fun onAddressClick(address: String) {
+                    openAddressLocation(address = address, view = binding.root)
                 }
 
                 override fun onUniversityExpanded(universityName: String) {

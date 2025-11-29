@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FavUniversity</string>
+    <string name="app_name">Fav University</string>
     <string name="home_fragment_title">University Guide</string>
     <string name="favorites_fragment_title">Favorites</string>
     <string name="search_fragment_title">Search Universities</string>
@@ -9,9 +9,6 @@
     <string name="university_expand_button">University Expand Button</string>
     <string name="city_expand_button">City Expand Button</string>
     <string name="university_favorite_button">University Favorite Button</string>
-
-    <string name="added_to_favorites">added to favorites</string>
-    <string name="removed_from_favorites">removed from favorites</string>
 
     <string name="university_type">University Type:</string>
     <string name="phone">Phone:</string>
@@ -25,14 +22,6 @@
     <string name="search">Search</string>
 
     <string name="hint_text">Search University…</string>
-
-    <string name="dialog_title">Phone Call Permission Required</string>
-    <string name="dialog_message">This feature is required to make phone calls.</string>
-    <string name="dialog_positive_text">OK</string>
-
-    <string name="settings_dialog_title">Permission Required</string>
-    <string name="settings_dialog_message">We need phone permission to make a call. Please grant permission in the settings.</string>
-    <string name="settings_dialog_positive_text">Open Settings</string>
-    <string name="dialog_negative_text">Cancel</string>
+    <string name="error_no_map_or_browser">No map application or browser found</string>
 
 </resources>

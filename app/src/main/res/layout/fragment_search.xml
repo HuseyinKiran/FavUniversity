@@ -32,6 +32,7 @@
             android:inputType="text"
             android:textColorHint="#99000000"
             android:textColor="#99000000"
+            android:imeOptions="actionSearch"
             android:hint="@string/hint_text"
             />
     </com.google.android.material.textfield.TextInputLayout>
