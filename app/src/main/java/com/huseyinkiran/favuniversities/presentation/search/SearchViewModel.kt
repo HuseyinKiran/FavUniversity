@@ -8,6 +8,7 @@ import com.huseyinkiran.favuniversities.presentation.mapper.toUI
 import com.huseyinkiran.favuniversities.presentation.model.UniversityUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -23,6 +24,9 @@ class SearchViewModel @Inject constructor(
     private val allUniversities = MutableStateFlow<List<UniversityUIModel>>(emptyList())
     private val _expandedUniversityNames = MutableStateFlow<Set<String>>(emptySet())
     private val _query = MutableStateFlow("")
+
+    private val _isLoading = MutableStateFlow(false)
+    private val _errorMessage = MutableStateFlow<String?>(null)
 
     private val favoriteNamesFlow = useCases
         .getAllFavoritesUseCase()
@@ -43,19 +47,48 @@ class SearchViewModel @Inject constructor(
                 )
             }
 
-            if (queryText.length < 2) return@combine emptyList()
+            if (queryText.length < 2) {
+                emptyList()
+            } else {
+                updated.filter { it.name.contains(queryText, ignoreCase = true) }
+            }
 
-            updated.filter { it.name.contains(queryText, ignoreCase = true) }
         }.stateIn(
             viewModelScope,
-            kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000),
+            SharingStarted.WhileSubscribed(5000),
             emptyList()
+        )
+
+    val uiState: StateFlow<SearchUiState> =
+        combine(
+            searchResults,
+            _isLoading,
+            _errorMessage
+        ) { searchResults, isLoading, errorMessage ->
+            SearchUiState(
+                results = searchResults,
+                isLoading = isLoading,
+                errorMessage = errorMessage
+            )
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            SearchUiState()
         )
 
     init {
         viewModelScope.launch {
-            val universityList = useCases.getAllUniversitiesUseCase()
-            allUniversities.value = universityList.map { it.toUI() }
+            _isLoading.value = true
+            _errorMessage.value = null
+            try {
+                val universityList = useCases.getAllUniversitiesUseCase()
+                allUniversities.value = universityList.map { it.toUI() }
+            } catch (e: Exception) {
+                _errorMessage.value = "İnternet bağlantınızı kontrol ediniz."
+                e.printStackTrace()
+            } finally {
+                _isLoading.value = false
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package com.huseyinkiran.favuniversities.presentation.search
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -96,14 +97,25 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    private fun observeResults() {
+    private fun observeResults() = with(binding) {
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.searchResults.collect { list ->
-                    adapter.submitList(list)
+                viewModel.uiState.collect { state ->
+                    progressBar.isVisible = state.isLoading
+                    txtError.isVisible = state.errorMessage != null
+                    rvSearchResults.isVisible = state.results.isNotEmpty()
+
+                    if (txtError.isVisible) {
+                        tilSearch.isEnabled = false
+                    }
+
+                    txtError.text = state.errorMessage
+                    adapter.submitList(state.results)
                 }
             }
         }
+
     }
 
 }
