@@ -3,9 +3,7 @@ package com.huseyinkiran.favuniversities.presentation.website
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import androidx.core.view.isGone
@@ -14,20 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.huseyinkiran.favuniversities.R
+import com.huseyinkiran.favuniversities.core.ui.viewBinding
 import com.huseyinkiran.favuniversities.databinding.FragmentWebsiteBinding
 import kotlinx.coroutines.launch
 
-class WebsiteFragment : Fragment() {
+class WebsiteFragment : Fragment(R.layout.fragment_website) {
 
-    private var _binding: FragmentWebsiteBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentWebsiteBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val binding by viewBinding(FragmentWebsiteBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,21 +43,19 @@ class WebsiteFragment : Fragment() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun setupWebView(url: String) {
-        with(binding.webView) {
-            with(settings) {
-                javaScriptEnabled = true
-                domStorageEnabled = true
-                loadWithOverviewMode = true
-                useWideViewPort = true
-            }
+    private fun setupWebView(url: String) = with(binding.webView) {
+        with(settings) {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            loadWithOverviewMode = true
+            useWideViewPort = true
+        }
 
-            webViewClient = WebViewClient()
-            if (url.contains("https://")) {
-                loadUrl(url)
-            } else {
-                loadUrl("https://$url")
-            }
+        webViewClient = WebViewClient()
+        if (url.contains("https://")) {
+            loadUrl(url)
+        } else {
+            loadUrl("https://$url")
         }
     }
 
