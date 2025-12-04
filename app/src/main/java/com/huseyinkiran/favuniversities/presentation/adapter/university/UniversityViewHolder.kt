@@ -19,14 +19,14 @@ class UniversityViewHolder(private val binding: CellUniversityBinding) :
         callbacks: UniversityAdapter.UniversityClickListener,
     ) = with(binding) {
 
-        val endPaddingDp = when(fragmentType) {
+        val endPaddingDp = when (fragmentType) {
             AdapterFragmentType.HOME -> 8
             AdapterFragmentType.FAVORITES -> 16
             AdapterFragmentType.SEARCH -> 16
         }
 
         val endPaddingPx = endPaddingDp.dpToPx(root.context)
-        txtUniName.setPadding(0,0,endPaddingPx,0)
+        txtUniName.setPadding(0, 0, endPaddingPx, 0)
 
         txtUniType.text = university.universityType
         txtUniName.text = university.name
@@ -37,10 +37,39 @@ class UniversityViewHolder(private val binding: CellUniversityBinding) :
         txtWebsite.text = university.website
         txtEmail.text = university.email
 
-        txtPhone.paintFlags = txtPhone.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        txtWebsite.paintFlags = txtWebsite.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        txtEmail.paintFlags = txtEmail.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        txtAddress.paintFlags = txtAddress.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        if (university.phone != "-" && university.phone.isNotBlank()) {
+            txtPhone.paintFlags = txtPhone.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            txtPhone.setOnClickListener { callbacks.onPhoneClick(university.phone) }
+        } else {
+            txtPhone.paintFlags = txtPhone.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
+            txtPhone.setOnClickListener(null)
+        }
+
+        if (university.website != "-" && university.website.isNotBlank()) {
+            txtWebsite.paintFlags = txtWebsite.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            txtWebsite.setOnClickListener {
+                callbacks.onWebsiteClick(university.website, university.name)
+            }
+        } else {
+            txtWebsite.paintFlags = txtWebsite.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
+            txtWebsite.setOnClickListener(null)
+        }
+
+        if (university.email != "-" && university.email.isNotBlank()) {
+            txtEmail.paintFlags = txtEmail.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            txtEmail.setOnClickListener { callbacks.onEmailClick(university.email) }
+        } else {
+            txtEmail.paintFlags = txtEmail.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
+            txtEmail.setOnClickListener(null)
+        }
+
+        if (university.address != "-" && university.address.isNotBlank()) {
+            txtAddress.paintFlags = txtAddress.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            txtAddress.setOnClickListener { callbacks.onAddressClick(university.address) }
+        } else {
+            txtAddress.paintFlags = txtAddress.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
+            txtAddress.setOnClickListener(null)
+        }
 
         btnFavorite.setImageResource(
             if (university.isFavorite) R.drawable.baseline_favorite_24
@@ -59,9 +88,6 @@ class UniversityViewHolder(private val binding: CellUniversityBinding) :
         }
 
         btnFavorite.setOnClickListener { callbacks.onFavoriteClick(university) }
-        txtPhone.setOnClickListener { callbacks.onPhoneClick(university.phone) }
-        txtWebsite.setOnClickListener { callbacks.onWebsiteClick(university.website, university.name) }
-        txtEmail.setOnClickListener { callbacks.onEmailClick(university.email) }
-        txtAddress.setOnClickListener { callbacks.onAddressClick(university.address) }
+
     }
 }
