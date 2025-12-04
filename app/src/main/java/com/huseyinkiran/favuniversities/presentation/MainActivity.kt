@@ -1,5 +1,6 @@
 package com.huseyinkiran.favuniversities.presentation
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -39,10 +40,15 @@ class MainActivity : AppCompatActivity() {
         val root = binding.main
         val toolbar = binding.toolbar
         val bottomBar = binding.customBottomBar
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
         ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
             val systemBars = insets.getInsets(
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+                if (isLandscape) {
+                    WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.displayCutout()
+                } else {
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+                }
             )
             view.setPadding(systemBars.left, 0, systemBars.right, 0)
 
@@ -100,7 +106,6 @@ class MainActivity : AppCompatActivity() {
             binding.bgNavigationBar.setBackgroundColor(
                 when (dest.id) {
                     splashFragment -> getColor(R.color.bg_splash)
-                    websiteFragment -> getColor(R.color.white)
                     else -> getColor(R.color.bg_app)
                 }
             )
@@ -161,4 +166,5 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
 }

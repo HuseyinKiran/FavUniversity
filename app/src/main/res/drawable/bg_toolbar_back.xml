@@ -11,6 +11,8 @@
     <item>
         <shape android:shape="oval">
             <padding
+                android:bottom="12dp"
+                android:top="12dp"
                 android:left="12dp"
                 android:right="12dp" />
             <solid android:color="@color/bg_toolbar" />
